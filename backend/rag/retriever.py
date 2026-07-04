@@ -1,27 +1,36 @@
-from sentence_transformers import SentenceTransformer
-from backend.rag.vector_store import collection
+from backend.rag.vector_store import get_collection
 
-model = SentenceTransformer(
-    "BAAI/bge-small-en-v1.5"
-)
+_model = None
+
+def get_model():
+    global _model
+
+    if _model is None:
+        from sentence_transformers import SentenceTransformer
+
+        print("Loading embedding model...")
+
+        _model = SentenceTransformer(
+            "BAAI/bge-small-en-v1.5"
+        )
+
+        print("Embedding model loaded.")
+
+    return _model
+
 
 def retrieve(query, top_k=5):
 
-    query_embedding = model.encode(
-        query
-    ).tolist()
+    model = get_model()
+    collection = get_collection()
+
+    query_embedding = model.encode(query).tolist()
 
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=top_k
+        n_results=top_k,
+        include=["documents", "metadatas", "distances"]
     )
-
-
-    results = collection.query(
-    query_embeddings=[query_embedding],
-    n_results=5,
-    include=["documents", "metadatas", "distances"]
-)
 
     return {
         "documents": results["documents"][0],
