@@ -23,7 +23,8 @@ Thumbs.db
 
 # Logs
 *.log
-
+# PDFs
+*.pdf
 # Models
 *.bin
 *.pt
