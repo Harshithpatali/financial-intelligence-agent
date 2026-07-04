@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import traceback
 
 app = FastAPI(title="TCS Financial Intelligence Agent")
@@ -19,10 +19,9 @@ def ask(question: str):
         return answer_question(question)
 
     except Exception as e:
-        print("ERROR IN /ask")
-        print(str(e))
         traceback.print_exc()
 
-        return {
-            "error": str(e)
-        }
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )

@@ -1,11 +1,23 @@
 from groq import Groq
 import os
 
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
-)
+_client = None
+
+def get_client():
+    global _client
+
+    if _client is None:
+        print("Initializing Groq client...")
+        _client = Groq(
+            api_key=os.getenv("GROQ_API_KEY")
+        )
+
+    return _client
+
 
 def generate_answer(prompt):
+
+    client = get_client()
 
     print("Sending request to Groq...")
 
@@ -23,5 +35,3 @@ def generate_answer(prompt):
     print("Groq response received")
 
     return response.choices[0].message.content
-
-print("llm.py imported")

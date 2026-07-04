@@ -11,7 +11,10 @@ def answer_question(question):
         top_k=5
     )
 
-    print("STEP 2: retrieve complete")
+    print(
+    f"STEP 2: retrieve complete - "
+    f"{len(results['documents'])} documents"
+)
 
     context = "\n\n".join(
         results["documents"]
@@ -20,8 +23,9 @@ def answer_question(question):
     sources = []
 
     for item in results["sources"]:
-        sources.append(
-            item["source"]
+        if isinstance(item, dict):
+            sources.append(
+            item.get("source", "Unknown")
         )
 
 

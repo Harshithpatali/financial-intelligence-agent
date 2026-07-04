@@ -10,6 +10,7 @@ def get_model():
     global _model
 
     if _model is None:
+
         print("STEP A: importing SentenceTransformer")
 
         from sentence_transformers import SentenceTransformer
@@ -17,7 +18,7 @@ def get_model():
         print("STEP B: creating SentenceTransformer")
 
         _model = SentenceTransformer(
-            "BAAI/bge-small-en-v1.5"
+            "all-MiniLM-L6-v2"
         )
 
         print("STEP C: SentenceTransformer loaded")
@@ -41,6 +42,10 @@ def retrieve(query, top_k=5):
     query_embedding = model.encode(
         query
     ).tolist()
+
+    print(
+    f"Embedding length: {len(query_embedding)}"
+)
     print("Embedding created")
 
     print("Querying ChromaDB...")

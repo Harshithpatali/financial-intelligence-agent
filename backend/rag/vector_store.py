@@ -28,10 +28,14 @@ def get_collection():
             path=str(CHROMA_PATH)
         )
 
-        _collection = client.get_or_create_collection(
-            name="tcs_knowledge_base"
-        )
+        _collection = client.get_collection(
+    name="tcs_knowledge_base"
+)
 
         print("ChromaDB loaded successfully.")
+
+        print(
+    f"Collection count: {_collection.count()}"
+)
 
     return _collection
