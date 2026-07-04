@@ -1,28 +1,17 @@
-from pathlib import Path
-import chromadb
+from fastapi import FastAPI
 
-_collection = None
+print("MAIN: starting import")
 
-def get_collection():
+app = FastAPI(
+    title="TCS Financial Intelligence Agent"
+)
 
-    global _collection
+print("MAIN: app created")
 
-    if _collection is None:
+@app.get("/")
+def root():
+    return {"status": "healthy"}
 
-        PROJECT_ROOT = Path(__file__).resolve().parents[2]
-
-        CHROMA_PATH = PROJECT_ROOT / "backend" / "chroma_db"
-
-        print(f"Loading ChromaDB from {CHROMA_PATH}")
-
-        client = chromadb.PersistentClient(
-            path=str(CHROMA_PATH)
-        )
-
-        _collection = client.get_or_create_collection(
-            name="tcs_knowledge_base"
-        )
-
-        print("ChromaDB loaded.")
-
-    return _collection
+@app.get("/ask")
+def ask(question: str):
+    return {"question": question}
