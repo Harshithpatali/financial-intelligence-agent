@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Mon, 18 May 2026 07:00:00 GMT
+source: Google News
+---
+
+# SAP powers TCS’s large‑scale payroll transformation, supporting its cloud‑first strategy - Express Computer
+
+Link:
+https://news.google.com/rss/articles/CBMiygFBVV95cUxQNUlxZFlmZ3ZXcTF1OVlLdWFfWENKNXJjdERZcE81c1hwbWhvWXpXMXA4RUd3R2ZhR0d0UXdYM1E5dmdrRzEzNndiV2RaVHhMMHd2Y0tXWkh2aHNCYlEwXzdBWlR3bFFUbWJrR05zcWNUY2xNb2FFYU5DalJZYzRzN2kzSThlaGJFMFN1QjNPbmJYMGdiZ08wR0F2WjExTUNtTGFyNW54NGRQUDNjbVQyZlhGMEgzZDNuaGxKeXJlY0k5b01pV3RCeWFn0gHPAUFVX3lxTE96bEdQVGVoZXVlbFFabEs5V3hTVzhyZ0tON1BaUmNaOGNjR1ZfY1ZRaVpvNzd0cEtKS3F5MHM3eVhVMTR2X1VUM3dqbm02RWpubjd2dVNLcnd1eGRJbWFCbEdoTmJkblR2d3JDMGEtQk1iTjIxTDdybVg0bGdsQ0hpRHB2c3ZKQllpRjBpU3drNzRBLTRRRFVSRFVWUDFIZW9LMXI3bXpvX1k5RC1aWmo3akQ4eVlyMldWVEM2TW83QUNGTlpyN29kbmJIMHNoMA?oc=5

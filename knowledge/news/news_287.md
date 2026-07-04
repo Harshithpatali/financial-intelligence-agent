@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 09 Oct 2025 07:00:00 GMT
+source: Google News
+---
+
+# TCS to buy US-based ListEngage MidCo, its arm for up to $72.8 mn - Moneycontrol.com
+
+Link:
+https://news.google.com/rss/articles/CBMiwgFBVV95cUxPOUtKQXBETjZNNWFIazFCc0Z0TmxtdmNhUDFiTmp0SDdYd0RldEd0LXBxdE5TOEhDbnJRazl3djdRV3NtdVJhNHctOHVYYzZNNmxjdWQ1UGNjUmFPRWZDRkdIQVp4UFk4OFlOcDNqOWpWd0VBUGNscm5fRUtWa1A4T2VTbThoQXpiY1VUUTVwTnlPWUl1emp2cVZRQnR4VFdubTZvdVBTaVFvRzVHX19YT1pyYkJrZWJMeUxqTGxxdW1od9IBxwFBVV95cUxNWlcyVUtUdVBtRXhxdWlsNEJ6Qy03eVRHZWxnYk9UX0J3MkVjRzQ5ZGdaYkhYVFZxUlVRREVoWUVNY2txUTZaSjlsNjdSemQyQkdGTGlHWGpUSUZzNjI5X25nY0FoYzJxdHl1MnVmck8wX3NkX3ZXbHhuOGIxMUJ0UFV5X2tGd0x6RTZSbWt6S2pKd1NaZ3dVRlhRZlJ1dFNPVGdzVm9ZM3NLY0x2WHJaVlI1UG40cEluc0lla0x0WjF3ZG5pbmFj?oc=5

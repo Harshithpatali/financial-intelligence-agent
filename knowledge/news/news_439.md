@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 17 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# OpenAI lost $38.5 billion in 2025, more than revenue of TCS or Infosys - India Today
+
+Link:
+https://news.google.com/rss/articles/CBMizwFBVV95cUxNTmM4eFFFVEpDWDRZUGtLcjVVb05tX216amEyMlhMWlI2aXM4eElqVkhqNlZycEV6cXVRZURxeVA5Mk9kS0xWNGFrNGxaN0tvVjFob2RjRFNvU0pobWg0bkFPLVFJV012S1JlR2hBR1dPbW5jY0l5OFN6OENxaXBXWWVTZnZlbmduQ3ZvYVJsaFRnTjFhd0NzeU5BOXdoQkcwTk41MGRHUDVhLVdpT1dKOW9vWkZpajRZM01OTTJhb0pCYllnTDZaMDJlTWJnMVnSAdQBQVVfeXFMTTM4S0ludVZtRGpRN3NEbXB3U1FOWmxocndGQUZIR0JZcXB3bmdKQ1F1MzBtci1lcS1odlE4dlIweTdweDlpQVFfczRXVGV5ejhNejNuRktid0VBUTJhd1JTMG9WOFc3QlBKMWktTm5oUEdJUElMbzhKWkxYZnppQUxEZ2hBZDRtQUpoTDNhYlZmbmZPQmJYU0lqcV95eG9laUM1cmcweF9SWkFiSlhiMmNoc25YSnFCTk9XUl93bll1VVVodHlGQS16WXZVTkZpVkhwUzk?oc=5

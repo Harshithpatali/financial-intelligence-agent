@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Sat, 13 Dec 2025 08:00:00 GMT
+source: Google News
+---
+
+# TCS Acquires Coastal Cloud In $700 Million Deal - Pulse 2.0
+
+Link:
+https://news.google.com/rss/articles/CBMidEFVX3lxTE9ZZFkyWnMtaFVvLVF3ZWRUbG1wWF92dXZ4TFNyZWxKUTVOOEZSTkE1QzFmdm9SWEw0S0gyd19oWjBDbXMyZnk1WENJMnNTbFIwVDBnZFRxNEtxV0FBSlNCTF9KSlN6NTZ0WXQ0LUhIUVNxQ1pa0gF6QVVfeXFMTVJwQTh6NVlYekxjS3dGWmVORXJMcExwTWkwcDNWZEx2NXJJQkRPT2RZVkdaSVVfQTA4TEJmelVzOVlscjk5aFNhQk04M1VTTF9VYk9yT3VtS0FvcktOSl9NMGVUZ293cGpmZGQzdk9iZnY5R0U5WlBkX2c?oc=5

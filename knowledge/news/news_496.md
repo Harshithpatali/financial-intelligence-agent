@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 11 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS bets big on Anthropic Claude: Why this might impact IT hiring in India - theweek.in
+
+Link:
+https://news.google.com/rss/articles/CBMioAFBVV95cUxQTUpSNDZZZkNHT3gwNXRNSUNqN2hVVDA0WWJzOTlUTmltS21hSVEzaFE1Y0dtTHdaUnMtSTYzNjJCbUxJSzFzN2V2MUswQzZjejIzUW10MWNtaklIUFRaWWgxbVNyTU1ZZEhVV3RyYjlNenN1U00tcUxESDRXdDktZnpNUmJqRHZ3cWl1MUVMZjg1SmF1Q3FfYlNkZE1JVjJH0gGmAUFVX3lxTE5OY0VmSHY4RGRqNDR3cktpVlRrSFRlT3NMbkFFcU9rWWVNS2RwVUhFcHlTb0Q4UmdGckIxbEF4Z0RjVFBjOUxrcG15NmN5SGlLQ0NFUmtXZUFNaGJabVo4WWRHUXdCSDRfZjBtMHBjQzBGbEd1QkJCYV9jVFA4QVJ6NkRIVFh6VVZNY3l6UThNNDlxN3UxTjhwanNtMWR4MEFkRFpyV3c?oc=5

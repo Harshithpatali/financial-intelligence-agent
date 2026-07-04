@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 09 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS will have as many AI agents as human employees in 3 years: Chairman Chandrasekaran - The Hindu
+
+Link:
+https://news.google.com/rss/articles/CBMiwgFBVV95cUxNWGZSS1pNTXhrSU5zcXREaWJTUUZaUFd3Mk5MR2d1aV8zNGN6WXBDQWhPRURMTUFReDZUaDlLVGxSemhXUTdJTk1Ha2l2R3VqZzI4ZHFmeURROTZITVF2TDZGNW45RjIxYkNRXzdEcVhYM285TGg2bm9YSVpVVmc2M3lmRWxlZkNfckxCQnVreGlYR0c0ZkhkLUthaExrdXUzdXVnSXBiUWxTTVQ1cm9veXktUkU1VThXaW5LNFV1WFJVZ9IByAFBVV95cUxOS2s0MGV4aFpUcG1LXzc4S3ZMZWlYcmlyZC1KeVIzTGIzTnBmSkNxcmxYU29nc0FjYzFSS29qOVlza2NwemgzQUZNYWNDZWQ5Y3huR0lsSzFuQUJPOUVLSkFXQTBZUVdpbC0wU1U2T1ljTDNsUWFJZUJISlFmdnplZEdUV0ZVTDZ4c0JZRFlOekpJdmtodGhzQXNHaDRfTFctNFRIcjN2aUd6TUk5Q1VxN29INVNIbXZnajBaY2JEUkgwdWxGQmY2OQ?oc=5

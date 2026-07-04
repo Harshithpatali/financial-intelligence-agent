@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 23 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# IT index falls 2% amid AI worries; TCS, Wipro, Infosys lead losses - Moneycontrol.com
+
+Link:
+https://news.google.com/rss/articles/CBMixgFBVV95cUxOLU9oQkVwSVM4X050S0RJcEhZV21CaTJhWDJLNlFTX0pna01BTVppaVpYWS1PR1diSS10cm44S1FGdG1XTENzS0Z6SW85VE0yQ0JFTlN5Yks5a1pDcGQwaFJicktZdVZSdlhGdHFQLWktUkdYTzhMc2JIRVZycmhqLWQ4V1p5Qk1Fd01GVzBnUXhIVGZobGFnYWRieEdlVHdJRk5xLWgxVndlOHExVnQxSW4xMzI2MnJTZ2RLWC1BMGlwYW5kU0HSAcsBQVVfeXFMTWlQbGFVRU1mMXktcU1TTjl2ak82XzRZUzlJTnBkeFltZXZuTGMxTWpSaGxGallERm1fbXhNaldwYzhod25jRTl5WkZra0xzUUtndHpWUkVRM3ZQSl9zMFd5SVJGYnVuV2tUcEdveWN6eGMyVnBjdjZkc0d2UUpmOVZ3TFpObGR6LTB3WDNab0dBUE9PR3Z3VE43U1Mzd3cxMGsweS1rOFhqMDhFRDJnbk5rbm82SUR5U2Y1OEszQ2lyMS1YV0pJY2ZTS28?oc=5

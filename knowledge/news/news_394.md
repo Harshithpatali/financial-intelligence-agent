@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 11 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS, Anthropic partner to scale enterprise Al; to equip 50,000 employees with Claude - DT Next
+
+Link:
+https://news.google.com/rss/articles/CBMiwgFBVV95cUxNSWh6ODBmaHpyZjlxTE0zRXU4emtLNnpnOXZ3MG16dEdiNEI3MThYaTRlVzdMMmtkcnNsMkhkcGFRekxMY002a2VzNW85UDlyOXVzSmRDRWZ0OEJTWmVBOWwwdFNQQnE1UXp6WGt6enpTNktvR1FpdlJxaUN0QVhOQUxtRGJVSW5ta21zN2JGeHgzMGp4MXlGcVFnLUJZYXo5Nlp1dEVGdGVuS0E2UERzd04zY0hNM1NXaXRhSC1EV1ptd9IBzwFBVV95cUxQVzlBcVBmb1huMEdqU044TkpxbGNqc18teWI4NjBtbUlaRVpOb0JvaDNYazJRdU1ZQXl6bnRtZnQ4RFNhSkR2VHNjMXRlSkFhNWtIN1BBZjBfNGVtQnRQRXZEeVRoSy1HMjlxVkxnRV9QRlR2M3Q2VkstQ3BYNm4zNktQQlR3VkExV0EweElxa1lXUU9iM0M5VmtaOXRRQTBsN21zTEttNy1DNGJ6dF9BbnFEMHVQYlBMdGM2LXVsMk00ZWRuUGtYNFNGSEZlMU0?oc=5

@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 09 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS chairman says AI agents could match company's human workforce in three years - The New Indian Express
+
+Link:
+https://news.google.com/rss/articles/CBMizgFBVV95cUxPUDZZWmxXUVdfUVc0WldYdVlNNXB2c0dCNmN1OGxSWlJOVm5qSWxtcTBaMDN2TXdQNHRNQXMyYkFkd2k4VDM3YzhvbHl3U0tCRW9feF9hank2UFg1eW8xeGNDR3h1SlNyTnJzcDFMYnpkVEdpX1hwZTR1cUZud255OUZ5dzdfSDdoOU5tYTlkZnBvT0pfcll4Vkt2NHVBakZ3aXZkUVpSRnRiZmNlbFBUSjZPNHVsQXBiRndWTFViQzg5b1drczh3dmw2OUgwQdIB2wFBVV95cUxPaUMxYk9DZWJOZlozUkI1MXhuaWptZzlvZUFXa3FfaXhyQTNBbWw3YVZFSzc2cmZNeHdzR2x2ZlM3MV96Zk5WRUFQRy1BUHFySm9meWJZY2puOXNfN2w3bnNRMkcyUENKX2RXRE50ZnRaM1VUVkVyZkhLbE9qdDJDWGg0Y2xZTWRyLUk4ZE03RUpxVGlGMjdscU9hdmxRdS00eVNmRmNaRTczbV80M290bF9naUhIcmhUUm9JUFJkcjFYM084OW5waFh3NW5FbzRUMGQ4WUw2dGh6c3c?oc=5

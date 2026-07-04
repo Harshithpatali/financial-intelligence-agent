@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Mon, 08 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS wins multimillion-euro deal from Canada Life - The Hindu
+
+Link:
+https://news.google.com/rss/articles/CBMipAFBVV95cUxNSmJET3hBN2Nlc2RpcFVRY0pkcjdjdjdQejlHeXNNY3YybFJmVmp2V0pCQ281RjRIM2wxUTJXRk1ZaHF3NXV5bXRCbDVBMldaNk10SWhneXdXRjdYUVNuN3B5UWFzaFF6X1FyT29BUW0zak9vMzdsc2tEN3hDa2RnYi1NOG9WM3ZFcEMxVmdjNzV3QW1xUW4zVHFteEFhM1hxXzJORtIBqwFBVV95cUxPREQtaUxaWXdrT242cjBwX0lpRUFFcjhoLXMtNXlEX200ek02bnMtazdwT1A2aDVHcDY3bm5UWVE2VkZFNllKNmRzTVZCZXVHVzhJcVRIUEh1amtyVkVnS0ZuR3hST2V0MlRxRmtMTGZWRGdUNDdtRExfSlVuTHpUYVlWR2VoN3lrTEhoTjlUVlZERmlULWQxQjlMMDlKdGx6NDFMaFhKQmxUYTQ?oc=5

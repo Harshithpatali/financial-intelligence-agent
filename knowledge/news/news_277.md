@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 11 Dec 2025 08:00:00 GMT
+source: Google News
+---
+
+# AI-driven growth of TCS makes its M&A strategy more aggressive - Business Standard
+
+Link:
+https://news.google.com/rss/articles/CBMiwgFBVV95cUxNd3dZYzlwVDVXdkNkbjB2WXJEMFZBNENoVVcxRGo2X21ScWJ5TkFEVDhZQzV1QlpBeHVoa3psREJOOTZ2OW5kZ0t6Yjk0SlpGUjJHRHNrSnNTcHNlOUxOcnV1clhCeVJxMlhVRlkxbkVsOGd1UFphdFJWb3U2RWlvaEpRWUpuRXBEWXpVbktwNXZQME1qUEt0QjFJSUlWQm1PcWlCX0JTZFZqWWw5SWtHM0lkVFktajhHRGFsaFdGS1JsUdIBxwFBVV95cUxPWlJiaEtmV2UwSm82dUZlV0piSlAwSzVaZFNGRktDRXE1MVllamxZU0RoblZUa1pMU29KaFFtVFY3MjVxOHdkeVJGNHZmSElub3dFYllEUXdIeXp6NDd6Z1VGTkZ2Ym44MnFQM3lLOTZhcGtnQnBjUjlUcVJmbXJCeVRuVWdWNGZGYml4Vk9Sc3dpbHdNN2YtekZ1M0Vob0tJSjMtUnRIQldyUGgxRngtalZxUHBHTWw5M3lUNkp3UmlBQjNDQi1Z?oc=5

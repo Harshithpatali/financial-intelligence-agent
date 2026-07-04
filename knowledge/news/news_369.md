@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 17 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS inks multi-year partnership with Norway-based Elopak ASA to transform its IT operations - CNBC TV18
+
+Link:
+https://news.google.com/rss/articles/CBMiwAFBVV95cUxNY2dEN2FSX3JHZDR1TGNEdUctTEdsTzRSSlptb3gweFhJVVlhcnkwSVdobjZ1Vnc0OVVKdEl1MjJ3Z0ltVGhUaTRUeERUS3hhcndndTR4TmlXaFRGREwxTThnNksxWVFSZUxWVE13V3Zkd2NucklHbmNHWmVBbnk1S2xlM21vZnY1bjJCX09yN0pBWkY5Vm5uWUVRdFJKeE80cm1Bc3hrbUJmTkZBRDlsQkx5X2V1YjhPVkRFYVJEMzDSAcYBQVVfeXFMT2xHdW9HbnotU0VHNjMwWUlWdmZaanl5UmtJTVFPbmNXQ01zS0hzVTBqb1ctYUZmZWIya19tQXBTRXRXZmY3dGlBTThaVVdGQmROTFZvVnA5U0Nob2ZKQXlhNWlSRDJfQmpXZWdSeUcwUVVOVXlDU2xkX2pqdkRzR05qSXlZVWU5b0l1UkE1QnNmWnZPRXRkWm5VTVYtZ0FtRWptN2ZxeGlmRmlrbVZlajN4NE1HMWtQSWVmRWQ2V2Q2WUlTODJ3?oc=5

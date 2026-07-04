@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Sun, 14 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS and Anthropic forge global AI alliance to scale enterprise deployment of Claude - Indian Chemical News
+
+Link:
+https://news.google.com/rss/articles/CBMi0wFBVV95cUxPcW5VZVJyZnNqNDFzRzFRdkpPSnZpd3BhaUc5VE1TTVh0TDRZYVRkeTdiX2NmbTdHcm9OWTlrWnZXQ19SbklrZG56N0ZQRm9mOTBMZThFX1otdGl2MzBRSE1XOWp0WDhlNmQ1cFE0cVA4ZlphMWJYY0RZYzFDWm5KbWJRQ0VHNTJPMlhEZGV2Z1YxUDNDRDFvUXBzNVVESkQzczVrZVUySGtpM0JMVURhVERDb1Ayd20tMVM2U1VUQVVqdk1BV2pCSjZsb0w1WENwbzAw0gHaAUFVX3lxTFBsb2RMMnlGQmdTWDdWXzNYYTQ0UWw1enAyQkt2NEFYUzFpbWI2MVFmRnM5TDh0dU1ZcTZfSk9oWmt4YXJVajQ3Mjg2cWhBUVNOb2VUczUtcUtJYm9UbnAxVzc2UkxwMi1KWEk1YjF6djcxOWtBajJYYi0tcExjcmhPeUhPdHRmQnlNbzlFbmU1R1ZKT3p4a1VPSXgxaVNoVUJCQXlmU1NZaGJwZVlwZkJYaFFiSlUxdjhIWEZtMWZWVHhGMU94RkMxZ3JXWHIyUnM3TEVGRURxZmF3?oc=5

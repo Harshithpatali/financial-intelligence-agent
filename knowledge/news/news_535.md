@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 02 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# CBSE's Rs 384-crore OSM deal: How Coempt beat TCS by 2 points and a 60% lower bid - India Today
+
+Link:
+https://news.google.com/rss/articles/CBMitgFBVV95cUxNeFFYb3lYbWxzaUVub0cxaktnS1VfaVVPdTBocko5Y3poMWg5OS1NbHVSVG5mei04UTZ4bFc5NHVCd1RHMENHQnNtbnV4NmdydHp6MnFaVl9xa0FmdzZjdzZRdmNfazJfYXUzay1FVlFnSmxqYXJHMjNEQS1CY0dsb3hnbU5OV1RXYkVXdmd6TlIxU3FVTEJ4YXRGY29JUDZXVmJEN2dyYWtvVDdBeTl5Z1RkTEM5QdIBuwFBVV95cUxPd1VvNUVBaTJsOFY2Z19hNEp2Sm1PUFIyMWFCU0VaS2d2djF4RTRMZnpOczdqbjZaQTFiOTNGRWpPUzQxZEVQNmh4eFI2N0hJS2toanlUTC1lUFFGZDBTamp6TWlfUGdaWlpfaWNSSE5GaHVuRHQ0ZGhnemZFSUpWczNiTkV1NWNqV2ZhOWFPeElKTjhvU0pKMnl4bzY4OFRid1ZCYld5eXBaN05INzJURXFPS0gyaGcyNXNz?oc=5

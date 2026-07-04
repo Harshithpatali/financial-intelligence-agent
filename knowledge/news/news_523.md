@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 27 May 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS To Modernise SKF's IT Infrastructure In Multi-Year Deal - Rediff
+
+Link:
+https://news.google.com/rss/articles/CBMimAFBVV95cUxQX2hCR1ZnWk4wVHFhR2hpcVVvM2x4WU1tMkxMMGY0Z0Uwb0RjdlhJcDR5dlY3Q1p3eU9OODlINUt0VGwyS2Ffb21oSFBOTkRrbnlKNFVManY4QlhvamZ0ZEN3d3d1RWZsb0VGczdnejhUcnIxQ1RoNjdHcTBfUUhsMXFpSWZKWG9kVkdQcFZyYmlwSHh0U1kxY9IBmwFBVV95cUxPM2NGamFYQ1ZwVF9DRks0ejRLYTdiMXU3QmN6RTJQTXF2TU9ieHhleVRtSzdiWkMyQlQ4WmlkSGNqUmR4OFRKRmZTQkdJZXpqaDdDckh5SFRtZ0RBcjJ1MGlFa1hOM3hWekYxQ3dibVhZMFhTdVRuX0xETVZIN2FnRzlfNTF1Y1dKVUUwOGMxc3k4cjRXRzM2Tk1Baw?oc=5

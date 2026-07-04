@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 02 Jul 2026 06:39:36 GMT
+source: Google News
+---
+
+# TCS recruits over 1,500 engineering students from KL University amid AI-led hiring shift - Storyboard18
+
+Link:
+https://news.google.com/rss/articles/CBMixAFBVV95cUxOV0FBVU9ISlJiZDlNNEZpcW1LZ29CV1hpSGprYlRpQ2R1Z2hqdUZZNmVjZG1HOE51dWxHUU9CNXB5dnJSamZmbWRzWG4wcnBNVFNwTWdOb1lSU0hIbVBxSHVWSlRHUlpRbDY4SVozQmpYODEzU3FnVFRBUEhTRm50bHVlRHJlcTZpRndxaU83U2JZNll1TVN1NUxGTy1ZNl9Cd2x6eXdvR2Z0S2UtRlhiZzd4YTluaHMzak10aUgzSTh4MVhP0gHKAUFVX3lxTE94TVNOQjEwNXVlX2lzbk5iclFSbXMyVkRZUE1CbjBQcWt5czVXdUxsZFpKU1RxdXlyV0FvNUsxd1UwVlNGSnpfckU4RlNNTHQ2NXlVLUVXcFhZeVN4WTdxSjdYeEdVTGp3LUFkcWQ4M2dIbGZHbWpOc0E3eHFwRl8zUkNDcEE4eFBDazVla1l5LUw5aENKcDc5ZGRYeFFjZ0hJbm5acmtBU18zSDZzc0lrWDFLbVBFZEhoWWlhelJtVm5UcWlIVnpVZnc?oc=5

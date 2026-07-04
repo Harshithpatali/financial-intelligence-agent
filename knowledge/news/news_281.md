@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 09 Oct 2025 07:00:00 GMT
+source: Google News
+---
+
+# TCS acquires US-based ListEngage for ₹646 crore - BusinessLine
+
+Link:
+https://news.google.com/rss/articles/CBMiswFBVV95cUxPRmh0eUJ2SW8wZk9kMXRQNW5iVjRvRWdwZjNzU2h0WE1CTG5kQS1CX0d4LXlOQkdzbDkwM2dpUnAxQm5saXd1STl6REh5bXpfcXlqT0g0UVhRNGdmVXNDRmdRX25SeEpsdXVZWGtDWk8yOW5WdHNycVctVEZKdGtXemxBQi14b3VnWkF0ekpjMm1LR29ZS3JoTHVFNUtBak01QlRYY0JTZHMwLWd5RDFGOHpMTdIBugFBVV95cUxQcjd4cmN6RjFJMTkwYldGeUp4RGhkYzhnRk8xMVFEZXd5Y0UtN1E1VFdWenpiWWlBei01VmlVMVhNOW80UXl0ZTBfTXRGOFY4UzRVc1NZcmFnYkZjUkl6Wk9fTF9nenVMa3pCMGktMjhtN24wckM3eV9BbkxBRVFycEI5cHRvVFVyRk1FVllTdHpReFRKdC1jUWFXUGdTcjZ3WnI0SXUyR2w3U1BWMi1VUU5VQTBVNmdUSmc?oc=5

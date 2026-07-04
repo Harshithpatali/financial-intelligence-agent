@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 01 Jul 2026 07:52:02 GMT
+source: Google News
+---
+
+# Infosys, TCS, Wipro face near-term AI, macro headwinds: Nomura - Moneycontrol.com
+
+Link:
+https://news.google.com/rss/articles/CBMiwAFBVV95cUxQeWp2WVVoam5aR0dYS2JtYWp6b2tkdzRyb1ZCMUpaVTlORGpTNmRXNy1hQjg3OERiMHZLYVphODg4ZWVaSDh1TTUwN2pBWjVIejM0SWZZQ2VhNE9rRWZFRWFBcG9tdFl4UTJQOWptV25fZ0d4Q2xjcEtTcksyOHhiUzdXcjN5Yjkzcld0cWMta2xMcTcxY1E0dzZ6bjJFSnVmN05XZWQ1ellFMzdFb1htRktQNUpMWXlCSkdqeEktWVHSAcYBQVVfeXFMUGw1MzkzSVNhTXdxeHdoWG51dHM5X29NTFNISWZTdUJJaWlaWnVRTGpJNWVkWXF3SmpNZ0QxdTFwYk1UeDE3TzMtOV94OTgtLVItX1hWSHVmSzl6YldKM0pkcjZJbjRnblZaU0VfRGJrU1VpZmtaaDQ1WEtWalEtZTNqUnpwakIxdmd1T3RNbW9tNkd6SEZ5cm14bHA4VDk0Uml3TGRjRXE2VFFSWUFmS1FmdlhQLVUwN2VVYTBfV0VNTEpNZ2Z3?oc=5

@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 17 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS partners with Tottenham Hotspur to accelerate digital transformation - Storyboard18
+
+Link:
+https://news.google.com/rss/articles/CBMixwFBVV95cUxNaTZwY0hZcjAwcG45R3ZycG1jVEdJYVVSeWVlb21wdWRGU1BCdUVKSzQ4RmtXcl9Ed0VBMVUwUkJYQXc1TXJrUkJPeThPUENEX1ZzT3dKRWxYSUc3XzUxVFBIS3lwQXhqZ2xFT1dSSndBNEU2T1FacVp2QlUteWJVb1pFMVl3MDRTR1RLYTUyLTJ5WmVMNEh3alh0cElJRnlVcXRiQ0djaHk1REJJQWkxc2FNQmJGVnJtbjFXdXRqMTFhYzJxUXpB0gHMAUFVX3lxTE5xLXU5ejNfTjU0Rk42bzROM1U3U0lReENjZFRSbWFvTzJOYkloSlAxUjlCY2lteXZpWEM0UVJsR0M1R2g2QUpaazVDbjlIelY4MUFOUmRubm9tSS1XTURxeVNPNXdDcGRndzM5S0p3Z19kTjYwREh6WDBQSW05amdSWjRnSjNqYk1TQWZ5dUxnQVBsVC1mY1lkel9hWl92ekxCQ0t4ZUk1eEMyQjhLOW9UQXM3TXd3T3RsODhuQXozc2hqSEFadGpNczdBcw?oc=5

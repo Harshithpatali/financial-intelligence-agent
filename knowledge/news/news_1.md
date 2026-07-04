@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 02 Jul 2026 04:00:56 GMT
+source: Google News
+---
+
+# Nifty IT jumps 4.6% after four-day slide; Infosys, Tech Mahindra, TCS lead rebound despite mixed global... - Moneycontrol.com
+
+Link:
+https://news.google.com/rss/articles/CBMi-gFBVV95cUxNZmdLcVIyMElCcWJQbHJBWnREX3kxcWJ0YVFaN2RUeGpaTy1GM3pRMWZoLUp0cUlQQjFuQjlfb0d0T21vbDlHTHhaZ0M3LUJ4SUNyb1FSUU5saFNINDVZbGxCNENXR1lNdHBFTTFuckRnYzh3bW5ub2JmbnRDeTE0MElFaDhCUTlaMWhSM3YwVHpsSW85bm9ZNWJkZi1NNVc3NmkycE1FV3hyajBPZ01qWjZIeWptc1JuQlNnUlotWm9MdGREaXVQTUZxel9JWEg5X1dHblNhZVhGemt5STV5amhDX21wbmE1cFhvb1A5NTh3alJsUmdsVWFR0gH_AUFVX3lxTE50ZHF0STJVeG5fV3JaNTYtMzNSdWVNcUFPMnZHMno5UEoxUmpBZFdCWW1INEw3c2ozcGlBWWs3Y0taWlR5c2pEa3lVelRqczc0WGNDbzlUSjNKV2FXSE1vcmNPdmRlS3VzR29wdjFWOHNoMnhTRGx6TE9HV28yb01SeVk2ZDhFSHR5Tkh6UEhhckxPb08xNjdZemYyZ3VJTE5BQWZUUFNqS2tvWk5OcXhuV1ZVX0p3Vjd0NmZLbTdmTkFIUk03UWh2MVRBZkxnTEZja0dVR2M0UGRuZUlCelNRd3NKWVB6Z2JaMXB5S0xpYXZYdnNjUkVBSjhPN2s1Zw?oc=5

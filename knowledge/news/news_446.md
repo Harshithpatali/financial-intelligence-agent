@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 25 Feb 2026 08:00:00 GMT
+source: Google News
+---
+
+# TCS Urges Staff To Use AI Despite Risk To Revenue: CEO - NDTV
+
+Link:
+https://news.google.com/rss/articles/CBMimgFBVV95cUxQNVlSdVRfb1B3QjlpQ0I4R1d0am41UWd4TklTYWdfQ3JlOXhzcDR1NHdWQ010SjdCVVFwYzVIbEdzbDFJQVlrVEozQ3RKX1dmb0VYM0xqaV8zdi1FQUNJcm4zUE9RWFVqUVdaSE5xUDZ2NUF5UlE3UUZkY3d0Y1cwMXZ5X1RIYjJqSEFYTnNnUFY1cDYyRlhxSDZn0gGiAUFVX3lxTFBuOWVXZ21aMFp3cFI1MmNRd3EzTjFOOGVrUmJLdVJDdTVmM2xLTmp6cWlranl6R1ZpalBfMnYtdHNIZUZPM2lqRDFjUmEyaDRwZlNsY3RBanhyWDdPYlNhbUd4NFNHbkhQYVB1cnp5aUNfYmQtZnp5UHU3cFdYZzhHVDE5elAyOVlueW5HRVVMbk9weWpVNXRqRlQza1ZULXg2QQ?oc=5

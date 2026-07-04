@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 02 Jul 2026 06:15:19 GMT
+source: Google News
+---
+
+# Nifty IT jumps over 4%; Infosys, TCS shares surge up to 5%. Should you buy IT stocks at this juncture? - livemint.com
+
+Link:
+https://news.google.com/rss/articles/CBMi-gFBVV95cUxQaUo0LTl2SXAwbGk3aC1mdDZxUXUyWXVTWGVYUnkyVllMcTlqdFdpdEdxenB6N2s1N2pBTF93M1dfLUc3NkpaUnhRdUZRdThveG0zbG5CTEdMenh0Z3c2dDEyMFFiWG5iRXppT2tOanlraTNTbm1zSUxRLXlrWDR6eDJabXJVOU03dWRNeUEzM0d5VW9hYTFTdnBzcy0xRTBsR3JxSFRaSTR0amRVeDRMZUpfRDVjY1ZialpGaWFEMEs4SlFFcXlsXzdXUkNJdG5VTDc2ZTNWVWxFRWgzeGFCaEtIaE53enpobmVTdkUtY1gwdWI0YU9OdnBB0gH_AUFVX3lxTFBlaDZTOEF2bTNpLXVuNXUwb3ZQX3FVMGpoNWpFbG9jQlBsRVdGOUN6UnYta0JXbUVvNUVLeUNxUU1ObE13MkpwRF8zeUM3MDREU1JxQ0UzMGluRkJWY2hKeFNQWWRTSUE1eFUwbW93T0ZGd1lMLUdSVVF1d2ZyYzlZcXh0NFBwSlAwMkduSUgyaXZMeUZCQlhjR1Q1YU9zODIzV1lkU1NnWG9fYzkzZ29xYWdBcmM4Y2V0elV0dTU0aUQ2SmI2RzN2YUJ6MEdVeWtnLU5iMjNhWkNiVkhxb2F3aVFWSlpKUVR4eHRSZ0JVT2l6MVdHWEhDTkdjYmhodw?oc=5

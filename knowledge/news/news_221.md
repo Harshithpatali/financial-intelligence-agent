@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 10 Dec 2025 08:00:00 GMT
+source: Google News
+---
+
+# TCS signs pact to buy Coastal Cloud for $700 million in all-cash deal - Business Standard
+
+Link:
+https://news.google.com/rss/articles/CBMixAFBVV95cUxOMnhmUjVUUVREeERHTGFNT2h4T2VGVGJGaFFSZktVaWtCa21aQ2FleVBSSEhPUDFURHc0cE1RS0R1LVVWczJjYjI4dXBnZEVmbXRxLWxxRnZ0X3dySU9KU3hscVREalJFT1o0RnVFRmFqZnNzLWlwZzFaaDBybTFiYW15THEzeGpLVEc1bkRWcFhYdEdqcFUtX0xta1A1RU5uc01OQ2hqajIzU0h3SXh0TEN2RWtKTy1jR0tXZUJmWF8ySFg40gHKAUFVX3lxTFBuQjFnaDhTcVU0elFva0hQSGJVcXBKMVF0c3VCdTExamRZbW01MTZ0bV80Zk92c3JkMFNXX2lGUkhjcWsxZmd6NXJacmVaNXpuOS1UMGxJZHd4OVFNems2LWpYUmItTzBZQ3Rlb24tbGRCUWF6ZVNScVhWRlRQUkg3NnlqX092cGpCeDF6bUc0ajZwTHphRTlmb3ZLeHFBelF4cWJKMEFDQnRkMndXSEg2ZXBhSzV0TllEVm9kSXpMY3JBMWZnbWlFdWc?oc=5

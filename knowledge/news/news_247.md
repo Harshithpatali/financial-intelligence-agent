@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Fri, 19 Dec 2025 08:00:00 GMT
+source: Google News
+---
+
+# TCS to acquire Salesforce consultancy Coastal Cloud in $700-million deal - Consulting.us
+
+Link:
+https://news.google.com/rss/articles/CBMirAFBVV95cUxPWW00OHJfdjQteTR1MFlRUWpGUFc5cllvUmJMcWFRQTlWdGI1c0RUdFdPZTlMamdhVjE5RUFwRGRvcXllMHhoWkF0VF93MWNNUWhTbGVnN3BST0xsbFp6dHpjajhzZjQzSE9qQW1zZEdUcERqYjNLdEdZUlR1cW1BVmVrV09QQmVnOU5jS0V5ZDQ5d2hkLUxHTlJ5RlQ5TERyRkZMTDdqUGVSeDJ60gGyAUFVX3lxTE5xcUlOT2h2cnllWm43RmoxV2tISTA4NTQ1RVJkVmFIOHlRd3pkR2pIQkR6X1NGSk5kVzNwbkJHM01YaEJKUUxtY21YN3E5Ui1nbUxQT21fR05mdFQ4NV9YQU0xZkV5WkVzbnFDQTBtQXloWTg4VzY3SDYzSTBDYmFTcE1vVHRfSW9UM2NFdE5SUDBEUG12QlpxNzB0VmlQeDZmRkZmeFpIVjdHcW9HaGpLc1E?oc=5

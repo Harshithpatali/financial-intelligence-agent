@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Sun, 01 Jun 2025 07:00:00 GMT
+source: Google News
+---
+
+# In case against Gujarat Samachar publisher & editor, ED cites ‘illegal acquisition’ of NTPC, TCS shares - ThePrint
+
+Link:
+https://news.google.com/rss/articles/CBMizAFBVV95cUxNZDh2c1VLRDdMSXJjbEVScnJ1b29qRDM5dEQ2NC1BU3ltbno3aU5mcUxBLUQxNmd1RW1QSGRZRk8yM2hIdnhkVTZGYzJpdGs1enY4NnZKRjVaMUEzZVNHemxpdVRlbmpmbHdfcjluZ1k5aC1OVVBBNmVmODZLQ3IwVjliX3JKU1h0LWZVaEw3bnlqelFaXzNRMXZtNmdXX1ZjRlNQX1YyUlNJR3d0dXBLVENmSTAzYUYxdVBkRXNxQVE2RUJHVlNmNUNHU0bSAdIBQVVfeXFMUEVzLWQwMnVqclhJdkxrbDRnWU9BbzFtTk9SWnVSbC1BeDVDNUM0OUFieGJaUlZMMjk3MFBoMG9jZGlSRkFpeFI1dWN0TXBMb1JLT0djSUlhaUdtQ3VZd2VqSWptVlZtdWFjS2xpbUt5eDBXU3FrQ01JUlNLd2MzMzY5Y3pnRDVURlRlbE1mcWVkU01tVldlQkg4UGZEdGx6ZU1VMzU3WkZmWE5Mb0ZWRFBRb0UxVlJHaXBqbWc5QzJfRWktYzBFZEszVkl4TjU4R1F3?oc=5

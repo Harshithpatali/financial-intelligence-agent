@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 28 May 2026 07:00:00 GMT
+source: Google News
+---
+
+# Tata Consultancy Services inks multi-year AI transformation deal with SKF - Business Standard
+
+Link:
+https://news.google.com/rss/articles/CBMisAFBVV95cUxNZnFnX0kxRjhMNmlHaHlqNkx3WVYyOHp1QmZCX3dyNjNPTllMa1Q2YUphT0pLdUN6UV8zblVtd0FkY3V0LXFOTnVFX3prS1ppQlpxZ2J1WkVYOTZMNVJBQkhNWmI2Skc0dnRxTF83OGlkcXFEaGlkbUlUN3o5aG53Y0h6eWtLdlFscjlxbWFseEx3eTFabktza3VJZndiTk9sckJNWHpYc3kxLXNtQXFiM9IBtgFBVV95cUxOV2ZYaF94dWVyem9LMTR5d2RUMFFKLUFoQWxFbUhZM3RYNGRhWXJrV18ta3hZRU5lOUlrcnVYOVhtckd3R2ZnV0h1ZDJaY0d0Tkt3alY4cVVTekFTZ1FzVTlveVBWYVJlQTJ1cjBtTUdyck1hVWVFN28yRGl0c3EyNUlxWHZRNUlkSWhVMXdpTm5mcGV4aEZZWU5SdC1MWjhIOWItS1NrZldWQTcwczdBVVpaaVZHQQ?oc=5

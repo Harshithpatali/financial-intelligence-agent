@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 11 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS ties up with Anthropic for AI adoption - The Indian Express
+
+Link:
+https://news.google.com/rss/articles/CBMimwFBVV95cUxNWUowMnJNc2w1R0QzNFIzeHkyLWlNZ09TRlByOWI1dUVDWUw4T0liLWVsVHRYQmltQVBzRjN4NWNhczBUZkVlaVRFejl0S2gwZklvb0NBa3pLS3dqWXVrM25sSFVxeUlOODJrTGZXOXRORnZxSHVzU0pMaDY4am81YW5NS0phM1JMNG53TnU4MldOd1MwdjRBeE9pb9IBogFBVV95cUxPRVRITFJFUUdVQjNmTFVGclNVWHpTaVFmclBiTDJQaFRhYTVQdXdGMTQ3cmlCWmJmQ1psZU5vLXYyelNpZElZLURKNnRjNUxpSEZ1NFlfUFJrajRaUHc3ai1WRXc1a1pCWFF1bkxQUVRyU25OTXV2NTQxbGJTM0FvWU9TYU51WjEzUnlvbGdQWlVkWnBQT1BHVkd2cGplbm8tWXc?oc=5

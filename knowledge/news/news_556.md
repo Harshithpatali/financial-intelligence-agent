@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 27 May 2026 07:00:00 GMT
+source: Google News
+---
+
+# SKF Awards Global AI-Led Business Transformation Contract to TCS - Deccan Chronicle
+
+Link:
+https://news.google.com/rss/articles/CBMiswFBVV95cUxQZXVsMURsTGgyQmF5ZnFuNUx5Nk8xUk1ERm1TVXNZQmhVMEU1VnRXd3JoR2hDNm5RVkR5NEdxWDgyZ3dIblJ4SXdSaGlKT19sUGN5Q09zUTQxUGQwTFFZdTBoLUVvTUNoRXNVS25CVDZDenVndGxhZ1k1Yll6THhxNmNCa3p2VlRGUHNwRHNvNXozbWZ3alRGRWpGdjNmUHVMMmVNcnU3U2dscGFVMExvRExSQdIBuAFBVV95cUxOSDJwVEF2VmY2TV9pZmFUQWJCdnk2M1ZyTm1wTkstVUo2WGJSdm5TcTNwOEVBR3lySVJWdGd4eVI4QUhxQWU2NVdfNnRUamhTVzJXZmVlelIwdllMUU1uc0JOXzktajJkeWxnM05ZYmRtYXNzZ0JlMEtWNG9OYkp3d1ZuUndZSGJxR3lxMUR6SldnMDhUVHpxWTR5RVptRnRhbmllYTJYdFZxNjd5eHlLNkRuQWJHaFRu?oc=5

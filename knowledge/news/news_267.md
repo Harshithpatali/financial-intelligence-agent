@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Sun, 12 Apr 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS payouts to Tata Sons fall as acquisitions, AI push weigh on cash flows - livemint.com
+
+Link:
+https://news.google.com/rss/articles/CBMitAFBVV95cUxPVUpmRnJmT3VidHhtTnBjbndQT3BtRXNFMkVwZ1NLQzVsY0xxd0l5U2hLZ0hDMDhPV19ncjQ4clNMWU44RVA4TktyMk1OTTZ1aXJpcGFTQ3NrS3BPa0l4QVg2aG83aGFJZ05WMWpTeEZnTU8yb0NEOUZwQmdjTXU4bWs3MmRhZFpBZl9xX0dYYVlEeUx4dGZtZi1rekJEelpReXpxbmcxSEE2R05BOUZYVlZETjfSAboBQVVfeXFMT1MwMWd2MTRpc2xSWmdFOFdsbTJkY0MxZUdicWhnYkxzeFBaWlExZ2pKbW1DNU5ocTdtcUJuOXA5dGhfV2ZzT1VBUExyWldQdHRXMG1rQWZRaWVmZFRLQkVxeXlRUFdIUU1IUXVscWlZaEtoc18zNEZWXzJPTTVKaXVJalFSNGdqQTJtSkVSYTVWaHNUVnQ1TVRrVXByb2pBajdtcUt2TGJJRFpicGJIV2M3Vm9rNnhMVUtB?oc=5

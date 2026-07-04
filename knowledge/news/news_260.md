@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 14 Oct 2025 07:00:00 GMT
+source: Google News
+---
+
+# TCS, Google Cloud ink pact to integrate Gemini Enterprise for workforce and customers - livemint.com
+
+Link:
+https://news.google.com/rss/articles/CBMi0AFBVV95cUxObkF0QV9vSVhfU0FpYko5eGVyY2ZTbXcxRG0wbk1IWjhxT2Q3SURRS2dnZmRvMUlweDE4LTd2cFhMZTNFY2pUMUFZdmZUT2NQbnJNZmwwVWRpd284NV9COHQ2VjJlQ3FVZDJNQzFDS1hPN2JxU25uLXJuczRuMURETlBlaGVGLUpUaVNwOVhkbE1ySVhmYVBBU24tQWowdjdoWUViZjVRU2ZWSk9IWnVyazVheDFfdTN1ZV9NTVlCS1A1UGhPT3pEM2Nxa2VER1U30gHWAUFVX3lxTE11d0JzWlRTUzRZa3lyTEt2ZUJKYlhwdUUwOWtGRWhHdXI4S2wzbG5CNmdybXBFOWJVZzhKZDM4SURXQ0ItdEZVel9sQzMyRHAwOFpNZTljNEdiOE42di1GRzV5VURTUmpQTmNhd0xua0laS3ozWUxRTVZfejJzRVZTNmY5cktfWm1IMHBDSjNoejdzRGZnZnU3dHh4ZmRNa2RpdUxlLV9VUUVsSDhaZ2dKREJ3REQzVFNXdFdqWndOeDVnYnZjUnBLVnRUcE1DZzZtTkpZWnc?oc=5

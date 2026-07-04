@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+chromadb
+sentence-transformers
+langchain
+langchain-text-splitters
+groq
+tqdm
+numpy
+pandas

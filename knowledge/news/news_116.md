@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Sat, 13 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS, Oracle team up for AI data platform lab, centre of excellence in Kolkata's Salt Lake - Telegraph India
+
+Link:
+https://news.google.com/rss/articles/CBMi2wFBVV95cUxPQ00wVFdUWFkzcGZRUHR6Z185U01GV1QtanlnQjFMMVplbUViYm1fWm5DYmN3dU41Y05vTkw1S3FHX3pfMlV4b2ZyTXVET2pfaC1reUtJYUN2eVpKREgwSWJmNlRKdVpBM3ZJTkVIZWYta3lCVzYwVmNkcTVpb2JTelprd21UaXFkZGlUMm5Oa01YMU9OTmlncTNUeWwxRnRXenlGWC0zNmpjOUY5a0NJVkI4NlE3ZDdZVngzOWtGeG1hell4czZ4MVFLbkZOLUhEUmV4TEp0Sm1zNjTSAeABQVVfeXFMT3ZIa0hEMXhreGd4bkZuLUk2RnVsMzVackhWYVJmU0Z4THNGcU4zeDVrNWVINFNBdUtldlNpZ25vSUhiLVlCN0Nscm5ueFFtLUtOeHFGMmdORUljWExvMndra3NTMklZZ2FBaWpJTWtMOExqc2FaYnlFSWNtLVU0QnVkTFFFNVY1RDVXaDczcWVvSnR5aVhSZHJzVUVweWZ2bnZGbWM2Y1NXU3lxTXowbjF0NEFlYmVPcFRESUVGNEpiYTVzVmE0OWU2TWJheHFrbkZJcF9nZGt5ZFgzX1BuS1c?oc=5

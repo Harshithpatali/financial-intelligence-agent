@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Mon, 08 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS bags multi-million euro AI-led IT transformation deal from Canada Life - Business Today
+
+Link:
+https://news.google.com/rss/articles/CBMi1AFBVV95cUxOdmFObW9qN1UtVnRSdG5nVkVVMXhPbW1PYWkyR2dyYkR3bDNQMzVGUVk0MUpsTko0UG4zZ2o3SHNVRWkyUzRYdnUwR2UwbVNYS05nYVdtZWp5QklpYWdwclFuRV9xQ1hxQmk2aHNIaUVQSGV6SWJxOVg2UDJyanJxMk5qWnlrRjFKX0twTDVTVUtPdDd6ZzVQR2VmUU1YdkRMU0k3TXQ2UXE5bHVoWHAzWVNwdjV3czdoTDhyY3paM0ZzRnNkUzBhMUkwQlNiTnBaZVcyUNIB2gFBVV95cUxQZF91cXlfYlBCYTdXdlNXNUNvUVJ0T0sweVFLVlpFbWoxREZSaHMwalhYMEJyd1pPRlE1UjBPQUlZaWQ1SE9tWnZFYm9oeWtIN3JxYnhkQTdXbWVnZnF1eGxsMkNwRzVzWE9STGtPSmltdElEVVRIeGZ3TDNZNi1IUk5GSXJ3eHh3QkJpZ1R1M2NJWVZyejQ4NWEtMlJEUTB6a0F4MkIwWkhSb0pEcW9wRVUyLVdueGdJS0MtbmJlYUlzT1VDWnM2LXctQmdCWG5pS0o5NkZMZmxPdw?oc=5

@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Fri, 10 Apr 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS Q4 Results: Net profit grows 12% to ₹13,784 crore - BusinessLine
+
+Link:
+https://news.google.com/rss/articles/CBMirgFBVV95cUxPN3lmYXZyWk82Tks4Ump5Vjd3cFJfTlpqMEVsYnM0eDdSZjBvLUpKVDdZaVBPOFA3d1JtbVhuQXphdnd3WTNvNWVLUE1odTdyOFRhb1NOLS01Q2VsNnByWkpxQ3dvLXpTUE15MlVQTWZnYko3ekJWWVFLbmdERzJabGlqV20yWU1sUjl4eWpuak56dFFJY2RpY2xYbVZtNHVxXzFHOTJoRk1WNWV6dVHSAbQBQVVfeXFMTm5lYnBUcWg3RHBPNWdYTUZTZXowbzE1dmJnWS1ySDNtb19Vdkt5Z01meVEtTlk4dTc0aVA2ZEh5Rms2M2FrZEdmU3kxUldDSmR0RW5zcXVRbE5tUVNHcXczcks1dmpxaVdwYzE0SUJrVU1xZXlWTWxlMi1zekIwTW5NZUpFOF9xM0lZTUMycDlsT0x0bnhmajRqSFRNUTUyUFcxOExGVjJUMm02N3Q2dlVCUHlK?oc=5

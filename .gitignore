@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.env/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Chroma
+backend/chroma_db/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Models
+*.bin
+*.pt
+*.pth
+
+# Cache
+.cache/

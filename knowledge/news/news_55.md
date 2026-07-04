@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Sat, 20 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# Nashik Court Reserves Bail Order In TCS Sexual Harassment And Religious Conversion Case - LawBeat
+
+Link:
+https://news.google.com/rss/articles/CBMixgFBVV95cUxOckw1eWtxWXhwbFJ3eEhhUThPc0JlUlBlV0lVTC1JQ0E0QzBmTm45OG5xU0dtMkRWSUZST0ZoYzByS09sNFFSMGJRYWxfNzQxa29iU0dISzI4cVk0Q0V3Q1p1OC1qN0hIRDlkdVNhNlRZX2Z4clFIbE1lcGsycmU4SUl5bEY3NEhFNWVCcC01bElzMk5wb1FUdFJuZHlfMFdNNjA4WGtaSldPVmlTT083OEZoa216bEpPZ3VyelZFWXcxc2Q2LXfSAcsBQVVfeXFMT3ZxUF81d3BMOS1JbzdIWFFUaVJlS1E4QnpBZE5mLXVGa1l2T3pRY3ctSUZ6YzFzdjlTN0VpNzVPaF9nZDV3Z201RkUwLWVQLWZnd3lXTkE2Mm5HbUw2bEpxRTcwY0t5S2NlZXlDejdiY2hwcnhuZGdfb1BlQlFnU09TNUw4OGttN2treUdsRnROYWdRdVZaY0Z1VmtpQkVxaE1lb0xsVHBvS3NoeldvVklFV3UxMGxacW9Dc2k0dWFfbG5EV2tSdmpaNGs?oc=5

@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 27 May 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS to modernise SKF’s global operations with AI-led platform - ETEnterpriseai.com
+
+Link:
+https://news.google.com/rss/articles/CBMi0wFBVV95cUxNOTE5RnZIamhsWDBpWDRLLTk3bEdwbmVqQ05rRDRjaG5MUmVnZVBQSmFhYzNSS3JrNXBleGNMa2FrUEhNSjl0TDdubXZsVWNqX256SFE4UHowU2ZxY09wSmV6TmxncEdISXNaSksyMkdLZlhYcVYyU0FyNndZNDNDVVJuaEhjWUx4Zlg2dnI5dzAyZUdGbVdGRk9YRTJlVnlkSlR4NDd2N1dvN0hQV3U4RUJKZ19JRWVRaFg3c1FYX0tkQU9UTU1kVmFRZG83NjFsbF9J0gHYAUFVX3lxTE9wb3c5c09iQ2RFWmZZMjl2RkVwRi1yeERraHFiUk5zcmk0NnhmU3lDSl9YN1hQTGl4RnpMMTJ4WG1PdXFGeTN2Zlg4azIxdUlkZHhZRTRVT21Ka0Q3V3FSM2VHVFRDaUtiM1laTktoUVljZmh5V3c0cjViS3J3bjh6Sk1WeVptQ056UE8wbnNkUEJYNWVhdWR4eEFFYm1GZDk1Y1hieWxrY3dqSEItVHVPWjh4dGpGR0loR0hnWWp6UEdleW00dFRKbjZUb3ZxcmMxN0FldGtqSg?oc=5

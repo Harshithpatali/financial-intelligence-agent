@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 09 Apr 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS profit jumps 12% on-year in Q4FY26, 28% sequentially - The Indian Express
+
+Link:
+https://news.google.com/rss/articles/CBMiqgFBVV95cUxPZURoV0RRckgwczJvcnZTWGo5bHFOeTBObjBheWpfYk9NTGNJSU1UVTdSMENTaFVxS09ac3p2eUJiMUk0djYxOEZpV0dGZEFjVDZraXhGQWl4dWU4d283ZnQzbEVkMkYyOWdrSTQyS2lRLWRrYlgxbHpqREpzT2hrTU9WSXpWM2xNbVR0bm9lMTR3bUR4ckE3cDEtTUhSSmF4ZU1LVjR5S3FZQdIBsAFBVV95cUxPTXZkZlRybkdHZ1VjRkFjbXdHUm5ydTJpZTVzbTRTM2h4SC04X0ticGdpbWY4WHpfQk5Ya3k4SkRPTUkzelNZaHJYWlBvZHBuRHYxVXVQOHNDbWxtSnBoQnQ3alFqMjdXOFVRMS1IUS1GM2FSQV8wMkdkX1lZYmJNUUNIb1ZzN0hpY2loVm10VHJjTGg5akU4bnhBajZnNF82TFdueHpfejhjb0VldHNnQw?oc=5

@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 27 Nov 2025 08:00:00 GMT
+source: Google News
+---
+
+# TCS signs 5-year deal with SAP to modernise cloud and AI operations - Business Standard
+
+Link:
+https://news.google.com/rss/articles/CBMirAFBVV95cUxOZUJXZzdjT2pNUUNYbDVnbUl6dEpLX09ueXdpUHE5WlFOUTN6ZWo0X3RFWWhoVDJxWVlnbk45WG1DRkdfbmw5YmZIYzYxbXNkN1BRcGtwOUVhQ1N3eDM5RGNvT05MZVNsbEtUbEZ1dGs1a0dyMC1ZaC1scXB5cy1MZHliaXRQLUdKbTR0c3RJb0s0dVF5RXRKWTZuQzRKY2V0REp4Wjd2TnFIa25G0gGyAUFVX3lxTE0xNk9QLUtsYVR1RGxVeWl4alg1QXphRUxyV1UxM1hUYXpSVzVvbmpZTmhOV3VacVB3d28wMHhkMEJnczIzRl8ySm95VjluRXJLM1RfMjRoSnljV2dlUkUza0lPUFVqVEJLXzBicHpubXNYMUp6NXdtUks0LW8yZUozdWNkWjR1SWktSXR3SnJMMlpwWW5JX2RzWUpjTXI1Uy1lbEExOTR6WGkzRUJXV053OGc?oc=5

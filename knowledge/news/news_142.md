@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Mon, 08 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS Deepens AI Push With New Canada Life Technology Partnership - outlookbusiness.com
+
+Link:
+https://news.google.com/rss/articles/CBMiqAFBVV95cUxPdWRiY1RUM0FoU25ZR2lOajFmbU8zNmJiREhYdDI4Ymt4aG9mZGJOZERta2ktY1I4RzJnLXBqN3FvWkE5R001V0ZFQTNCZFVBWk9DaFNjTmNRd21ibDhLX0NtSFhvMzhGbkRTYTB6TEIxbG53LVJsZWNsSVF4dTdGRmF2M3E4dHN0RXNmbHhNOUtuZWlKaVBfN1dhaUlQSXdQOGd2S0Y4NVDSAbYBQVVfeXFMTXc3ZXlWYmJYR01EVHF0aWNjYjVhN1U0cW9ZWDhkWmVtVHBwaEQ2UEJ1Rmc5UnNUYzRpSTN0aDc4dGI5aFZScG9JbWZXUTFaV1lfLV9TZmZDNXU5TWxxaXRxdkJlZkZaWlJiaWhxN0VSZklSY0lBN2I3cjZIUmNCUG5fVDFOczAyRzhna2xWWHhqZmttUmVHMURkRnR0cUdsajhiRGcxeW93YXhSQ182bThtd1BzTmc?oc=5

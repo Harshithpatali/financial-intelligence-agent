@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Wed, 10 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS says it will hire less people and use more AI agents in next 3 years: Story in 5 points - India Today
+
+Link:
+https://news.google.com/rss/articles/CBMixgFBVV95cUxPR1Fsd2tBOXZMaEd1bWFrWVdERXBKTHE3VlRLNDNFSWN0d0s3dy1NLWZMMWFhTHp3MTZyUUlPSzFjRGV2aW1aeGVvZTZiRExNMFRzWlNiM0dHM3FNVWNMX0hENDktX1VWdUQ4dGZrSEVyWjM1QXAyQWxDTklUTk84aml2Rk9XQlh4RVhFcUR0MmIxdkF4QjVHaUp0aFZCNklvUEdXVU1YVjZ0em8wekp3c3Y1bjhtWnlIYk1iRGdXaC1pVElUOUHSAcsBQVVfeXFMUG9RV2dtWnhCcmtuSjcxeEw3SndObXV2M1NudlBBOFA4dHdyd1JXeGpiTkNWb3o1bW5HeGppZGIxdDBDN0JPTHdFNW1waTZNWV93VGF0LU9Nem9udUZEZ1RJOWJDUk9ONk16UXhWbVpEaHlxY0Y1bUhDQTVscThOUzlzOW40eFZOX1Rmc19YWG5QdW5Md25HZ1dtTkJZemhreWtZNlFBYWI4VGM0YWpjNzNVZ2ZIcGdlNkNxU0xRYzZlTEkxd1pTLUlvNW8?oc=5

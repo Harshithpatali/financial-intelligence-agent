@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Mon, 29 Jun 2026 23:30:53 GMT
+source: Google News
+---
+
+# NSE set to become LIC’s fifth-largest equity holding, ahead of Infosys, TCS and HDFC Bank - Moneycontrol.com
+
+Link:
+https://news.google.com/rss/articles/CBMi5wFBVV95cUxQcVZPcEZIZm5lcWRwWmdFUEZrOXVzMzBJNWdhcWVzSDZIZWZPRDlhdXZTRWJScVYxODZ3WFZhQzJYcEJnR19Ca3pFdVlDdlVlNmxHQnJjcHVsUVpDektpcld6R053OHNPTmRSN2lkNGY0T1pwUnhaS2xnVjl1bUtPSWUtcDJic2RSOUJUa1M4aUU2bUJTNUtuQXlBbGtPLWs1ajU4aXlrX3p6TS1ra1Y0RUVjWjItV2FiMEJlQjJqWl94SlVfdC1NWnFZNEVCeHNjWkQ1emZWRzkxNklZc3hnQTRwMzRYUTDSAewBQVVfeXFMUG11bUVrRmttWm5xaFU3TWNvQjliNjhjblR1R3NybzJXcm5hWVVzODMtRm9HcGlpS3Q1VXRZZFlHN2xtYU1UMVloRU0wT2NaMUdHUmNwRzltalRieGN6Vm13MGlCb21SS3VIWEJzNDlXRVdjN29ZRXkxeWhlUHhZV3B2eXVHYlFVQi03bGRLQUdZUnFRSXRlYUc3WFVJYi1adVp5akFReTl5anNUaWh6bEdFaEtGclFRb285RFJOU0RDU0dwM2ZrcmhIa2t6SXJtYTEwT1hRSXpHME5xaUdxNUotVmNlUW9HaE8zeHU?oc=5

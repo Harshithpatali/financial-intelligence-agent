@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 08 Jan 2026 08:00:00 GMT
+source: Google News
+---
+
+# TCS Q3 earnings: Growth, AI investments among 5 factors to watch out for - Moneycontrol.com
+
+Link:
+https://news.google.com/rss/articles/CBMizAFBVV95cUxPLWlpdExwRXFlSG9LNmttSlBaSUU3SnFZcm9VS2hEdlhQaFhzNXQ3TjFESFBacUJPRVI3a05RSF96RmVLbm9MdjVpTTZKRkNuZzdKZm9CMjRoN2xWaVhzNERFQ0o2WmEtNGVmS0lSM2c4T2FmRlppckRNNzZqQ3F5RFVkWjI2ZGI1WGJFd1NsOWRQbDZHYnZCeHJCSnI1endTdlVueTVRN0xqN0RXWnVkSXJzcm5EWGlhWkx4OGNYUlZBbWoydnlKb1lFMUzSAdIBQVVfeXFMT2tWVnBDZjJ5dTVnZkwtYjhfakJ2S05zZnpJdEg5a0EwdWJ4eXBtSlQ5NU9yLWFueWFKN1I2Y3JWMUc1aFF5cW1sTnpWMjdpWWthZkxqSXFqcllMQUVjTllqVXpueWVvWjdWQUl0M2xyLUtYTXJBWGFQeDlXQWtSZEZ1dU9xdHU5YnQ4WTczYy04TldWd0gweGdCYndDbHFlMndlVVRkNElZa2pGZDQySTBZRVBmbUp4WTZLNzBzNm54ejZ3bGM5N19OVVFvcUxsS2ZB?oc=5

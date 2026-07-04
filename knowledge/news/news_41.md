@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 02 Jul 2026 05:10:44 GMT
+source: Google News
+---
+
+# Nifty IT index rebounds, up 4% after 4-day fall; Infy, TCS surge up to 5% - Business Standard
+
+Link:
+https://news.google.com/rss/articles/CBMi0AFBVV95cUxNa01NOE5nazlCS2xfdWt4NS1BdUhqY2NLbF9KRVhHeFFPbWpqN1E4VEt3cmlKdWtwRHc5ajNycE9qZFFBMnhDU01qM3NQTjF4UUIyVFFuUmRLd2dXMXp0a25GTXdXeWozMTZrYlJKTHlFWWdvcjk3NXhINXZ4RTRqYkh6MnpTOU1Yal9wdkdQY2ptM0pDYzgxY2wwQ0dXV2NNZDdNakMxeV9PYW1fc1otM0dpSUwwMnh0YVA3TU44VUFCLXJIVDVmVGdsdUdobmFW0gHWAUFVX3lxTE1Lc2ROSEx4LVhXbDktZUZTNWpHOVBGOVVqZFdEQWlCTmpYMm5icjhGUlpxSGhjYjAyQTlLNHh0WFpiMmZJU1cxU19PY3JJekw3WFo5M1hJcjBjYm95bDc2OUNseFB5UFotNDNndVVTNGRlaUNheEJGUjRKZzRZYVl2WWI2YlpfdVIyTThlTVYxV2l2bnpBZ3NhUVRmSWdhdDVTN1hSbTJrU3ZWYnhpZFF5ZS1aMkl4VVpkUWl3ekVqSU54YjI1TTNMX01RamQxcWg0LVhWY0E?oc=5

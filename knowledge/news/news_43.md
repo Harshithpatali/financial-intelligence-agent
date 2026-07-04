@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 11 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS to train 50,000 staff with Claude powered by Anthropic - The Hindu
+
+Link:
+https://news.google.com/rss/articles/CBMivAFBVV95cUxNSmUwM1VneE05UTRYZzhERmp6QWZwZnRHS081aktGTFRIR01uekphdlJzdDJXTDUxeENna19TOXdrMTRHSmV0OWkxc1Vob2NrajVQTVhObXZxVDVMbTJoT0RyQ2NEeFF1ejFOamlCRHRmajRmS0FycHFsUkxCMEdhZkpXb01scE03OHNtTUlxeVlzMU5WSkQzb1dqSW9LNXdIUUV1NEdhRlNwMEJxVWJTc0EwODgxX3ljUHJnVdIBwwFBVV95cUxNbFZCTWNBQ1lBZXZadjNuQmZYVUZaRC1naG5kUkl4ZlFLekdYQTgtVjN5ZHZycE1aQ0RUaE52Y1kxRnItRFNCLXFUeGJsTjRDTW16bzFuWGRkMUg0YkQxb1pPZ0pfcjctdzdrd28xMjJZdi0yWEJZZ1lfdEo4eXVfQWM4MTlhYzY4akxNbURJRXRSLS1yb3lXRjd6ZTJjZjJqc0hUZmRwODFTWERLS2NSQ3dOak9pZkhQUVhjV2ZmMGdQNU0?oc=5

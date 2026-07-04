@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 30 Jun 2026 10:34:41 GMT
+source: Google News
+---
+
+# TCS: Q4 2026 SaaS revenue up 17% YoY, recurring revenue at 58%, SaaS ARR $86.8M, net retention 106% - TradingView
+
+Link:
+https://news.google.com/rss/articles/CBMihAJBVV95cUxQazc5MDRxdE9VSWE2MXdKcFBKbWtILVo2VFd0MXB1YkpZVHZSb0FOQWJKWHJ2ZFRqUEtwOGdkdGFmWmJCV09yYlRBMjJrTWRBSUw5YUF5UVZCT1Jzak53Q0FTdHlfdHFyLWR2cWJQT2pfbk5OcTJCZFA5ZDhTSHpkYWJILUZqLTZvZGVmcXR4RlBUZXhCd29hSy1BanJyVG54a3JDRkFMaHVGUVo1aGZuUFhKM0JWeHpjVHRweTFWZDBPY2tkZU5BN0laaElvQkdiaFlweHVWYXd4ak9SZU5WMXpFWUFERW9ocWY3WFRVdDQ5SFRmTV9yZkktUDdSd3c2VzJfRQ?oc=5

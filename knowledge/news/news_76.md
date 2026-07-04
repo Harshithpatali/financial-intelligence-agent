@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 16 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# A $220-million blow as US Supreme Court shuns TCS: What happened? - Firstpost
+
+Link:
+https://news.google.com/rss/articles/CBMixgFBVV95cUxNdUFoNDhzOUpNbFZBNUNPb3pOSHZMNGltcG5LTDAxMGZ4UkVEZFJQdjRFZ3JIMFh3cFl0WDQ4SzBaYmc1al9IVDlKSC0wUDFWbjFNQmsxOEthbzAtRXdxYU44T0pvbjNVUkpySnBobzdYdXlRNmlzWkpka2diQmdZVmR2R1BBMHljQk1PZXdiWHdBOUozcmtaZkJXbFQyb3B1bzdkVWMzNXhJY0tsbWRtVEZWbmtQdURqRjgwaWlyTnNhYlhnOFHSAcsBQVVfeXFMUHVMb3hLNnNPMGhHa3dTRDlXczBHa09SWVRINmdRZEJ1ZFBJZ1duNFplc21hY2ZiQWFuUTREajFaZ24tVWhxMjUwMm43MXlDTi04NVp1YXVNLVJpWE5MMGtLc0NtX3lSR0M3bEF4R3FSR1RWZEZSdEJlcGp0S1hUVXc0cTBvcEJiSnNrYklxVUdmSnVocDVCX2hKUHYzdzMyTl83dHUtWVJmUHdORGhHU3VWb2NUVWNsdk8xQzhZOUJ3NGNDNzdjSHJ3RlU?oc=5

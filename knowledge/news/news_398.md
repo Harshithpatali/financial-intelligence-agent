@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 09 Apr 2026 07:00:00 GMT
+source: Google News
+---
+
+# Pearson and TCS partner to bring AI into learning and assessments - Consultancy.uk
+
+Link:
+https://news.google.com/rss/articles/CBMipgFBVV95cUxNdlRlX3pWaEdiY1FvNEQwR2JTckxxNzh5d1J5bFpXekNlMUdFOVpGdmNkTjExeDUtTlJiX0xNbjRqSDJxNWFkR1ZhSXVsb2ZrWnpsV2ZCNUdTM1JIaTFpQklLdDkxX1JZOGFtTlpGMTBSNm5UdXpJVk4xQXFaNGtDQ19ZLWVWNXdUZnhRRmROSGFsMEJkWjJKNUZBemN1UTVvRHlickZ30gGrAUFVX3lxTE1Iby13aHhMTl9ucUZOcUYxOE9id1poRFRGOG5ta3pJRjlnWDBDRTU2eGVieTY0OWowM2ZIMklsczU3OUVRX0puTXNzM1M5SzNWdWNfbl9XOEgwQkxNSWlicUJGeFJIM2xpZDJFenhjQkFBRmxfMHRoUm1qMUhYTnFPcEd0bmg3WUdGMjByNWp5dmw3MGdTY2YwUV95TjdjWi12b1dOejhyNGxnNA?oc=5

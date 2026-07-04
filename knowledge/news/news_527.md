@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Mon, 08 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS renews 1.5 million sq ft Chennai office lease worth ₹1,420 crore - BusinessLine
+
+Link:
+https://news.google.com/rss/articles/CBMi2gFBVV95cUxPbGRNSVM4TDhmT2lYQWdrV1laSEpNWnY2T3gxRjMzODllUkhsTEZvSjAteFBJdl9Nc1lVRC1lb0JtRkplY3dxcHppaGt5eU5vMVo2SHJGU0ZCb3hMVlNFbGhUTllnSno5bjZaVnYwbExCc3d3ZVN2WjdfeThuRkVvdkg3RHVaZjBKaUxaYUFrdkV5bUlDdERpTzkxMVpSLUFqMXRkMHBSR1dOTWhiVzdCTmZuNXJoYmsyUGUyYktrdS1iVGE0eXZYdWdXQ3FiLV9NYlRPcnpLbzB5UdIB4AFBVV95cUxQd0hOVTB4UmpsVnl5VDNCLVBpNlV4NEVzdnNxanEtcWwxWERjSWtOaFJVOFhTM19YMHZFZFZLZENtSlJkNDZvc3pVMUxhSHhwQXRrblFsYVhIb0VaTWZDdnR1Y1pvNmpibU9ZSG5ldFUwTDVheHNoNzByOGtteUdkZnFpYU5md1c2YkFtQzR4NFl4QUpYX3lyOU0yYXBlZVNIVUtBU3J3WGdZNXpOaW1KUGJrN1lzUHR0WjZJX3UyZENoamplUUNqcHp3NFV1ZG9BeC0xMDQwS0RFbFUxcm9mSg?oc=5

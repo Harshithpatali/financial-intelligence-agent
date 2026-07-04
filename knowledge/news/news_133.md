@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Tue, 09 Jun 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS To Deploy AI Agents At Massive Scale, Hiring Trends Set To Change - Swarajya
+
+Link:
+https://news.google.com/rss/articles/CBMipgFBVV95cUxPbE5qMlV3eGhPNVJOeXEzbnNFTGRSTC1OMXhCNk85V1pRVHAwQnF1amt4a2NfVW9EUVdaWHc2N0dfVHhZbGtrS2ZBaWV3ZzdMakNzaEQ5eVFsMlVsT0luNlRvdUpGMGNhcE5pQzIyejlid2hLNWN2SXdoTUFhUjZreXN4SjAtOHpfYkNzUlRfT1FaNlg5YURSQkFlRWZMdGdac2dfdmRn0gG2AUFVX3lxTE1oOXRIdC10dGdwaWRtdjVfUExwMTM4SVdRYUxraEpxRV9yVTBqRkI5UzJSZHgwa2pVNGE5dEJ6VlFuY2NkeHduSDh6UGRrb3J3Z2I4ZWVPLTBNU1V2UFQwbzNub000MVQtRmNxN2V1YUk4YVUyZDdsSG9FLUxiMG9VWWhYTEJNZUVVRWpWemNHU1ZSQjQxcHViZVlBdU5aQ3phSkU0N1FTanl4R0gxTlNPZHRxWGN3?oc=5

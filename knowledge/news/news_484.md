@@ -1,0 +1,11 @@
+---
+type: news
+company: TCS
+date: Thu, 09 Apr 2026 07:00:00 GMT
+source: Google News
+---
+
+# TCS Q4 Results: Profit Soars 29%; Revenue Beats Estimates - NDTV Profit
+
+Link:
+https://news.google.com/rss/articles/CBMinwFBVV95cUxOSVI5SW9XbE15eU5lYU53a0k3Z3VGOFFiVlJHTmpXcnB4Yktvd245UVM5ZTNrZjZhNG9rSkFkQWxBUFlCWEVZcTlMazFldTdJOUZuYW5kRW12X194RExzSTQ3Nngyc1dMTncxbE5qLXdFejNnMExodFpUaHl3MWJ2c2JYT05oR1NWN2RWcDMxRklCam15bTNWcE95ajdONXPSAacBQVVfeXFMUFRxV3VPN1h0UUlrZExobkxFaklIMmRMSmJWNlNsRXZzc25kejdqeHItX2JtNnhuTTFNQTRvbmtlX01HWkhfVDZac3phRmpsbVVTaDVSQmJPOU5VZ0pEM1hfVVc1cWFyVWZ5azJVUnJUSUVpQnpjZHBRNHh5TU8tZDN0Z0JHMUN5NGVuTVlrbTh6WkFzRzkwdlpON21EZXUwOWJROFJOazA?oc=5
