@@ -1,37 +1,41 @@
-from groq import Groq
 import os
+from groq import Groq
 
-_client = None
+print("llm.py imported")
 
-def get_client():
-    global _client
-
-    if _client is None:
-        print("Initializing Groq client...")
-        _client = Groq(
-            api_key=os.getenv("GROQ_API_KEY")
-        )
-
-    return _client
+client = Groq(
+    api_key=os.getenv(
+        "GROQ_API_KEY"
+    )
+)
 
 
 def generate_answer(prompt):
 
-    client = get_client()
-
-    print("Sending request to Groq...")
-
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature=0.1
+    print(
+        "Sending prompt to Groq..."
     )
 
-    print("Groq response received")
+    response = (
+        client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.1,
+            max_tokens=1200
+        )
+    )
 
-    return response.choices[0].message.content
+    print(
+        "Groq response received"
+    )
+
+    return (
+        response
+        .choices[0]
+        .message.content
+    )

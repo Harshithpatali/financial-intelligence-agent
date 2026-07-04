@@ -7,6 +7,7 @@ from utils import (
     load_financials,
     get_metric
 )
+
 # -----------------------------
 # Page Config
 # -----------------------------
@@ -134,24 +135,53 @@ with tab1:
                 API_URL,
                 params={
                     "question": question
-                }
+                },
+                timeout=120
             )
 
+            if response.status_code != 200:
+
+                st.error(
+                    f"API Error: {response.status_code}"
+                )
+
+                st.text(response.text)
+
+                st.stop()
+
             data = response.json()
+
+            st.json(data)
 
         with st.chat_message(
             "assistant"
         ):
 
-            st.markdown(
-                data["answer"]
-            )
+            if "answer" in data:
+
+                st.markdown(
+                    data["answer"]
+                )
+
+            else:
+
+                st.error(
+                    data.get(
+                        "error",
+                        "Unknown API Error"
+                    )
+                )
+
+                st.stop()
 
             st.subheader(
                 "📚 Sources"
             )
 
-            for source in data["sources"]:
+            for source in data.get(
+                "sources",
+                []
+            ):
 
                 with st.expander(
                     source.split("\\")[-1]
@@ -364,18 +394,44 @@ with tab5:
                 API_URL,
                 params={
                     "question": q
-                }
+                },
+                timeout=120
             )
 
+            if response.status_code != 200:
+
+                st.error(
+                    f"API Error: {response.status_code}"
+                )
+
+                st.text(response.text)
+
+                continue
+
             data = response.json()
+
+            st.json(data)
 
             st.markdown(
                 f"### {q}"
             )
 
-            st.write(
-                data["answer"]
-            )
+            if "answer" in data:
+
+                st.write(
+                    data["answer"]
+                )
+
+            else:
+
+                st.error(
+                    data.get(
+                        "error",
+                        "Unknown API Error"
+                    )
+                )
+
+                continue
 
             st.divider()
 

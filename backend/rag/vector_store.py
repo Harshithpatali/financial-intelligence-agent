@@ -12,14 +12,22 @@ def get_collection():
 
     if _collection is None:
 
-        PROJECT_ROOT = Path(__file__).resolve().parents[2]
+        PROJECT_ROOT = (
+            Path(__file__).resolve().parents[2]
+        )
 
-        CHROMA_PATH = PROJECT_ROOT / "backend" / "chroma_db"
+        CHROMA_PATH = (
+            PROJECT_ROOT
+            / "backend"
+            / "chroma_db"
+        )
 
-        print(f"Loading ChromaDB from: {CHROMA_PATH}")
-        print(f"Chroma path exists: {CHROMA_PATH.exists()}")
+        print(
+            f"Loading ChromaDB from: {CHROMA_PATH}"
+        )
 
         if not CHROMA_PATH.exists():
+
             raise FileNotFoundError(
                 f"ChromaDB folder not found: {CHROMA_PATH}"
             )
@@ -29,13 +37,11 @@ def get_collection():
         )
 
         _collection = client.get_collection(
-    name="tcs_knowledge_base"
-)
-
-        print("ChromaDB loaded successfully.")
+            name="tcs_knowledge_base"
+        )
 
         print(
-    f"Collection count: {_collection.count()}"
-)
+            f"Collection Count: {_collection.count()}"
+        )
 
     return _collection

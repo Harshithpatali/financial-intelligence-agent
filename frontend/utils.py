@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def load_financials():
 
     income = pd.read_csv(
@@ -14,13 +15,21 @@ def load_financials():
         "data/financial_metrics/cash_flow.csv"
     )
 
-    return income, balance, cashflow
+    return (
+        income,
+        balance,
+        cashflow
+    )
 
 
-def get_metric(df, metric_name):
+def get_metric(
+    df,
+    metric_name
+):
 
     row = df[
-        df["Unnamed: 0"] == metric_name
+        df["Unnamed: 0"]
+        == metric_name
     ]
 
     if row.empty:

@@ -1,27 +1,41 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 import traceback
 
-app = FastAPI(title="TCS Financial Intelligence Agent")
+app = FastAPI(
+    title="TCS Financial Intelligence Agent",
+    version="1.0.0"
+)
+
 
 @app.get("/")
 def root():
-    return {"status": "healthy"}
+    return {
+        "status": "healthy"
+    }
+
 
 @app.get("/ask")
 def ask(question: str):
+
     try:
-        print("Importing rag_pipeline")
 
-        from backend.rag.rag_pipeline import answer_question
+        print("=" * 80)
+        print(f"QUESTION: {question}")
 
-        print("rag_pipeline imported")
+        from backend.rag.rag_pipeline import (
+            answer_question
+        )
 
-        return answer_question(question)
+        result = answer_question(question)
+
+        return result
 
     except Exception as e:
+
+        print("ERROR IN /ask")
+        print(str(e))
         traceback.print_exc()
 
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
+        return {
+            "error": str(e)
+        }

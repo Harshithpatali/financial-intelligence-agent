@@ -1,69 +1,76 @@
-from backend.rag.retriever import retrieve
-from backend.rag.llm import generate_answer
+from backend.rag.retriever import (
+    retrieve
+)
+
+from backend.rag.llm import (
+    generate_answer
+)
+
+print("rag_pipeline.py imported")
 
 
 def answer_question(question):
 
-    print("STEP 1: retrieve start")
+    print(
+        "Starting retrieval..."
+    )
 
     results = retrieve(
         question,
         top_k=5
     )
 
-    print(
-    f"STEP 2: retrieve complete - "
-    f"{len(results['documents'])} documents"
-)
-
-    context = "\n\n".join(
-        results["documents"]
+    documents = results.get(
+        "documents",
+        []
     )
 
     sources = []
 
-    for item in results["sources"]:
-        if isinstance(item, dict):
-            sources.append(
-            item.get("source", "Unknown")
-        )
+    for item in results.get(
+        "sources",
+        []
+    ):
 
+        if isinstance(item, dict):
+
+            sources.append(
+                item.get(
+                    "source",
+                    "Unknown"
+                )
+            )
+
+    context = "\n\n".join(
+        documents
+    )
 
     prompt = f"""
-You are a senior equity research analyst.
+You are a financial analyst.
 
-Use ONLY the provided context.
+Answer ONLY using the supplied context.
 
-Requirements:
-- Give a concise executive summary.
-- Mention financial figures exactly.
-- Mention years and periods.
-- Calculate growth rates if available.
-- Compare with previous periods.
-- If information is missing, say so.
-- Never invent numbers.
+If information is unavailable,
+state that clearly.
 
-Context:
+CONTEXT:
 {context}
 
-Question:
+QUESTION:
 {question}
 """
-
-    print("STEP 3: calling LLM")
 
     answer = generate_answer(
         prompt
     )
 
-    print("STEP 4: LLM response received")
-
     return {
         "question": question,
         "answer": answer,
-        "sources": list(set(sources)),
-        "num_sources": len(set(sources))
+        "sources": list(
+            set(sources)
+        ),
+        "num_sources": len(
+            set(sources)
+        )
     }
-
-
-print("rag_pipeline.py imported")
