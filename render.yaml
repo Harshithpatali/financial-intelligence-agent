@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: tcs-financial-agent-api
+    env: python
+
+    buildCommand: pip install -r backend/requirements.txt
+
+    startCommand: uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
