@@ -17,9 +17,8 @@ def get_model():
 
         print("STEP B: creating SentenceTransformer")
 
-        _model = SentenceTransformer(
-            "all-MiniLM-L6-v2"
-        )
+        _model = SentenceTransformer("BAAI/bge-small-en-v1.5")
+        
 
         print("STEP C: SentenceTransformer loaded")
 
