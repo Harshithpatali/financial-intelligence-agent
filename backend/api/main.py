@@ -10,4 +10,11 @@ def root():
 
 @app.get("/ask")
 def ask(question: str):
-    return {"question": question}
+
+    print("Importing rag_pipeline")
+
+    from backend.rag.rag_pipeline import answer_question
+
+    print("rag_pipeline imported")
+
+    return answer_question(question)

@@ -49,3 +49,5 @@ def retrieve(query, top_k=5):
         "documents": results["documents"][0],
         "sources": results["metadatas"][0]
     }
+
+print("retriever.py imported")

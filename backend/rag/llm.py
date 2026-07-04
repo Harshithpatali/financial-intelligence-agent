@@ -23,3 +23,5 @@ def generate_answer(prompt):
     print("Groq response received")
 
     return response.choices[0].message.content
+
+print("llm.py imported")

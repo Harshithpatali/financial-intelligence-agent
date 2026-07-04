@@ -24,6 +24,7 @@ def answer_question(question):
             item["source"]
         )
 
+
     prompt = f"""
 You are a senior equity research analyst.
 
@@ -59,3 +60,6 @@ Question:
         "sources": list(set(sources)),
         "num_sources": len(set(sources))
     }
+
+
+print("rag_pipeline.py imported")

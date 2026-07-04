@@ -15,3 +15,6 @@ def root():
 @app.get("/ask")
 def ask(question: str):
     return {"question": question}
+
+
+print("vector_store.py imported")
