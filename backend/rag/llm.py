@@ -7,6 +7,8 @@ client = Groq(
 
 def generate_answer(prompt):
 
+    print("Sending request to Groq...")
+
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
@@ -17,5 +19,7 @@ def generate_answer(prompt):
         ],
         temperature=0.1
     )
+
+    print("Groq response received")
 
     return response.choices[0].message.content

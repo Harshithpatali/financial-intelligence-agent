@@ -4,10 +4,14 @@ from backend.rag.llm import generate_answer
 
 def answer_question(question):
 
+    print("STEP 1: retrieve start")
+
     results = retrieve(
         question,
         top_k=5
     )
+
+    print("STEP 2: retrieve complete")
 
     context = "\n\n".join(
         results["documents"]
@@ -41,13 +45,17 @@ Question:
 {question}
 """
 
+    print("STEP 3: calling LLM")
+
     answer = generate_answer(
         prompt
     )
 
+    print("STEP 4: LLM response received")
+
     return {
-    "question": question,
-    "answer": answer,
-    "sources": list(set(sources)),
-    "num_sources": len(set(sources))
-}
+        "question": question,
+        "answer": answer,
+        "sources": list(set(sources)),
+        "num_sources": len(set(sources))
+    }

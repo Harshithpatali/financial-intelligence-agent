@@ -21,16 +21,29 @@ def get_model():
 
 def retrieve(query, top_k=5):
 
+    print("Loading model...")
     model = get_model()
-    collection = get_collection()
+    print("Model loaded")
 
-    query_embedding = model.encode(query).tolist()
+    print("Loading collection...")
+    collection = get_collection()
+    print("Collection loaded")
+
+    print("Creating embedding...")
+    query_embedding = model.encode(
+        query
+    ).tolist()
+    print("Embedding created")
+
+    print("Querying Chroma...")
 
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=top_k,
         include=["documents", "metadatas", "distances"]
     )
+
+    print("Chroma query complete")
 
     return {
         "documents": results["documents"][0],
