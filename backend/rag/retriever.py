@@ -13,22 +13,21 @@ def get_model():
 
     if _model is None:
 
-        print(
-            "Loading BAAI/bge-small-en-v1.5..."
-        )
+        print("STEP A: importing SentenceTransformer")
 
         from sentence_transformers import (
             SentenceTransformer
         )
 
+        print("STEP B: creating model")
+
         _model = SentenceTransformer(
             "BAAI/bge-small-en-v1.5"
         )
 
-        print("Embedding model loaded")
+        print("STEP C: model loaded")
 
     return _model
-
 
 def retrieve(
     query: str,
