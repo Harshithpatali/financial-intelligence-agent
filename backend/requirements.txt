@@ -8,3 +8,6 @@ groq
 tqdm
 numpy
 pandas
+
+transformers
+torch

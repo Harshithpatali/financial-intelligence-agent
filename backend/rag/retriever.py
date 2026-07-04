@@ -1,20 +1,23 @@
 from backend.rag.vector_store import get_collection
 
+print("retriever.py imported")
+
 _model = None
 
 def get_model():
     global _model
 
     if _model is None:
+        print("STEP A: importing SentenceTransformer")
+
         from sentence_transformers import SentenceTransformer
 
-        print("Loading embedding model...")
+        print("STEP B: creating SentenceTransformer")
 
         _model = SentenceTransformer(
-            "BAAI/bge-small-en-v1.5"
-        )
-
-        print("Embedding model loaded.")
+    "all-MiniLM-L6-v2"
+)
+        print("STEP C: SentenceTransformer loaded")
 
     return _model
 
@@ -50,4 +53,3 @@ def retrieve(query, top_k=5):
         "sources": results["metadatas"][0]
     }
 
-print("retriever.py imported")
