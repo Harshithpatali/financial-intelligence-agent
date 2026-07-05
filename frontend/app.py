@@ -63,8 +63,8 @@ except Exception:
     """
     Backend is starting up.
     This may take up to 60 seconds on the first request.
-    Please wait...
-    """
+    Please wait... and refresh the page if necessary.
+    """  
 )
     st.stop()
 

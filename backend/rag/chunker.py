@@ -1,7 +1,6 @@
 from pathlib import Path
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-
 def load_documents():
 
     docs = []
@@ -19,7 +18,9 @@ def load_documents():
             })
 
         except Exception as e:
-            print(f"Error reading {md_file}: {e}")
+            print(
+                f"Error reading {md_file}: {e}"
+            )
 
     return docs
 
