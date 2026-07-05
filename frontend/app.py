@@ -59,7 +59,13 @@ try:
 
 except Exception:
 
-    st.error("Cannot connect to backend")
+    st.warning(
+    """
+    Backend is starting up.
+    This may take up to 60 seconds on the first request.
+    Please wait...
+    """
+)
     st.stop()
 
 # -----------------------------
