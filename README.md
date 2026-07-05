@@ -1,8 +1,8 @@
 <div align="center">
 
-# 📊 TCS Financial Intelligence Agent
+#  Financial Intelligence Agent
 
-**An AI-powered Retrieval-Augmented Generation (RAG) system for exploring Tata Consultancy Services annual reports through natural language.**
+**TCS Financial Intelligence Agent is an enterprise-style Retrieval-Augmented Generation (RAG) platform built using FastAPI, ChromaDB, Sentence Transformers, Groq LLM, and Streamlit. The system transforms TCS annual reports into a structured Open Knowledge Format (OKF)-based financial knowledge repository, enabling semantic search, context-aware financial analysis, and source-grounded question answering. Deployed on Render and Streamlit Cloud, the platform provides interactive financial insights, executive summaries, and natural language access to corporate disclosures and annual report intelligence.**
 
 [![Live App](https://img.shields.io/badge/Live-Demo-brightgreen)](https://financial-intelligence-agent-g.streamlit.app/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
@@ -22,8 +22,20 @@ Annual reports typically span hundreds of pages covering financial statements, m
 
 **TCS Financial Intelligence Agent** solves this by transforming TCS annual reports into a searchable, conversational knowledge base. Investors, analysts, students, and researchers can ask natural language questions and receive **context-aware, source-grounded answers** drawn directly from official disclosures.
 
-**Example questions:**
 
+
+Traditional annual reports contain hundreds of pages of financial statements, management discussions, risk disclosures, AI strategy updates, and operational insights.
+
+This project converts those reports into a searchable knowledge base using:
+
+Open Knowledge Format (OKF)-style document storage
+Vector embeddings
+ChromaDB vector search
+Retrieval-Augmented Generation (RAG)
+Large Language Models via Groq
+Interactive Streamlit dashboard
+
+Instead of manually reading reports, users can ask:
 ```text
 What was TCS revenue in FY2024?
 What are the key risks facing TCS?
@@ -35,6 +47,8 @@ Summarize FY2025 performance.
 The system combines document parsing, vector embeddings, semantic retrieval, and large language model inference into a single end-to-end RAG pipeline.
 
 ---
+
+
 
 ## 🏗️ Architecture
 
