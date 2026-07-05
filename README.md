@@ -28,12 +28,12 @@ Traditional annual reports contain hundreds of pages of financial statements, ma
 
 This project converts those reports into a searchable knowledge base using:
 
-Open Knowledge Format (OKF)-style document storage
-Vector embeddings
-ChromaDB vector search
-Retrieval-Augmented Generation (RAG)
-Large Language Models via Groq
-Interactive Streamlit dashboard
+-Open Knowledge Format (OKF)-style document storage
+-Vector embeddings
+-ChromaDB vector search
+-Retrieval-Augmented Generation (RAG)
+-Large Language Models via Groq
+-Interactive Streamlit dashboard
 
 Instead of manually reading reports, users can ask:
 ```text
