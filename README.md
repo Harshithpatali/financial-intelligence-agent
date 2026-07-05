@@ -1,6 +1,10 @@
 <div align="center">
 
-#  Financial Intelligence Agent
+# 📊 TCS Financial Intelligence Agent
+
+<p align="center">
+  <img src="assets/dashboard.png" alt="Dashboard" width="1000">
+</p>
 
 **TCS Financial Intelligence Agent is an enterprise-style Retrieval-Augmented Generation (RAG) platform built using FastAPI, ChromaDB, Sentence Transformers, Groq LLM, and Streamlit. The system transforms TCS annual reports into a structured Open Knowledge Format (OKF)-based financial knowledge repository, enabling semantic search, context-aware financial analysis, and source-grounded question answering. Deployed on Render and Streamlit Cloud, the platform provides interactive financial insights, executive summaries, and natural language access to corporate disclosures and annual report intelligence.**
 
