@@ -43,6 +43,8 @@ def get_model():
         print("STEP C: model loaded")
 
     return _model
+print("Model loaded")
+
 
 def retrieve(
     query: str,
