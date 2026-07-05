@@ -244,12 +244,18 @@ with tab1:
                 with st.expander(
                     f"📚 Sources ({len(sources)})"
                 ):
+                    
+
+
+                    import os
 
                     for source in sources:
 
+                        file_name = os.path.basename(source)
+
                         st.markdown(
-                            f"- {source.split('/')[-1].split('\\\\')[-1]}"
-                        )
+                                f"- {file_name}"
+                                     )
 
 # ==================================================
 # FINANCIALS TAB
