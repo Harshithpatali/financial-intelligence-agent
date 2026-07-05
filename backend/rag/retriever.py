@@ -18,9 +18,16 @@ def get_model():
 
         print("STEP A: importing SentenceTransformer")
 
-        from sentence_transformers import (
-            SentenceTransformer
-        )
+        try:
+            import torch
+            print("TORCH VERSION:", torch.__version__)
+
+            from sentence_transformers import SentenceTransformer
+            print("SentenceTransformer imported")
+
+        except Exception as e:
+            print("IMPORT ERROR:", str(e))
+            raise
 
         print("STEP B: creating model")
 
