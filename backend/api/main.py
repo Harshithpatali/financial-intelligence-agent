@@ -1,3 +1,16 @@
+from fastapi import FastAPI
+import traceback
+
+app = FastAPI(
+    title="TCS Financial Intelligence Agent",
+    version="1.0.0"
+)
+
+@app.get("/")
+def root():
+    return {"status": "healthy"}
+
+
 @app.get("/ask")
 def ask(question: str):
 
@@ -17,9 +30,10 @@ def ask(question: str):
         return result
 
     except Exception as e:
-        import traceback
 
         print("ERROR:")
         traceback.print_exc()
 
-        return {"error": str(e)}
+        return {
+            "error": str(e)
+        }
