@@ -35,7 +35,7 @@ def get_collection():
         client = chromadb.PersistentClient(
             path=str(CHROMA_PATH)
         )
-
+        print("Collection names:", client.list_collections())
         _collection = client.get_collection(
             name="tcs_knowledge_base"
         )

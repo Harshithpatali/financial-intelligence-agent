@@ -44,7 +44,7 @@ st.caption(
     "AI-Powered Equity Research Assistant"
 )
 
-API_URL = "http://127.0.0.1:8000/ask"
+API_URL = "https://financial-intelligence-agent-pmgy.onrender.com/ask"
 
 # -----------------------------
 # Load Financials
