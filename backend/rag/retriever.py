@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from backend.rag.vector_store import (
     get_collection
 )
@@ -21,8 +24,15 @@ def get_model():
 
         print("STEP B: creating model")
 
+        hf_token = os.getenv("HF_TOKEN")
+
+        print(
+            f"HF Token Found: {hf_token is not None}"
+        )
+
         _model = SentenceTransformer(
-            "BAAI/bge-small-en-v1.5"
+            "BAAI/bge-small-en-v1.5",
+            token=hf_token
         )
 
         print("STEP C: model loaded")
@@ -38,12 +48,22 @@ def retrieve(
 
     model = get_model()
 
+    print("Model obtained")
+
     collection = get_collection()
+
+    print("Collection obtained")
+
+    print("Creating embedding")
 
     query_embedding = (
         model.encode(query)
         .tolist()
     )
+
+    print("Embedding created")
+
+    print("Querying ChromaDB")
 
     results = collection.query(
         query_embeddings=[
@@ -56,6 +76,8 @@ def retrieve(
             "distances"
         ]
     )
+
+    print("Chroma query completed")
 
     documents = (
         results.get(
@@ -76,6 +98,10 @@ def retrieve(
             "distances",
             [[]]
         )[0]
+    )
+
+    print(
+        f"Retrieved {len(documents)} documents"
     )
 
     return {

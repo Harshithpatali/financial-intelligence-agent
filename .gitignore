@@ -12,7 +12,6 @@ venv/
 .streamlit/secrets.toml
 
 # Chroma
-backend/chroma_db/
 
 # VS Code
 .vscode/
