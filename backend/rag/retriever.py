@@ -35,6 +35,8 @@ def get_model():
 
         print(f"HF Token Found: {bool(hf_token)}")
 
+        print("About to load SentenceTransformer")
+
         _model = SentenceTransformer(
             "BAAI/bge-small-en-v1.5",
             token=hf_token
