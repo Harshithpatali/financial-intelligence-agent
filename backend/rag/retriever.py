@@ -1,9 +1,9 @@
+import os
+
 from dotenv import load_dotenv
 load_dotenv()
 
-from backend.rag.vector_store import (
-    get_collection
-)
+from backend.rag.vector_store import get_collection
 
 print("retriever.py imported")
 
@@ -33,9 +33,7 @@ def get_model():
 
         hf_token = os.getenv("HF_TOKEN")
 
-        print(
-            f"HF Token Found: {hf_token is not None}"
-        )
+        print(f"HF Token Found: {bool(hf_token)}")
 
         _model = SentenceTransformer(
             "BAAI/bge-small-en-v1.5",
