@@ -1,3 +1,4 @@
+
 import streamlit as st
 import requests
 import pandas as pd
@@ -17,6 +18,56 @@ st.set_page_config(
     page_icon="📊",
     layout="wide"
 )
+
+# -----------------------------
+# Backend Health Check
+# -----------------------------
+
+API_URL = "https://financial-intelligence-agent-pmgy.onrender.com/ask"
+HEALTH_URL = "https://financial-intelligence-agent-pmgy.onrender.com/"
+
+
+def ask_question(question):
+
+    response = requests.get(
+        API_URL,
+        params={
+            "question": question
+        },
+        timeout=180
+    )
+
+    if response.status_code != 200:
+        raise Exception(
+            f"API Error: {response.status_code}"
+        )
+
+    return response.json()
+
+
+try:
+
+    health = requests.get(
+        HEALTH_URL,
+        timeout=10
+    )
+
+    if health.status_code != 200:
+
+        st.error("Backend unavailable")
+        st.stop()
+
+except Exception:
+
+    st.error("Cannot connect to backend")
+    st.stop()
+
+# -----------------------------
+# Session State
+# -----------------------------
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 # -----------------------------
 # Styling
@@ -44,16 +95,17 @@ st.caption(
     "AI-Powered Equity Research Assistant"
 )
 
-API_URL = "https://financial-intelligence-agent-pmgy.onrender.com/ask"
-
 # -----------------------------
 # Load Financials
 # -----------------------------
 
-income_df, balance_df, cashflow_df = (
-    load_financials()
-)
+@st.cache_data
+def load_cached_financials():
+    return load_financials()
 
+income_df, balance_df, cashflow_df = (
+    load_cached_financials()
+)
 # -----------------------------
 # Sidebar
 # -----------------------------
@@ -115,6 +167,11 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 
 with tab1:
 
+    for msg in st.session_state.messages:
+
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
     question = st.chat_input(
         "Ask a question about TCS..."
     )
@@ -124,43 +181,46 @@ with tab1:
 
     if question:
 
+        st.session_state.messages.append(
+            {
+                "role": "user",
+                "content": question
+            }
+        )
+
         with st.chat_message("user"):
-            st.write(question)
+            st.markdown(question)
 
         with st.spinner(
-            "Analyzing company data..."
+                        "🔍 Searching reports and generating answer..."
         ):
 
-            response = requests.get(
-                API_URL,
-                params={
-                    "question": question
-                },
-                timeout=120
-            )
+            try:
 
-            if response.status_code != 200:
+                data = ask_question(question)
 
-                st.error(
-                    f"API Error: {response.status_code}"
-                )
+            except Exception as e:
 
-                st.text(response.text)
-
+                st.error(str(e))
                 st.stop()
 
-            data = response.json()
-
-            st.json(data)
-
-        with st.chat_message(
-            "assistant"
-        ):
+        with st.chat_message("assistant"):
 
             if "answer" in data:
 
-                st.markdown(
-                    data["answer"]
+                answer = data["answer"]
+
+                st.success(
+                    "Answer Generated"
+                )
+
+                st.markdown(answer)
+
+                st.session_state.messages.append(
+                    {
+                        "role": "assistant",
+                        "content": answer
+                    }
                 )
 
             else:
@@ -174,19 +234,22 @@ with tab1:
 
                 st.stop()
 
-            st.subheader(
-                "📚 Sources"
-            )
-
-            for source in data.get(
+            sources = data.get(
                 "sources",
                 []
-            ):
+            )
+
+            if sources:
 
                 with st.expander(
-                    source.split("\\")[-1]
+                    f"📚 Sources ({len(sources)})"
                 ):
-                    st.write(source)
+
+                    for source in sources:
+
+                        st.markdown(
+                            f"- {source.split('/')[-1].split('\\\\')[-1]}"
+                        )
 
 # ==================================================
 # FINANCIALS TAB
@@ -380,63 +443,65 @@ with tab5:
         "AI Executive Insights"
     )
 
-    questions = [
-        "What are the key growth drivers for TCS?",
-        "What are the major risks facing TCS?",
-        "What did management say about AI?"
-    ]
+    if st.button(
+        "Generate Executive Insights"
+    ):
 
-    for q in questions:
+        questions = [
+            "What are the key growth drivers for TCS?",
+            "What are the major risks facing TCS?",
+            "What did management say about AI?"
+        ]
 
-        try:
+        with st.spinner(
+            "Generating executive insights..."
+        ):
 
-            response = requests.get(
-                API_URL,
-                params={
-                    "question": q
-                },
-                timeout=120
-            )
+            for q in questions:
 
-            if response.status_code != 200:
+                try:
+                    data = ask_question(q)
 
-                st.error(
-                    f"API Error: {response.status_code}"
-                )
+                except Exception as e:
 
-                st.text(response.text)
+                    st.error(str(e))
+                    continue
 
-                continue
+                   
 
-            data = response.json()
-
-            st.json(data)
-
-            st.markdown(
-                f"### {q}"
-            )
-
-            if "answer" in data:
-
-                st.write(
-                    data["answer"]
-                )
-
-            else:
-
-                st.error(
-                    data.get(
-                        "error",
-                        "Unknown API Error"
+                    st.markdown(
+                        f"### {q}"
                     )
-                )
 
-                continue
+                    if "answer" in data:
 
-            st.divider()
+                        st.write(
+                            data["answer"]
+                        )
 
-        except Exception as e:
+                    else:
 
-            st.error(
-                f"Failed to fetch insight: {e}"
-            )
+                        st.error(
+                            data.get(
+                                "error",
+                                "Unknown API Error"
+                            )
+                        )
+
+                    st.divider()
+
+                except Exception as e:
+
+                    st.error(
+                        f"Failed to fetch insight: {e}"
+                    )
+                    
+                    # -----------------------------
+# Footer
+# -----------------------------
+
+                    st.divider()
+
+                    st.caption(
+                            "Built with FastAPI • ChromaDB • BAAI/bge-small-en-v1.5 • Groq LLM • Streamlit"
+                            )
