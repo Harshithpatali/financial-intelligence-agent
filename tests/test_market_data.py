@@ -33,3 +33,19 @@ def test_ticker_validation():
     import pytest
     with pytest.raises(ValueError):
         normalize_ticker("TCS.NS; DROP TABLE")
+
+
+
+def test_market_cache_returns_last_successful_value_when_provider_fails(monkeypatch):
+    from backend import market_data
+
+    key = ("quote", "STALE_TEST")
+    monkeypatch.setitem(market_data._CACHE, key, (0.0, {"ticker": "STALE_TEST", "price": 100.0}))
+    result = market_data._cached(
+        "quote",
+        ("STALE_TEST",),
+        lambda: (_ for _ in ()).throw(RuntimeError("provider rate limited")),
+    )
+    assert result["price"] == 100.0
+    assert result["data_status"] == "stale"
+    assert "last successfully cached" in result["price_note"]
