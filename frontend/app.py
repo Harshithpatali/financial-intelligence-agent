@@ -394,6 +394,17 @@ def load_financial_news(query: str) -> dict[str, Any]:
     return response.json()
 
 
+@st.cache_data(ttl=86400, show_spinner=False)
+def load_daily_sentiment(query: str) -> dict[str, Any]:
+    response = requests.get(
+        f"{API_BASE}/sentiment/daily",
+        params={"q": query, "limit": 12},
+        timeout=180,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
 def render_sources(sources: list[Any]) -> None:
     if not sources:
         st.caption("No source records were returned for this answer.")
@@ -501,7 +512,7 @@ st.write("")
 # -------------------------------------------------------------------
 navigation_options = [
     "Overview", "AI Research", "Financial performance",
-    "Balance sheet", "Cash flow", "Markets & News", "How it works",
+    "Balance sheet", "Cash flow", "Markets & News", "Market Sentiment", "How it works",
 ]
 selected_section = st.radio(
     "Navigate dashboard",
@@ -809,6 +820,119 @@ elif selected_section == "Markets & News":
         except requests.RequestException as exc:
             st.warning(f"News feed is temporarily unavailable: {exc}")
 
+
+
+elif selected_section == "Market Sentiment":
+    section_heading(
+        "07 / NLP market intelligence",
+        "Daily market-news sentiment",
+        "Financial headlines scored with ProsusAI FinBERT. Sentiment describes the tone of coverage, not expected stock returns.",
+    )
+    sentiment_options = {
+        "TCS · Tata Consultancy Services": "Tata Consultancy Services TCS",
+        "Infosys": "Infosys India",
+        "Reliance Industries": "Reliance Industries",
+        "HDFC Bank": "HDFC Bank",
+        "ICICI Bank": "ICICI Bank",
+        "NIFTY 50 · Indian markets": "NIFTY 50 Indian stock market",
+    }
+    sentiment_company = st.selectbox("Company or market", list(sentiment_options), key="sentiment_company")
+    sentiment_query = sentiment_options[sentiment_company]
+    refresh_sentiment_col, refresh_note_col = st.columns([1, 3])
+    with refresh_sentiment_col:
+        if st.button("Refresh today's analysis", key="refresh_sentiment"):
+            load_daily_sentiment.clear()
+            st.rerun()
+    with refresh_note_col:
+        st.caption("Results are cached for 24 hours to reduce duplicate inference calls. Refresh manually to request a new analysis.")
+
+    try:
+        with st.spinner("Collecting headlines and running financial sentiment classification…"):
+            sentiment_data = load_daily_sentiment(sentiment_query)
+        counts = sentiment_data.get("counts", {})
+        score = float(sentiment_data.get("sentiment_score", 0.0))
+        label = str(sentiment_data.get("sentiment_label", "neutral")).title()
+        st.markdown(
+            f'<div class="panel"><div class="panel-copy">Overall headline tone</div>'
+            f'<div style="font-size:2rem;font-weight:800;color:#9ce8e7">{label}</div>'
+            f'<div class="panel-copy">Average sentiment score: {score:+.3f} · Range: -1 to +1</div></div>',
+            unsafe_allow_html=True,
+        )
+        positive = int(counts.get("positive", 0))
+        negative = int(counts.get("negative", 0))
+        neutral = int(counts.get("neutral", 0))
+        total = int(sentiment_data.get("article_count", positive + negative + neutral))
+        sentiment_cols = st.columns(4)
+        sentiment_cols[0].metric("Articles scored", total)
+        sentiment_cols[1].metric("Positive", positive, f"{positive / total:.0%}" if total else None)
+        sentiment_cols[2].metric("Negative", negative, f"{negative / total:.0%}" if total else None)
+        sentiment_cols[3].metric("Neutral", neutral, f"{neutral / total:.0%}" if total else None)
+
+        chart_left, chart_right = st.columns(2, gap="large")
+        with chart_left:
+            st.markdown("**Headline distribution**")
+            distribution = pd.DataFrame([
+                {"Sentiment": "Positive", "Articles": positive},
+                {"Sentiment": "Neutral", "Articles": neutral},
+                {"Sentiment": "Negative", "Articles": negative},
+            ])
+            fig = px.pie(
+                distribution, names="Sentiment", values="Articles", hole=.62,
+                color="Sentiment",
+                color_discrete_map={"Positive": "#75d6ad", "Neutral": "#8fa8bd", "Negative": "#e58b87"},
+            )
+            st.plotly_chart(style_chart(fig, 300), use_container_width=True, config={"displayModeBar": False})
+        with chart_right:
+            st.markdown("**Sentiment by publication date**")
+            trend = pd.DataFrame(sentiment_data.get("trend", []))
+            if not trend.empty:
+                trend["date"] = pd.to_datetime(trend["date"])
+                fig = px.bar(trend, x="date", y="sentiment_score", hover_data=["article_count"])
+                fig.update_traces(marker_color="#53d6df")
+                fig.add_hline(y=0, line_dash="dash", line_color="#91a3b5")
+                fig.update_yaxes(title="Average sentiment", range=[-1, 1])
+                st.plotly_chart(style_chart(fig, 300), use_container_width=True, config={"displayModeBar": False})
+            else:
+                st.info("Publication dates were not available for a daily trend.")
+
+        st.markdown("**Classified headlines**")
+        for article in sentiment_data.get("articles", []):
+            headline = str(article.get("title", "Untitled"))
+            article_url = str(article.get("url", ""))
+            article_label = str(article.get("label", "neutral")).title()
+            confidence = float(article.get("confidence", 0))
+            if article_url.startswith("https://"):
+                st.markdown(f"**[{headline}]({article_url})**")
+            else:
+                st.markdown(f"**{headline}**")
+            st.caption(
+                f"{article_label} · confidence {confidence:.0%} · "
+                f"score {float(article.get('sentiment_score', 0)):+.2f} · "
+                f"{article.get('publisher', 'Publisher not identified')} · "
+                f"{article.get('published', 'Date unavailable')}"
+            )
+            st.divider()
+        st.caption(
+            f"Model: {sentiment_data.get('model')} · Source: {sentiment_data.get('source')} · "
+            f"Retrieved: {sentiment_data.get('retrieved_at')}"
+        )
+        st.info(sentiment_data.get("methodology_note", "Headline sentiment is not investment advice."))
+    except requests.HTTPError as exc:
+        status = exc.response.status_code if exc.response is not None else "unknown"
+        detail = ""
+        if exc.response is not None:
+            try:
+                detail = str(exc.response.json().get("detail", ""))
+            except ValueError:
+                detail = ""
+        if status == 503:
+            st.warning(detail or "FinBERT is not configured. Add HF_TOKEN to the Render backend environment.")
+        else:
+            st.warning(f"Sentiment service returned HTTP {status}. {detail}")
+    except requests.RequestException as exc:
+        st.warning(f"Sentiment service is temporarily unavailable: {exc}")
+    except (KeyError, TypeError, ValueError) as exc:
+        st.warning(f"Sentiment response could not be displayed: {exc}")
 
 
 elif selected_section == "How it works":
