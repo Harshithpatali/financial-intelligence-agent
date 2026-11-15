@@ -4,6 +4,7 @@ The hosted API does not load PyTorch/SentenceTransformers. Streamlit supplies
 the normalized BGE query vector; Render searches the precomputed Chroma index.
 """
 from threading import Lock
+import math
 
 _records_cache = []
 _bm25_cache = None
@@ -90,6 +91,11 @@ def retrieve(query, top_k=3, query_embedding=None):
     if query_embedding is not None:
         if not isinstance(query_embedding, list) or len(query_embedding) != 384:
             raise ValueError("query_embedding must contain exactly 384 values for BAAI/bge-small-en-v1.5")
+        if not all(math.isfinite(float(value)) for value in query_embedding):
+            raise ValueError("query_embedding values must all be finite")
+        norm = math.sqrt(sum(float(value) ** 2 for value in query_embedding))
+        if not 0.90 <= norm <= 1.10:
+            raise ValueError("query_embedding must be L2-normalized")
         dense_result = collection.query(
             query_embeddings=[query_embedding],
             n_results=min(top_k * 8, collection.count()),
