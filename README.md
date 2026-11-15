@@ -19,12 +19,13 @@ Users can ask questions about TCS revenue, profitability, cash flow, business se
 
 1. **Ingestion:** PDF, CSV and news inputs are transformed into a version-controlled Markdown knowledge repository.
 2. **Page-aware chunking:** documents are split into overlapping chunks while retaining source and page metadata when available.
-3. **Dense retrieval:** BAAI BGE Small embeddings are stored in ChromaDB.
-4. **Lexical retrieval:** BM25 retrieves exact financial terms and figures.
-5. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. `MENTIONS` edges connect entities to source evidence; `CO_MENTIONED_WITHIN_CHUNK` edges record provenance-backed co-occurrence.
-6. **Hybrid ranking:** reciprocal-rank fusion combines dense, BM25 and graph results.
-7. **Generation:** Groq-hosted Llama answers from retrieved context and is instructed to cite source IDs.
-8. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
+3. **Offline document indexing:** GitHub Actions runs BAAI BGE Small once when knowledge sources or indexing code change, then publishes the ChromaDB vectors and NetworkX graph as a versioned GitHub Release asset.
+4. **Query embedding:** Streamlit loads the same BAAI BGE Small model on demand and embeds each user question; the 384-dimensional query vector is sent to FastAPI.
+5. **Lexical retrieval:** BM25 retrieves exact financial terms and figures.
+6. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. `MENTIONS` edges connect entities to source evidence; `CO_MENTIONED_WITHIN_CHUNK` edges record provenance-backed co-occurrence.
+7. **Hybrid ranking:** reciprocal-rank fusion combines dense, BM25 and graph results.
+8. **Generation:** Groq-hosted Llama answers from retrieved context and is instructed to cite source IDs.
+9. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
 
 > Graph edges describe evidence co-mentions, not causality or directional business relationships. This project uses a local NetworkX graph; it does not require a Neo4j server.
 
@@ -38,13 +39,18 @@ The repository contains TCS annual reports, quarterly financial reports and earn
 pip install -r backend/requirements.txt
 ```
 
-Configure `GROQ_API_KEY` in the environment. Optionally set `HF_TOKEN`, `EMBEDDING_MODEL` and `GROQ_MODEL`.
+Configure `GROQ_API_KEY` in the Render environment. The frontend does not need the Groq key; it only sends the question and its query embedding to the API.
 
-Rebuild vector and graph indexes after changing source documents:
+Document vectors are built by the GitHub Actions workflow **Build and publish RAG index**. It runs automatically when files under `knowledge/` or indexing code change, and can also be started manually from the Actions tab. The workflow publishes `tcs-rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; the index is not committed into the source tree.
+
+For a local rebuild, install the indexing dependency and run:
 
 ```bash
+pip install "sentence-transformers>=3.0,<6.0"
 python -m backend.rag.build_vector_db
 ```
+
+The Streamlit frontend also installs `sentence-transformers` and lazily loads `BAAI/bge-small-en-v1.5` to embed each query. The same model and normalized 384-dimensional vectors are used on both sides. Render does not install or load PyTorch/SentenceTransformers.
 
 To build only the graph from an existing Chroma collection:
 
