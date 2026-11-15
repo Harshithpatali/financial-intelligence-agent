@@ -1,0 +1,69 @@
+name: Build and publish RAG index
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "knowledge/**"
+      - "backend/rag/build_vector_db.py"
+      - "backend/rag/chunker.py"
+      - "backend/rag/graph_index.py"
+      - "backend/rag/vector_store.py"
+      - ".github/workflows/build-rag-index.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rag-index-build
+  cancel-in-progress: false
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out source documents
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install indexing dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install "sentence-transformers>=3.0,<6.0"
+
+      - name: Build document embeddings and graph
+        run: python -m backend.rag.build_vector_db
+
+      - name: Verify generated index
+        run: |
+          test -f backend/chroma_db/chroma.sqlite3
+          test -s backend/indexes/tcs_knowledge_graph.json
+          python - <<'PY'
+          from backend.rag.vector_store import get_collection
+          count = get_collection().count()
+          if count <= 0:
+              raise SystemExit("The generated Chroma collection is empty.")
+          print(f"Verified {count} indexed document chunks.")
+          PY
+
+      - name: Package index
+        run: zip -qr backend/rag-index.zip backend/chroma_db backend/indexes/tcs_knowledge_graph.json
+
+      - name: Publish versioned GitHub Release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="rag-index-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" backend/rag-index.zip#tcs-rag-index.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "RAG index ${GITHUB_RUN_NUMBER}" \
+            --notes "Precomputed BAAI/bge-small-en-v1.5 document embeddings and NetworkX evidence graph from commit ${GITHUB_SHA}."
