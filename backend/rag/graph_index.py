@@ -30,13 +30,13 @@ def build_graph(chunks,output_path=INDEX_PATH):
     if graph.has_edge(left,right):graph[left][right]["weight"]+=1
     else:graph.add_edge(left,right,relation="CO_MENTIONED_WITHIN_CHUNK",weight=1)
  output_path=Path(output_path);output_path.parent.mkdir(parents=True,exist_ok=True)
- output_path.write_text(json.dumps(nx.node_link_data(graph),ensure_ascii=False,indent=2),encoding="utf-8")
+ output_path.write_text(json.dumps(nx.node_link_data(graph,edges="edges"),ensure_ascii=False,indent=2),encoding="utf-8")
  _load_graph_cached.cache_clear()
  return graph
 @lru_cache(maxsize=4)
 def _load_graph_cached(path_string,modified_ns):
  path=Path(path_string)
- return nx.node_link_graph(json.loads(path.read_text(encoding="utf-8"))) if path.exists() else nx.Graph()
+ return nx.node_link_graph(json.loads(path.read_text(encoding="utf-8")),edges="edges") if path.exists() else nx.Graph()
 def load_graph(path=INDEX_PATH):
  path=Path(path)
  if not path.exists():return nx.Graph()
