@@ -27,7 +27,7 @@ API_BASE = os.getenv(
     "https://financial-intelligence-agent-pmgy.onrender.com",
 ).rstrip("/")
 API_URL = f"{API_BASE}/ask"
-HEALTH_URL = f"{API_BASE}/health"
+HEALTH_URL = f"{API_BASE}/ready"
 
 YEARS = ["2022-03-31", "2023-03-31", "2024-03-31", "2025-03-31", "2026-03-31"]
 YEAR_LABELS = {year: "FY" + year[:4] for year in YEARS}
@@ -227,7 +227,7 @@ def set_prompt(prompt: str) -> None:
 # -------------------------------------------------------------------
 @st.cache_data(ttl=10, show_spinner=False)
 def backend_health() -> tuple[bool, str]:
-    """Check only FastAPI liveness; this does not test Groq availability.
+    """Check API readiness, including local retrieval indexes and Groq configuration.
 
     A short-lived timeout during a long AI generation must not immediately
     label the whole service offline, so retry once and report an unknown /
@@ -239,9 +239,13 @@ def backend_health() -> tuple[bool, str]:
             response = requests.get(HEALTH_URL, timeout=15)
             response.raise_for_status()
             payload = response.json()
-            if isinstance(payload, dict) and payload.get("status") == "ok":
-                return True, "Backend reachable"
-            return False, "Unexpected health response"
+            if isinstance(payload, dict) and payload.get("status") == "ready":
+                return True, "Backend and retrieval index ready"
+            if isinstance(payload, dict) and payload.get("status") == "not_ready":
+                failed = [name for name, item in payload.get("checks", {}).items()
+                          if isinstance(item, dict) and item.get("ready") is False]
+                return False, "Backend not ready: " + ", ".join(failed or ["dependency check failed"])
+            return False, "Unexpected readiness response"
         except requests.RequestException as exc:
             last_error = exc
             if attempt == 0:
