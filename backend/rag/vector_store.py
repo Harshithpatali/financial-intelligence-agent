@@ -3,15 +3,19 @@ import os
 import chromadb
 
 _COLLECTION = None
+_CLIENT = None
 _COLLECTION_NAME = "tcs_knowledge_base"
 
 def get_db_path():
     return Path(os.getenv("CHROMA_DB_PATH", str(Path(__file__).resolve().parents[2] / "backend" / "chroma_db"))).resolve()
 
 def get_client():
-    path = get_db_path()
-    path.mkdir(parents=True, exist_ok=True)
-    return chromadb.PersistentClient(path=str(path))
+    global _CLIENT
+    if _CLIENT is None:
+        path = get_db_path()
+        path.mkdir(parents=True, exist_ok=True)
+        _CLIENT = chromadb.PersistentClient(path=str(path))
+    return _CLIENT
 
 def get_collection():
     global _COLLECTION
