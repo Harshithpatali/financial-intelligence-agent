@@ -1,9 +1,7 @@
-"""Memory-conscious lexical + graph retrieval for small Render instances.
+"""Memory-conscious hybrid retrieval using frontend query vectors, BM25 and graph evidence.
 
-Dense query embeddings are intentionally disabled in the hosted API because
-loading PyTorch/SentenceTransformers can exceed the free instance memory limit.
-The Chroma collection remains the source of evidence; BM25 and the evidence
-knowledge graph rank its stored chunks without loading a neural model.
+The hosted API does not load PyTorch/SentenceTransformers. Streamlit supplies
+the normalized BGE query vector; Render searches the precomputed Chroma index.
 """
 from threading import Lock
 
