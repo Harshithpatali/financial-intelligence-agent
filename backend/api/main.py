@@ -190,6 +190,27 @@ def market_history(
         raise HTTPException(status_code=502, detail="Historical market data provider is temporarily unavailable.") from exc
 
 
+@app.get("/sentiment/daily")
+def daily_market_sentiment(
+    q: str = Query(min_length=1, max_length=160),
+    limit: int = Query(default=12, ge=1, le=12),
+):
+    """Daily headline sentiment scored with ProsusAI FinBERT."""
+    from backend import market_data
+    try:
+        return market_data.get_daily_sentiment(q, limit)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        logger.warning("sentiment_not_configured_or_unavailable error=%s", str(exc))
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("daily_sentiment_failed query=%s error_type=%s", q, type(exc).__name__)
+        raise HTTPException(status_code=502, detail="Daily sentiment analysis is temporarily unavailable.") from exc
+
+
 @app.get("/news")
 def financial_news(q: str = Query(min_length=1, max_length=160), limit: int = Query(default=10, ge=1, le=20)):
     from backend import market_data
