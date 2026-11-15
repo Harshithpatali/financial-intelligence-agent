@@ -76,32 +76,26 @@ def _validate_archive(archive: Path, staging: Path) -> tuple[int, int]:
     return len(nodes), chunks
 
 
-def _install_one(source: Path, target: Path) -> tuple[Path, Path | None]:
-    """Copy to the target filesystem first, then rename locally to avoid EXDEV."""
-    target.parent.mkdir(parents=True, exist_ok=True)
-    temporary = Path(tempfile.mkdtemp(prefix=f".{target.name}-new-", dir=target.parent))
-    staged_target = temporary / target.name
-    backup_target = temporary / f"{target.name}.backup"
-    try:
-        if source.is_dir():
-            shutil.copytree(source, staged_target)
+def _copy_directory_contents(source: Path, destination: Path) -> None:
+    """Copy into the mounted Chroma directory; never rename its mount point."""
+    destination.mkdir(parents=True, exist_ok=True)
+    for item in source.iterdir():
+        target = destination / item.name
+        if item.is_dir():
+            shutil.copytree(item, target, dirs_exist_ok=True)
         else:
-            shutil.copy2(source, staged_target)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(item, target)
 
-        had_old = target.exists()
-        if had_old:
-            os.replace(target, backup_target)
-        try:
-            os.replace(staged_target, target)
-        except Exception:
-            if had_old and backup_target.exists():
-                os.replace(backup_target, target)
-            raise
-        return target, backup_target if had_old else None
-    finally:
-        # Keep backup until both index components have installed successfully.
-        if not (temporary / f"{target.name}.backup").exists():
-            shutil.rmtree(temporary, ignore_errors=True)
+
+def _restore_directory(backup: Path, destination: Path) -> None:
+    if destination.exists():
+        for item in destination.iterdir():
+            if item.is_dir():
+                shutil.rmtree(item)
+            else:
+                item.unlink()
+    _copy_directory_contents(backup, destination)
 
 
 def _install(staging: Path) -> None:
@@ -109,22 +103,35 @@ def _install(staging: Path) -> None:
     source_graph = staging / GRAPH_MEMBER
     target_chroma = ROOT / "backend" / "chroma_db"
     target_graph = ROOT / GRAPH_MEMBER
-    installed: list[tuple[Path, Path | None]] = []
+
+    backup_chroma = staging / "backup_chroma"
+    had_chroma = target_chroma.exists()
+    if had_chroma:
+        shutil.copytree(target_chroma, backup_chroma)
+
+    target_graph.parent.mkdir(parents=True, exist_ok=True)
+    backup_graph = staging / "backup_graph.json"
+    had_graph = target_graph.exists()
+    if had_graph:
+        shutil.copy2(target_graph, backup_graph)
+
     try:
-        installed.append(_install_one(source_chroma, target_chroma))
-        installed.append(_install_one(source_graph, target_graph))
+        # Chroma may be a Render persistent-disk mount. Copy into it rather
+        # than renaming/replacing the mount directory across filesystems.
+        _copy_directory_contents(source_chroma, target_chroma)
+
+        # The graph file is replaced atomically within its own filesystem.
+        graph_temp = target_graph.with_name(target_graph.name + ".new")
+        shutil.copy2(source_graph, graph_temp)
+        os.replace(graph_temp, target_graph)
     except Exception:
-        for target, backup in reversed(installed):
-            if target.is_dir():
-                shutil.rmtree(target, ignore_errors=True)
-            elif target.exists():
-                target.unlink()
-            if backup is not None and backup.exists():
-                os.replace(backup, target)
+        if had_chroma:
+            _restore_directory(backup_chroma, target_chroma)
+        if had_graph:
+            shutil.copy2(backup_graph, target_graph)
+        elif target_graph.exists():
+            target_graph.unlink()
         raise
-    for _, backup in installed:
-        if backup is not None:
-            shutil.rmtree(backup.parent, ignore_errors=True)
 
 
 def main() -> None:
