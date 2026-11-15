@@ -4,6 +4,7 @@ import logging
 import math
 import os
 import time
+import uuid
 from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -18,7 +19,7 @@ class JsonFormatter(logging.Formatter):
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "level": record.levelname,
             "logger": record.name,
-            "message": record.getMessage(),
+            "message": record.getMessage(),\n            "exception": self.formatException(record.exc_info) if record.exc_info else None,
         }, ensure_ascii=False)
 
 
@@ -113,7 +114,7 @@ def ask_post(request: Request, payload: AskRequest):
 
 
 def _answer(question, query_embedding=None):
-    request_id = f"req-{int(time.time() * 1000)}"
+    request_id = "req-" + uuid.uuid4().hex[:12]
     started = time.monotonic()
     try:
         from backend.rag.rag_pipeline import answer_question
