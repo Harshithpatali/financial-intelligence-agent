@@ -155,3 +155,48 @@ def _answer(question, query_embedding=None):
             status_code=503,
             detail={"message": "The research service is temporarily unavailable.", "request_id": request_id},
         ) from exc
+
+
+
+@app.get("/market/quote")
+def market_quote(ticker: str = Query(min_length=1, max_length=20)):
+    """Public market quote; data can be delayed and provider-limited."""
+    from backend import market_data
+    try:
+        return market_data.get_quote(ticker)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("market_quote_failed ticker=%s error_type=%s", ticker, type(exc).__name__)
+        raise HTTPException(status_code=502, detail="Market data provider is temporarily unavailable.") from exc
+
+
+@app.get("/market/history")
+def market_history(
+    ticker: str = Query(min_length=1, max_length=20),
+    period: str = Query(default="1y"),
+):
+    from backend import market_data
+    try:
+        return market_data.get_history(ticker, period)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except LookupError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("market_history_failed ticker=%s error_type=%s", ticker, type(exc).__name__)
+        raise HTTPException(status_code=502, detail="Historical market data provider is temporarily unavailable.") from exc
+
+
+@app.get("/news")
+def financial_news(q: str = Query(min_length=1, max_length=160), limit: int = Query(default=10, ge=1, le=20)):
+    from backend import market_data
+    try:
+        return market_data.get_news(q, limit)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("news_feed_failed query=%s error_type=%s", q, type(exc).__name__)
+        raise HTTPException(status_code=502, detail="News feed is temporarily unavailable.") from exc
