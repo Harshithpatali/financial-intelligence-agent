@@ -88,13 +88,11 @@ def build_graph(chunks, output_path=INDEX_PATH):
         for i, left in enumerate(concepts):
             for right in concepts[i + 1:]:
                 _add_edge(graph, left, right, "CO_MENTIONED_WITHIN_CHUNK")
-        trend = next((name for name, pattern in TREND_PATTERNS.items() if pattern.search(text)), None)
-        if trend:
-            trend_node = f"TREND:{trend}:{chunk_id}"
-            graph.add_node(trend_node, node_type="qualitative_trend", direction=trend, verified=False)
-            for entity in concepts:
-                _add_edge(graph, entity, trend_node, "QUALITATIVE_TREND_IN_EVIDENCE")
-            _add_edge(graph, trend_node, evidence, "SUPPORTED_BY")
+        for trend, pattern in TREND_PATTERNS.items():
+            if pattern.search(text):
+                trend_node = f"TREND:{trend}:{chunk_id}"
+                graph.add_node(trend_node, node_type="qualitative_trend", direction=trend, verified=False)
+                _add_edge(graph, trend_node, evidence, "SUPPORTED_BY")
     ordered = sorted(periods, key=lambda value: int(value[2:]))
     for previous, current in zip(ordered, ordered[1:]):
         _add_edge(graph, previous, current, "PRECEDES")
