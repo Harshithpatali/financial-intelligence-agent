@@ -1,420 +1,68 @@
-<div align="center">
+# TCS Financial Intelligence Agent
 
-# 📊 TCS Financial Intelligence Agent
+A source-grounded financial research assistant for TCS annual reports, quarterly disclosures, financial statements, earnings-call transcripts and company news.
 
-<p align="center">
-  <img src="assets/dashboard.png" alt="Dashboard" width="1000">
-</p>
+## Architecture
 
-**TCS Financial Intelligence Agent is an enterprise-style Retrieval-Augmented Generation (RAG) platform built using FastAPI, ChromaDB, Sentence Transformers, Groq LLM, and Streamlit. The system transforms TCS annual reports into a structured Open Knowledge Format (OKF)-based financial knowledge repository, enabling semantic search, context-aware financial analysis, and source-grounded question answering. Deployed on Render and Streamlit Cloud, the platform provides interactive financial insights, executive summaries, and natural language access to corporate disclosures and annual report intelligence.**
+- **Ingestion:** PDF-to-Markdown conversion with page-boundary markers; CSV/news knowledge documents.
+- **Chunking:** deterministic overlapping chunks with source, document type and page metadata.
+- **Dense retrieval:** BAAI BGE Small embeddings stored in persistent ChromaDB.
+- **Lexical retrieval:** BM25 keyword ranking.
+- **Knowledge graph:** local NetworkX entity graph; nodes represent financial concepts/reporting periods and edges represent co-mentions within evidence chunks.
+- **Fusion:** reciprocal-rank fusion combines dense, BM25 and graph retrieval.
+- **Generation:** Groq-hosted Llama model answers only from retrieved evidence and is instructed to cite source IDs.
+- **Serving:** FastAPI backend and Streamlit financial dashboard.
 
-[![Live App](https://img.shields.io/badge/Live-Demo-brightgreen)](https://financial-intelligence-agent-g.streamlit.app/)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com/)
-[![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-FF4B4B)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/License-Educational-lightgrey)](#license)
+> The graph index is a local NetworkX graph, not a managed Neo4j deployment. Its co-mention edges are evidence links, not causal relationships.
 
-[Live Demo](https://financial-intelligence-agent-g.streamlit.app/) · [Features](#-features) · [Architecture](#-architecture) · [Setup](#-local-setup) · [API](#-api-reference)
+## Run locally
 
-</div>
-
----
-
-## 📖 Overview
-
-Annual reports typically span hundreds of pages covering financial statements, management commentary, risk disclosures, and strategic initiatives — making it time-consuming to extract meaningful insights.
-
-**TCS Financial Intelligence Agent** solves this by transforming TCS annual reports into a searchable, conversational knowledge base. Investors, analysts, students, and researchers can ask natural language questions and receive **context-aware, source-grounded answers** drawn directly from official disclosures.
-
-
-
-Traditional annual reports contain hundreds of pages of financial statements, management discussions, risk disclosures, AI strategy updates, and operational insights.
-
-This project converts those reports into a searchable knowledge base using:
-
-**Core Technologies & Capabilities**
-
-- Open Knowledge Format (OKF)-style document storage
-- Vector embeddings using BAAI BGE models
-- ChromaDB vector search and retrieval
-- Retrieval-Augmented Generation (RAG)
-- Large Language Models via Groq
-- Semantic search across annual reports
-- Source-grounded financial question answering
-- Executive insight generation
-- FastAPI-powered backend services
-- Interactive Streamlit dashboard
-- Cloud deployment on Render and Streamlit Cloud
-
-Instead of manually reading reports, users can ask:
-```text
-What was TCS revenue in FY2024?
-What are the key risks facing TCS?
-What did management say about AI?
-Who is the CEO of TCS?
-Summarize FY2025 performance.
-```
-
-The system combines document parsing, vector embeddings, semantic retrieval, and large language model inference into a single end-to-end RAG pipeline.
-
----
-
-
-
-## 🏗️ Architecture
-
-```text
-                    ┌──────────────────────┐
-                    │   Annual Reports      │
-                    │      (PDF Files)      │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │   Document Parsing    │
-                    │   PDF → Markdown       │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │   Chunk Creation &     │
-                    │  Metadata Generation   │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │    BGE Embeddings      │
-                    │  (SentenceTransformer) │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │       ChromaDB         │
-                    │    Vector Storage      │
-                    └───────────┬───────────┘
-                                │
-   User Question ───────────────▶  FastAPI Backend
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │  Semantic Retrieval    │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │       Groq LLM         │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌──────────────────────┐
-                    │  Contextual Answer     │
-                    │    + Source Citation   │
-                    └──────────────────────┘
-```
-
-### System Workflow
-
-```text
-User Question
-   → Generate Query Embedding
-   → Search ChromaDB
-   → Retrieve Relevant Chunks
-   → Build Context Prompt
-   → Groq LLM Inference
-   → Answer + Sources
-   → Streamlit Dashboard
-```
-
----
-
-## ✨ Features
-
-### 💬 Financial Question Answering
-Ask natural language questions about revenue, profitability, growth, risks, investments, AI initiatives, business strategy, cash flow, leadership changes, and annual report disclosures.
-
-### 🔍 Retrieval-Augmented Generation
-Answers are generated from retrieved company documents rather than relying solely on model memory, resulting in:
-- Reduced hallucinations
-- Source-grounded responses
-- Explainable outputs
-- Financially relevant context
-
-### 📎 Source Attribution
-Every answer includes the supporting report references:
-
-```text
-Sources:
-annual-report-2022-2023.md
-annual-report-2024-2025.md
-annual-report-2025-2026.md
-```
-
-### 📈 Interactive Financial Dashboard
-- Revenue analysis
-- Net income trends
-- Cash flow metrics
-- Balance sheet overview
-- Executive insights
-
-### 🧠 AI Executive Insights
-Automatically generated summaries covering growth drivers, strategic initiatives, risk factors, and AI transformation efforts.
-
----
-
-## 🛠️ Technology Stack
-
-| Layer            | Technology              |
-|-------------------|--------------------------|
-| Frontend          | Streamlit                |
-| Backend           | FastAPI                  |
-| LLM               | Groq                     |
-| Vector Database   | ChromaDB                 |
-| Embeddings        | BAAI BGE Small            |
-| Data Processing   | Pandas                   |
-| Visualization     | Plotly                   |
-| API Hosting       | Render                   |
-| Frontend Hosting  | Streamlit Cloud           |
-| Language          | Python                   |
-| Knowledge Format  | Markdown / OKF Style      |
-
----
-
-## 📁 Project Structure
-
-```text
-financial-intelligence-agent/
-│
-├── backend/
-│   ├── api/
-│   │   └── main.py
-│   │
-│   ├── rag/
-│   │   ├── rag_pipeline.py
-│   │   ├── retriever.py
-│   │   ├── vector_store.py
-│   │   └── llm.py
-│   │
-│   ├── chroma_db/
-│   │
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── app.py
-│   ├── utils.py
-│   └── requirements.txt
-│
-├── knowledge/
-│   └── annual_reports/
-│
-├── ingestion/
-│
-├── README.md
-│
-└── .gitignore
-```
-
----
-
-## 📚 Knowledge Base
-
-The system uses annual reports converted into structured markdown files, forming an **Open Knowledge Format (OKF)-style** repository:
-
-```text
-knowledge/
-└── annual_reports/
-    ├── annual-report-2020-2021.md
-    ├── annual-report-2021-2022.md
-    ├── annual-report-2022-2023.md
-    ├── annual-report-2023-2024.md
-    ├── annual-report-2024-2025.md
-    └── annual-report-2025-2026.md
-```
-
-This design keeps company knowledge:
-
-- ✅ Human readable
-- ✅ Version controllable
-- ✅ Rebuildable
-- ✅ Auditable
-
----
-
-## 🔌 API Reference
-
-### Request
-
-```http
-GET /ask?question=Who is the CEO of TCS?
-```
-
-### Response
-
-```json
-{
-  "question": "Who is the CEO of TCS?",
-  "answer": "K Krithivasan is the CEO and Managing Director of TCS.",
-  "sources": [
-    "annual-report-2025-2026.md"
-  ],
-  "num_sources": 1
-}
-```
-
----
-
-## 📊 Financial Data Visualizations
-
-Supported dashboard components:
-
-- Revenue Trend Analysis
-- Net Income Growth
-- Free Cash Flow Analysis
-- Capital Expenditure Tracking
-- Cash Position Monitoring
-- Balance Sheet Snapshot
-
----
-
-## 🚀 Deployment Architecture
-
-```text
-Streamlit Cloud → Frontend Dashboard
-        ↓
-Render FastAPI API
-        ↓
-SentenceTransformer
-        ↓
-     ChromaDB
-        ↓
-     Groq LLM
-```
-
----
-
-## ⚙️ Local Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/financial-intelligence-agent.git
-cd financial-intelligence-agent
-```
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-**Windows**
-```bash
-venv\Scripts\activate
-```
-
-**Linux / macOS**
-```bash
-source venv/bin/activate
-```
-
-### 3. Install Backend Dependencies
+Install backend dependencies:
 
 ```bash
 pip install -r backend/requirements.txt
 ```
 
-### 4. Run the FastAPI Backend
+Set environment variables (at minimum `GROQ_API_KEY`; optionally `HF_TOKEN` and `GROQ_MODEL`).
+
+Build/rebuild the vector and graph indexes after changing source documents:
 
 ```bash
-uvicorn backend.api.main:app --reload
+python -m backend.rag.build_vector_db
 ```
 
-- Backend: `http://localhost:8000`
-- Swagger Docs: `http://localhost:8000/docs`
-
-### 5. Install Frontend Dependencies & Run Streamlit
+To rebuild only the graph from an existing Chroma collection:
 
 ```bash
-pip install -r frontend/requirements.txt
-streamlit run frontend/app.py
+python -m backend.rag.build_graph_from_collection
 ```
 
-- Frontend: `http://localhost:8501`
+Start the API:
 
----
-
-## 💡 Example Questions
-
-```text
-What was TCS revenue in FY2024?
-Summarize FY2025 performance.
-What are the major risks facing TCS?
-What did TCS say about AI?
-How has free cash flow changed?
-Who is the CEO of TCS?
-What are the key growth drivers?
-What is the company's digital transformation strategy?
+```bash
+uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
 ```
 
----
+Start the Streamlit UI from the repository root using your configured Streamlit entry point.
 
-## 📈 Performance Characteristics
+## API
 
-| Metric            | Value                    |
-|--------------------|--------------------------|
-| Embedding Model     | BAAI/bge-small-en-v1.5    |
-| Vector Database     | ChromaDB                 |
-| Retrieval Type      | Semantic Search           |
-| Context Source      | Annual Reports            |
-| LLM Provider        | Groq                      |
-| Response Type       | Grounded RAG              |
+- `GET /` service status
+- `GET /health` health check
+- `GET /ask?question=...` question answering
+- `POST /ask` JSON body: `{"question":"..." }`
 
----
+Answers include source filename, page where available, chunk ID, and retrieval score. Existing Markdown documents created before page markers are indexed with page unavailable; rerun PDF ingestion to enable page-level citations.
 
-## 🔮 Future Enhancements
+## Evaluation and quality
 
-**Financial Analysis**
-- Ratio analysis
-- CAGR calculations
-- Margin analysis
-- Segment-wise performance
+Automated tests cover page metadata, graph construction/entity extraction, safe no-evidence behavior, source metadata and API validation. GitHub Actions runs the test suite on pushes and pull requests.
 
-**Advanced RAG**
-- Hybrid search
-- Cross-encoder reranking
-- Query expansion
-- Multi-hop retrieval
+Before describing retrieval quality as improved, evaluate a fixed, reviewed question set and report Recall@k, MRR, citation correctness, faithfulness and answer relevance. The repository does not claim benchmark scores until that evaluation has been run.
 
-**User Experience**
-- Conversation memory
-- Report comparison
-- Downloadable research reports
-- Citation highlighting
+## Limitations
 
-**Data Sources**
-- Quarterly reports
-- Earnings calls
-- Investor presentations
-- SEC / regulatory filings
-- News integration
-
----
-
-## 📝 Resume Project Description
-
-> Built an enterprise-style Financial Intelligence Agent using FastAPI, ChromaDB, Sentence Transformers, Groq LLM, and Streamlit. Developed an Open Knowledge Format (OKF)-based financial knowledge repository from annual reports, enabling semantic search and retrieval-augmented question answering with source-grounded responses. Deployed a production-ready RAG pipeline using Render and Streamlit Cloud for interactive financial analysis and executive insights.
-
----
-
-## 👤 Author
-
-**Harshith Devaraja**
-
-- GitHub: [Harshithpatali](https://github.com/Harshithpatali)
-- LinkedIn: [harshith-devaraja](https://www.linkedin.com/in/harshith-devaraja-087ba0228/)
-- Portfolio: [harshithpatali.github.io](https://harshithpatali.github.io/harshith-portfolio/)
-
----
-
-## 📄 License
-
-This project is intended for educational, research, and portfolio purposes. Financial information is derived from publicly available TCS annual reports and should not be considered investment advice.
+- The initial entity extractor is rule-based and focused on common TCS/financial concepts; it is not a general-purpose financial NER model.
+- Graph relationships indicate co-mention in a source chunk, not causal or directional business relationships.
+- Exact page citations require PDF documents to be re-ingested with page markers.
+- Financial outputs are research assistance, not investment advice.
