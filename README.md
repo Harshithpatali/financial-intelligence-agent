@@ -22,9 +22,9 @@ Users can ask questions about TCS revenue, profitability, cash flow, business se
 3. **Offline document indexing:** GitHub Actions runs BAAI BGE Small once when knowledge sources or indexing code change, then publishes the ChromaDB vectors and NetworkX graph as a versioned GitHub Release asset.
 4. **Query embedding:** Streamlit loads the same BAAI BGE Small model on demand and embeds each user question; the 384-dimensional query vector is sent to FastAPI.
 5. **Lexical retrieval:** BM25 retrieves exact financial terms and figures.
-6. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. `MENTIONS` edges connect entities to source evidence; `CO_MENTIONED_WITHIN_CHUNK` edges record provenance-backed co-occurrence.
+6. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. Typed edges distinguish `MENTIONS`, `HAS_EVIDENCE_IN_PERIOD`, `PRECEDES`, qualitative trend evidence and `CO_MENTIONED_WITHIN_CHUNK`. Co-mentions are not causal relationships; trend nodes are unverified qualitative observations.
 7. **Hybrid ranking:** reciprocal-rank fusion combines dense, BM25 and graph results.
-8. **Generation:** Groq-hosted Llama answers from retrieved context and is instructed to cite source IDs.
+8. **Generation:** Groq-hosted GPT OSS answers from retrieved context and is instructed to cite source IDs.
 9. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
 
 > Graph edges describe evidence co-mentions, not causality or directional business relationships. This project uses a local NetworkX graph; it does not require a Neo4j server.
@@ -67,7 +67,7 @@ uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
 ## API
 
 - `GET /` service metadata
-- `GET /health` health check
+- `GET /health` liveness check\n- `GET /ready` readiness check for Chroma, graph index and Groq configuration
 - `GET /ask?question=...` question answering
 - `POST /ask` JSON request: `{"question":"What was TCS revenue in FY2024?"}`
 
@@ -77,7 +77,7 @@ Responses include the answer, source filename, page where available, chunk ID, s
 
 A lightweight offline evaluation module provides Recall@K, MRR@K and citation-coverage calculations. Add manually reviewed question-to-chunk relevance labels before reporting retrieval scores. Also manually inspect citation correctness, faithfulness, answer relevance and abstention on questions with no supporting evidence. Compare dense-only, dense+BM25 and dense+BM25+graph on the same frozen benchmark.
 
-GitHub Actions runs the automated test suite on pushes and pull requests.
+GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include normalized finite 384-dimensional embedding validation, a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
 
 ## Limitations and next steps
 
