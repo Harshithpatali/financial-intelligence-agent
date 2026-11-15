@@ -17,7 +17,7 @@ st.set_page_config(
     page_title="TCS | Financial Intelligence",
     page_icon="◈",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -303,6 +303,10 @@ def set_prompt(prompt: str) -> None:
     st.session_state.pending_prompt = prompt
 
 
+def set_dashboard_section(section: str) -> None:
+    st.session_state.active_dashboard_section = section
+
+
 # -------------------------------------------------------------------
 # API health and question answering
 # -------------------------------------------------------------------
@@ -469,6 +473,23 @@ with st.sidebar:
             st.rerun()
     st.caption("Financial data period: " + latest_fy)
     st.divider()
+    st.markdown("**NAVIGATION**")
+    navigation_options = [
+        "Overview", "AI Research", "Financial performance",
+        "Balance sheet", "Cash flow", "Markets & News", "Market Sentiment", "How it works",
+    ]
+    st.session_state.setdefault("active_dashboard_section", "Overview")
+    for section in navigation_options:
+        is_active = st.session_state.active_dashboard_section == section
+        st.button(
+            ("●  " if is_active else "") + section,
+            key="nav_" + section.lower().replace(" ", "_").replace("&", "and"),
+            type="primary" if is_active else "secondary",
+            use_container_width=True,
+            on_click=set_dashboard_section,
+            args=(section,),
+        )
+    st.divider()
     st.markdown("**Company snapshot**")
     st.metric("Revenue · " + latest_fy, crore(revenue))
     st.metric("Net income · " + latest_fy, crore(net_income))
@@ -511,16 +532,7 @@ st.write("")
 # -------------------------------------------------------------------
 # Main navigation
 # -------------------------------------------------------------------
-navigation_options = [
-    "Overview", "AI Research", "Financial performance",
-    "Balance sheet", "Cash flow", "Markets & News", "Market Sentiment", "How it works",
-]
-selected_section = st.selectbox(
-    "Dashboard section",
-    navigation_options,
-    label_visibility="collapsed",
-    key="active_dashboard_section",
-)
+selected_section = st.session_state.active_dashboard_section
 
 if selected_section == "Overview":
     section_heading("01 / Company dashboard", "TCS at a glance", f"Latest available annual financial data · {latest_fy}")
