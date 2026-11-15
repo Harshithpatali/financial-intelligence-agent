@@ -73,6 +73,10 @@ uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
 
 Responses include the answer, source filename, page where available, chunk ID, score and retrieval methods. Older Markdown files without page markers need to be regenerated from their original PDFs to support page-level citations.
 
+## Public market data and news
+
+The Markets & News dashboard uses Yahoo Finance through `yfinance` for quotes/history and Google News RSS for headlines. These sources do not require a paid API key. They are public/unofficial access paths: provider availability, coverage and rate limits can change. Quotes may be delayed and are not exchange-certified real-time prices. Responses are cached briefly in the API process to reduce repeated requests. Always verify prices with the relevant exchange or broker before making decisions.
+
 ## Evaluation
 
 A lightweight offline evaluation module provides Recall@K, MRR@K and citation-coverage calculations. Add manually reviewed question-to-chunk relevance labels before reporting retrieval scores. Also manually inspect citation correctness, faithfulness, answer relevance and abstention on questions with no supporting evidence. Compare dense-only, dense+BM25 and dense+BM25+graph on the same frozen benchmark.
