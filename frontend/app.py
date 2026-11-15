@@ -9,7 +9,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import requests
 import streamlit as st
-from sentence_transformers import SentenceTransformer
 
 # -------------------------------------------------------------------
 # App configuration
@@ -260,8 +259,9 @@ def backend_health() -> tuple[bool, str]:
 
 
 @st.cache_resource(show_spinner=False)
-def load_query_embedding_model() -> SentenceTransformer:
+def load_query_embedding_model():
     """Load the same BGE model used by the offline document-index build."""
+    from sentence_transformers import SentenceTransformer
     return SentenceTransformer("BAAI/bge-small-en-v1.5", device="cpu")
 
 
