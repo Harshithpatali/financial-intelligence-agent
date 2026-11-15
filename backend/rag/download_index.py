@@ -16,7 +16,7 @@ import zipfile
 from pathlib import Path
 
 REPOSITORY = os.getenv("RAG_INDEX_REPOSITORY", "Harshithpatali/financial-intelligence-agent")
-ASSET_NAME = "tcs-rag-index.zip"
+ASSET_NAME = "rag-index.zip"
 ROOT = Path(__file__).resolve().parents[2]
 DOWNLOAD_URL = (
     f"https://github.com/{REPOSITORY}/releases/latest/download/{ASSET_NAME}"
