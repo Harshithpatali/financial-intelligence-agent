@@ -17,7 +17,7 @@ st.set_page_config(
     page_title="TCS | Financial Intelligence",
     page_icon="◈",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -118,6 +118,61 @@ st.markdown(
     div[data-testid="stChatInput"] textarea { background: #142638; }
     div[data-testid="stChatMessage"] { background: rgba(19,35,51,.72); border: 1px solid var(--line); border-radius: 15px; padding: .9rem; }
     div[data-testid="stExpander"] { border: 1px solid var(--line); border-radius: 12px; background: rgba(17,29,43,.65); }
+
+    /* Responsive layout: preserve readable cards and charts on phones/tablets. */
+    @media (max-width: 1100px) {
+      .block-container { padding-left: 1.35rem; padding-right: 1.35rem; }
+      div[data-testid="stTabs"] [role="tablist"] {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: thin;
+        padding-bottom: .35rem;
+      }
+      div[data-testid="stTabs"] button { flex: 0 0 auto; }
+      .metric-value { font-size: clamp(1.2rem, 3vw, 1.65rem); overflow-wrap: anywhere; }
+    }
+    @media (max-width: 760px) {
+      .block-container {
+        padding: 1.1rem 1rem 2.2rem;
+        max-width: 100%;
+      }
+      .hero-title { font-size: clamp(1.85rem, 8vw, 2.45rem); line-height: 1.12; }
+      .hero-subtitle { font-size: .9rem; line-height: 1.6; }
+      .hero-meta { font-size: .62rem; line-height: 1.7; }
+      .section-title { font-size: 1.3rem; }
+      .metric-card { min-height: 108px; padding: .9rem; }
+      .metric-value { font-size: clamp(1.15rem, 5vw, 1.5rem); }
+      .panel { padding: 1rem; }
+      div[data-testid="stHorizontalBlock"] { flex-wrap: wrap; gap: .75rem; }
+      div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+        width: 100% !important;
+      }
+      div[data-testid="stTabs"] [role="tablist"] {
+        gap: .15rem;
+        border-bottom: 1px solid var(--line);
+      }
+      div[data-testid="stTabs"] button {
+        font-size: .78rem;
+        padding: .55rem .65rem;
+      }
+      div[data-testid="stButton"] button {
+        min-height: 2.8rem;
+        white-space: normal;
+        line-height: 1.35;
+        padding: .65rem .8rem;
+      }
+      [data-testid="stSidebar"] { min-width: min(85vw, 320px); }
+      [data-testid="stPlotlyChart"] { width: 100%; }
+    }
+    @media (max-width: 420px) {
+      .block-container { padding-left: .75rem; padding-right: .75rem; }
+      .hero-title { font-size: 1.8rem; }
+      .metric-label { font-size: .66rem; }
+      .metric-value { font-size: 1.18rem; }
+      .metric-foot { font-size: .67rem; }
+    }
     hr { border-color: var(--line); }
     .footer { color: #71869a; font-size: .72rem; text-align: center; padding-top: 1.4rem; }
     </style>
