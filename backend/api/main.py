@@ -5,18 +5,19 @@ app=FastAPI(title="TCS Financial Intelligence Agent",version="2.0.0",description
 logger=logging.getLogger(__name__)
 class AskRequest(BaseModel):
  question:str=Field(min_length=3,max_length=2000)
+ query_embedding:list[float]|None=None
 @app.get("/")
 def root():return {"status":"healthy","service":"tcs-financial-intelligence-agent","version":"2.0.0"}
 @app.get("/health")
 def health():return {"status":"ok"}
 @app.get("/ask")
-def ask(question:str=Query(min_length=3,max_length=2000)):return _answer(question)
+def ask(question:str=Query(min_length=3,max_length=2000)):return _answer(question,None)
 @app.post("/ask")
-def ask_post(payload:AskRequest):return _answer(payload.question)
-def _answer(question):
+def ask_post(payload:AskRequest):return _answer(payload.question,payload.query_embedding)
+def _answer(question,query_embedding=None):
  try:
   from backend.rag.rag_pipeline import answer_question
-  return answer_question(question)
+  return answer_question(question,query_embedding=query_embedding)
  except ValueError as exc:raise HTTPException(status_code=422,detail=str(exc)) from exc
  except Exception as exc:
   logger.exception("Question answering failed")
