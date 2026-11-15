@@ -3,11 +3,11 @@ from backend.rag.retriever import retrieve
 from backend.rag.llm import generate_answer
 
 
-def answer_question(question):
+def answer_question(question, query_embedding=None):
     if not question or not question.strip():
         raise ValueError("Question must not be empty")
 
-    results = retrieve(question, top_k=3)
+    results = retrieve(question, top_k=3, query_embedding=query_embedding)
     documents = results["documents"]
     sources = results["sources"]
     if not documents:
