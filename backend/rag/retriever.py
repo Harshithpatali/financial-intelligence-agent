@@ -1,62 +1,54 @@
-"""Memory-conscious hybrid retrieval using frontend query vectors, BM25 and graph evidence.
+"""Memory-bounded hybrid retrieval.
 
-The hosted API does not load PyTorch/SentenceTransformers. Streamlit supplies
-the normalized BGE query vector; Render searches the precomputed Chroma index.
+Uses bounded Chroma document filters for lexical candidates rather than
+materializing every document and a full in-memory BM25 index on the 512 MiB
+Render instance. Dense and graph retrieval remain bounded to small candidate
+sets.
 """
 from threading import Lock
 import math
+import re
 
-_records_cache = []
-_bm25_cache = None
-_cache_count = -1
-_cache_lock = Lock()
+_CACHE_LOCK = Lock()
+_TOKEN_RE = re.compile(r"[a-z0-9]{3,}", re.I)
 
 
-def _all_records(collection):
-    """Read Chroma in bounded pages rather than materializing one large response."""
-    records = []
-    offset = 0
-    page_size = 250
-    while True:
-        result = collection.get(
-            include=["documents", "metadatas"],
-            limit=page_size,
-            offset=offset,
-        )
+def _lexical_candidates(collection, query, limit=40):
+    """Fetch a small candidate set for each informative query term."""
+    terms = []
+    for term in _TOKEN_RE.findall(query.lower()):
+        if term not in terms and term not in {"the", "and", "for", "with", "from", "what", "how", "was", "were", "are"}:
+            terms.append(term)
+        if len(terms) >= 5:
+            break
+
+    scores = {}
+    records = {}
+    for term in terms:
+        try:
+            result = collection.get(
+                where_document={"$contains": term},
+                include=["documents", "metadatas"],
+                limit=limit,
+            )
+        except Exception:
+            continue
         ids = result.get("ids") or []
         docs = result.get("documents") or []
         metas = result.get("metadatas") or []
         for index, chunk_id in enumerate(ids):
             if index >= len(docs):
                 continue
-            records.append({
+            document = docs[index] or ""
+            metadata = metas[index] if index < len(metas) else None
+            records[chunk_id] = {
                 "id": chunk_id,
-                "text": docs[index] or "",
-                "metadata": (metas[index] if index < len(metas) else None) or {},
-            })
-        if len(ids) < page_size:
-            break
-        offset += len(ids)
-    return records
-
-
-def _get_lexical_index(collection):
-    """Build BM25 once per collection size, guarded against concurrent builds."""
-    global _records_cache, _bm25_cache, _cache_count
-    count = collection.count()
-    if count != _cache_count:
-        with _cache_lock:
-            count = collection.count()
-            if count != _cache_count:
-                records = _all_records(collection)
-                if records:
-                    from rank_bm25 import BM25Okapi
-                    tokenized = [item["text"].lower().split() for item in records]
-                    bm25 = BM25Okapi(tokenized)
-                else:
-                    bm25 = None
-                _records_cache, _bm25_cache, _cache_count = records, bm25, count
-    return _records_cache, _bm25_cache
+                "text": document,
+                "metadata": metadata or {},
+            }
+            scores[chunk_id] = scores.get(chunk_id, 0) + 1
+    ranked = sorted(scores, key=lambda key: (-scores[key], key))[:limit]
+    return {key: records[key] for key in ranked}, {key: float(scores[key]) for key in ranked}
 
 
 def retrieve(query, top_k=3, query_embedding=None):
@@ -69,21 +61,11 @@ def retrieve(query, top_k=3, query_embedding=None):
     from backend.rag.graph_index import graph_retrieve
 
     collection = get_collection()
-    if not collection.count():
+    count = collection.count()
+    if not count:
         return {"documents": [], "sources": [], "distances": [], "retrieval": []}
 
-    records, bm25 = _get_lexical_index(collection)
-    lexical_scores = {}
-    if bm25 is not None:
-        scores = bm25.get_scores(query.lower().split())
-        # Keep only a small candidate pool to avoid sorting/retaining every hit.
-        candidates = sorted(
-            ((records[i]["id"], float(score)) for i, score in enumerate(scores) if score > 0),
-            key=lambda item: item[1],
-            reverse=True,
-        )[: top_k * 8]
-        lexical_scores = dict(candidates)
-
+    records, lexical_scores = _lexical_candidates(collection, query, limit=top_k * 8)
     graph_hits = graph_retrieve(query, top_k=top_k * 8)
     graph_scores = {item["id"]: float(item["score"]) for item in graph_hits}
 
@@ -98,17 +80,22 @@ def retrieve(query, top_k=3, query_embedding=None):
             raise ValueError("query_embedding must be L2-normalized")
         dense_result = collection.query(
             query_embeddings=[query_embedding],
-            n_results=min(top_k * 8, collection.count()),
-            include=["distances"],
+            n_results=min(top_k * 8, count),
+            include=["documents", "metadatas", "distances"],
         )
         dense_ids = (dense_result.get("ids") or [[]])[0]
         dense_distances = (dense_result.get("distances") or [[]])[0]
-        dense_scores = {
-            chunk_id: 1.0 / (1.0 + max(float(distance), 0.0))
-            for chunk_id, distance in zip(dense_ids, dense_distances)
-        }
+        dense_docs = (dense_result.get("documents") or [[]])[0]
+        dense_metas = (dense_result.get("metadatas") or [[]])[0]
+        for index, (chunk_id, distance) in enumerate(zip(dense_ids, dense_distances)):
+            dense_scores[chunk_id] = 1.0 / (1.0 + max(float(distance), 0.0))
+            if chunk_id not in records and index < len(dense_docs):
+                records[chunk_id] = {
+                    "id": chunk_id,
+                    "text": dense_docs[index] or "",
+                    "metadata": dense_metas[index] if index < len(dense_metas) and dense_metas[index] else {},
+                }
 
-    # Reciprocal-rank fusion across dense, lexical and graph candidates.
     rankings = [
         [key for key, _ in sorted(dense_scores.items(), key=lambda item: item[1], reverse=True)],
         [key for key, _ in sorted(lexical_scores.items(), key=lambda item: item[1], reverse=True)],
@@ -119,9 +106,8 @@ def retrieve(query, top_k=3, query_embedding=None):
         for rank, key in enumerate(ranking, 1):
             fused[key] = fused.get(key, 0.0) + 1.0 / (60 + rank)
 
-    by_id = {item["id"]: item for item in records}
     ordered = sorted(fused, key=fused.get, reverse=True)[:top_k]
-    selected = [by_id[key] for key in ordered if key in by_id]
+    selected = [records[key] for key in ordered if key in records]
     return {
         "documents": [item["text"][:5000] for item in selected],
         "sources": [
@@ -134,5 +120,7 @@ def retrieve(query, top_k=3, query_embedding=None):
             for item in selected
         ],
         "distances": [fused[item["id"]] for item in selected],
-        "retrieval": (["dense"] if dense_scores else []) + (["bm25"] if bm25 is not None else []) + (["knowledge_graph"] if graph_scores else []),
+        "retrieval": (["dense"] if dense_scores else [])
+        + (["bm25"] if lexical_scores else [])
+        + (["knowledge_graph"] if graph_scores else []),
     }
