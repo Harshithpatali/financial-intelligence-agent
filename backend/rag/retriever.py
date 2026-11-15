@@ -60,7 +60,7 @@ def _get_lexical_index(collection):
     return _records_cache, _bm25_cache
 
 
-def retrieve(query, top_k=3):
+def retrieve(query, top_k=3, query_embedding=None):
     if not query or not query.strip():
         raise ValueError("Query must not be empty")
     if top_k < 1 or top_k > 10:
@@ -88,8 +88,25 @@ def retrieve(query, top_k=3):
     graph_hits = graph_retrieve(query, top_k=top_k * 8)
     graph_scores = {item["id"]: float(item["score"]) for item in graph_hits}
 
-    # Reciprocal-rank fusion over lexical and graph candidate lists.
+    dense_scores = {}
+    if query_embedding is not None:
+        if not isinstance(query_embedding, list) or len(query_embedding) != 384:
+            raise ValueError("query_embedding must contain exactly 384 values for BAAI/bge-small-en-v1.5")
+        dense_result = collection.query(
+            query_embeddings=[query_embedding],
+            n_results=min(top_k * 8, collection.count()),
+            include=["distances"],
+        )
+        dense_ids = (dense_result.get("ids") or [[]])[0]
+        dense_distances = (dense_result.get("distances") or [[]])[0]
+        dense_scores = {
+            chunk_id: 1.0 / (1.0 + max(float(distance), 0.0))
+            for chunk_id, distance in zip(dense_ids, dense_distances)
+        }
+
+    # Reciprocal-rank fusion across dense, lexical and graph candidates.
     rankings = [
+        [key for key, _ in sorted(dense_scores.items(), key=lambda item: item[1], reverse=True)],
         [key for key, _ in sorted(lexical_scores.items(), key=lambda item: item[1], reverse=True)],
         [key for key, _ in sorted(graph_scores.items(), key=lambda item: item[1], reverse=True)],
     ]
@@ -113,5 +130,5 @@ def retrieve(query, top_k=3):
             for item in selected
         ],
         "distances": [fused[item["id"]] for item in selected],
-        "retrieval": ["bm25", "knowledge_graph"],
+        "retrieval": (["dense"] if dense_scores else []) + (["bm25"] if bm25 is not None else []) + (["knowledge_graph"] if graph_scores else []),
     }
