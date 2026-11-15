@@ -237,14 +237,14 @@ def backend_health() -> tuple[bool, str]:
     for attempt in range(2):
         try:
             response = requests.get(HEALTH_URL, timeout=15)
-            response.raise_for_status()
             payload = response.json()
-            if isinstance(payload, dict) and payload.get("status") == "ready":
-                return True, "Backend and retrieval index ready"
             if isinstance(payload, dict) and payload.get("status") == "not_ready":
                 failed = [name for name, item in payload.get("checks", {}).items()
                           if isinstance(item, dict) and item.get("ready") is False]
                 return False, "Backend not ready: " + ", ".join(failed or ["dependency check failed"])
+            response.raise_for_status()
+            if isinstance(payload, dict) and payload.get("status") == "ready":
+                return True, "Backend and retrieval index ready"
             return False, "Unexpected readiness response"
         except requests.RequestException as exc:
             last_error = exc
