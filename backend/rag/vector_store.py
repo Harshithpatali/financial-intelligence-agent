@@ -1,11 +1,12 @@
 from pathlib import Path
+import os
 import chromadb
 
 _COLLECTION = None
 _COLLECTION_NAME = "tcs_knowledge_base"
 
 def get_db_path():
-    return Path(__file__).resolve().parents[2] / "backend" / "chroma_db"
+    return Path(os.getenv("CHROMA_DB_PATH", str(Path(__file__).resolve().parents[2] / "backend" / "chroma_db"))).resolve()
 
 def get_client():
     path = get_db_path()
