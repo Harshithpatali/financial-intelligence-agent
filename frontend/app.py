@@ -106,38 +106,44 @@ st.markdown(
       background: rgba(83,214,223,.07); border-radius: 7px; padding: .2rem .5rem;
       font-family: 'DM Mono', monospace; font-size: .7rem; margin: .15rem .25rem .15rem 0;
     }
-    /* Navigation tabs styled as independent, tactile buttons. */
-    div[data-testid="stTabs"] [role="tablist"] {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .55rem;
-      border: 0;
-      padding: .35rem 0 .75rem;
+    /* Streamlit BaseWeb tabs: style the actual tab-list and tab elements. */
+    div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: .55rem !important;
+      border: 0 !important;
+      background: transparent !important;
+      padding: .35rem 0 .85rem !important;
     }
-    div[data-testid="stTabs"] button[role="tab"] {
-      flex: 0 0 auto;
-      border: 1px solid rgba(120,160,190,.24);
-      border-radius: 11px;
-      background: linear-gradient(145deg, #142638, #101e2d);
-      color: #aebfcd;
-      font-weight: 700;
-      white-space: nowrap;
-      padding: .62rem .9rem;
-      min-height: 2.7rem;
-      transition: border-color .18s ease, background .18s ease, color .18s ease;
+    div[data-testid="stTabs"] [data-baseweb="tab"] {
+      height: auto !important;
+      min-height: 2.8rem !important;
+      flex: 0 0 auto !important;
+      padding: .68rem .95rem !important;
+      border: 1px solid rgba(120,160,190,.28) !important;
+      border-radius: 12px !important;
+      background: #142638 !important;
+      color: #b7c8d6 !important;
+      font-weight: 700 !important;
+      white-space: nowrap !important;
+      box-shadow: 0 3px 10px rgba(0,0,0,.12) !important;
     }
-    div[data-testid="stTabs"] button[role="tab"]:hover {
-      border-color: rgba(83,214,223,.65);
-      color: #dffbfa;
-      background: #193247;
+    div[data-testid="stTabs"] [data-baseweb="tab"]:hover {
+      border-color: #53d6df !important;
+      background: #1a3347 !important;
+      color: #e6fbfb !important;
     }
-    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-      color: #9ce8e7;
-      border-color: #53d6df;
-      background: linear-gradient(145deg, rgba(36,91,107,.55), rgba(20,48,65,.95));
-      box-shadow: 0 0 0 1px rgba(83,214,223,.12), 0 6px 18px rgba(0,0,0,.16);
+    div[data-testid="stTabs"] [data-baseweb="tab"][aria-selected="true"] {
+      border: 1px solid #53d6df !important;
+      background: linear-gradient(145deg, #21465a, #173247) !important;
+      color: #aaf1ed !important;
+      box-shadow: 0 0 0 1px rgba(83,214,223,.16), 0 6px 16px rgba(0,0,0,.2) !important;
     }
-    div[data-testid="stTabs"] [data-baseweb="tab-highlight"] { display: none; }
+    div[data-testid="stTabs"] [data-baseweb="tab-highlight"],
+    div[data-testid="stTabs"] [data-baseweb="tab-border"] {
+      display: none !important;
+      height: 0 !important;
+    }
     div[data-testid="stButton"] button {
       border: 1px solid rgba(120,160,190,.22); background: #142638; color: #dce9f2;
       border-radius: 10px; font-weight: 650; transition: all .18s ease;
@@ -150,13 +156,12 @@ st.markdown(
     /* Responsive layout: preserve readable cards and charts on phones/tablets. */
     @media (max-width: 1100px) {
       .block-container { padding-left: 1.35rem; padding-right: 1.35rem; }
-      div[data-testid="stTabs"] [role="tablist"] {
-        flex-wrap: nowrap;
+      div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+        flex-wrap: nowrap !important;
         overflow-x: auto;
         scrollbar-width: thin;
-        padding-bottom: .65rem;
       }
-      div[data-testid="stTabs"] button[role="tab"] { flex: 0 0 auto; }
+      div[data-testid="stTabs"] [data-baseweb="tab"] { flex: 0 0 auto !important; }
       .metric-value { font-size: clamp(1.2rem, 3vw, 1.65rem); overflow-wrap: anywhere; }
     }
     @media (max-width: 760px) {
@@ -177,11 +182,11 @@ st.markdown(
         min-width: 100% !important;
         width: 100% !important;
       }
-      div[data-testid="stTabs"] [role="tablist"] { gap: .4rem; }
-      div[data-testid="stTabs"] button[role="tab"] {
-        font-size: .78rem;
-        padding: .55rem .72rem;
-        min-height: 2.6rem;
+      div[data-testid="stTabs"] [data-baseweb="tab-list"] { gap: .4rem !important; }
+      div[data-testid="stTabs"] [data-baseweb="tab"] {
+        font-size: .78rem !important;
+        padding: .58rem .72rem !important;
+        min-height: 2.6rem !important;
       }
       div[data-testid="stButton"] button {
         min-height: 2.8rem;
