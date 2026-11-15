@@ -1,520 +1,586 @@
+from __future__ import annotations
 
-import streamlit as st
-import requests
+import os
+from pathlib import Path
+from typing import Any
+
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+import requests
+import streamlit as st
 
-from utils import (
-    load_financials,
-    get_metric
-)
-
-# -----------------------------
-# Page Config
-# -----------------------------
-
+# -------------------------------------------------------------------
+# App configuration
+# -------------------------------------------------------------------
 st.set_page_config(
-    page_title="TCS Financial Intelligence Agent",
-    page_icon="📊",
-    layout="wide"
+    page_title="TCS | Financial Intelligence",
+    page_icon="◈",
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
-# -----------------------------
-# Backend Health Check
-# -----------------------------
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "data" / "financial_metrics"
+API_BASE = os.getenv(
+    "API_BASE_URL",
+    "https://financial-intelligence-agent-pmgy.onrender.com",
+).rstrip("/")
+API_URL = f"{API_BASE}/ask"
+HEALTH_URL = f"{API_BASE}/health"
 
-API_URL = "https://financial-intelligence-agent-pmgy.onrender.com/ask"
-HEALTH_URL = "https://financial-intelligence-agent-pmgy.onrender.com/"
-
-
-def ask_question(question):
-
-    response = requests.get(
-        API_URL,
-        params={
-            "question": question
-        },
-        timeout=180
-    )
-
-    if response.status_code != 200:
-        raise Exception(
-            f"API Error: {response.status_code}"
-        )
-
-    return response.json()
+YEARS = ["2022-03-31", "2023-03-31", "2024-03-31", "2025-03-31", "2026-03-31"]
+YEAR_LABELS = {year: "FY" + year[:4] for year in YEARS}
 
 
-try:
-
-    health = requests.get(
-        HEALTH_URL,
-        timeout=10
-    )
-
-    if health.status_code != 200:
-
-        st.error("Backend unavailable")
-        st.stop()
-
-except Exception:
-
-    st.warning(
-    """
-    Backend is starting up.
-    This may take up to 60 seconds on the first request.
-    Please wait... and refresh the page if necessary.
-    """  
-)
-    st.stop()
-
-# -----------------------------
-# Session State
-# -----------------------------
-
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# -----------------------------
-# Styling
-# -----------------------------
-
+# -------------------------------------------------------------------
+# Visual system
+# -------------------------------------------------------------------
 st.markdown(
     """
     <style>
-    .big-font {
-        font-size:28px !important;
-        font-weight:bold;
-        color:#1E3A8A;
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --ink: #eaf1f7;
+      --muted: #91a3b5;
+      --panel: #111d2b;
+      --panel-2: #162638;
+      --line: rgba(148, 178, 204, .16);
+      --cyan: #53d6df;
+      --mint: #9be4c1;
+      --gold: #f1c879;
     }
+    html, body, [class*="css"] { font-family: 'Manrope', sans-serif; }
+    .stApp {
+      background:
+        radial-gradient(ellipse at 8% 0%, rgba(36, 105, 126, .20), transparent 34%),
+        radial-gradient(ellipse at 92% 8%, rgba(44, 83, 123, .16), transparent 30%),
+        #09131f;
+      color: var(--ink);
+    }
+    [data-testid="stHeader"] { background: rgba(9,19,31,.72); }
+    [data-testid="stSidebar"] {
+      background: linear-gradient(180deg, #101d2b 0%, #0c1724 100%);
+      border-right: 1px solid var(--line);
+    }
+    [data-testid="stSidebar"] > div { padding-top: 1.2rem; }
+    .block-container { padding-top: 2rem; padding-bottom: 3rem; max-width: 1500px; }
+    h1, h2, h3 { letter-spacing: -.035em; color: #f1f6fb; }
+    p, li { color: #c1cfdb; }
+    .eyebrow {
+      color: var(--cyan); text-transform: uppercase; letter-spacing: .18em;
+      font-size: .68rem; font-weight: 800; margin-bottom: .55rem;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1.06;
+      font-weight: 800; letter-spacing: -.06em; color: #f5f8fb; margin: 0;
+    }
+    .hero-subtitle { color: #9fb2c4; font-size: .98rem; margin-top: .7rem; max-width: 760px; }
+    .hero-meta { color: #7890a5; font-family: 'DM Mono', monospace; font-size: .72rem; margin-top: 1.2rem; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: .45rem; border: 1px solid rgba(83,214,223,.28);
+      color: #9ce8e7; background: rgba(83,214,223,.08); border-radius: 999px;
+      padding: .42rem .75rem; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #71dfb3; display: inline-block; }
+    .section-kicker { color: var(--cyan); font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; margin-bottom: .35rem; }
+    .section-title { font-size: 1.45rem; font-weight: 800; color: #edf4f9; letter-spacing: -.04em; margin-bottom: .2rem; }
+    .section-note { color: #91a3b5; font-size: .84rem; margin-bottom: 1rem; }
+    .metric-card {
+      background: linear-gradient(145deg, rgba(23,42,59,.96), rgba(15,29,43,.96));
+      border: 1px solid var(--line); border-radius: 16px; padding: 1rem 1.1rem;
+      min-height: 118px; box-shadow: 0 10px 28px rgba(0,0,0,.12);
+    }
+    .metric-label { color: #91a8bb; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .metric-value { color: #f1f7fb; font-size: 1.72rem; font-weight: 800; letter-spacing: -.05em; margin-top: .35rem; }
+    .metric-foot { color: #89a1b5; font-size: .72rem; margin-top: .2rem; }
+    .panel {
+      background: rgba(17,29,43,.82); border: 1px solid var(--line);
+      border-radius: 18px; padding: 1.15rem 1.25rem; margin-bottom: .9rem;
+    }
+    .panel-title { color: #e8f0f6; font-weight: 800; font-size: 1rem; }
+    .panel-copy { color: #91a5b7; font-size: .82rem; line-height: 1.55; }
+    .source-chip {
+      display: inline-block; border: 1px solid rgba(83,214,223,.25); color: #a4e6e4;
+      background: rgba(83,214,223,.07); border-radius: 7px; padding: .2rem .5rem;
+      font-family: 'DM Mono', monospace; font-size: .7rem; margin: .15rem .25rem .15rem 0;
+    }
+    div[data-testid="stTabs"] button { font-weight: 700; color: #91a5b7; }
+    div[data-testid="stTabs"] button[aria-selected="true"] { color: #75e0df; }
+    div[data-testid="stTabs"] [data-baseweb="tab-highlight"] { background: #53d6df; }
+    div[data-testid="stButton"] button {
+      border: 1px solid rgba(120,160,190,.22); background: #142638; color: #dce9f2;
+      border-radius: 10px; font-weight: 650; transition: all .18s ease;
+    }
+    div[data-testid="stButton"] button:hover { border-color: #53d6df; color: #9ce8e7; background: #1a3347; }
+    div[data-testid="stChatInput"] textarea { background: #142638; }
+    div[data-testid="stChatMessage"] { background: rgba(19,35,51,.72); border: 1px solid var(--line); border-radius: 15px; padding: .9rem; }
+    div[data-testid="stExpander"] { border: 1px solid var(--line); border-radius: 12px; background: rgba(17,29,43,.65); }
+    hr { border-color: var(--line); }
+    .footer { color: #71869a; font-size: .72rem; text-align: center; padding-top: 1.4rem; }
     </style>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
-st.markdown(
-    '<p class="big-font">📊 TCS Financial Intelligence Agent</p>',
-    unsafe_allow_html=True
-)
 
-st.caption(
-    "AI-Powered Equity Research Assistant"
-)
+# -------------------------------------------------------------------
+# Data access and formatting
+# -------------------------------------------------------------------
+@st.cache_data(show_spinner=False)
+def load_data() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    income = pd.read_csv(DATA_DIR / "income_statement.csv", index_col=0)
+    balance = pd.read_csv(DATA_DIR / "balance_sheet.csv", index_col=0)
+    cash = pd.read_csv(DATA_DIR / "cash_flow.csv", index_col=0)
+    ratios_path = DATA_DIR / "key_ratios.csv"
+    ratios = pd.read_csv(ratios_path) if ratios_path.exists() else pd.DataFrame()
+    for frame in (income, balance, cash):
+        frame.columns = [str(c) for c in frame.columns]
+        for col in frame.columns:
+            frame[col] = pd.to_numeric(frame[col], errors="coerce")
+    return income, balance, cash, ratios
 
-# -----------------------------
-# Load Financials
-# -----------------------------
 
-@st.cache_data
-def load_cached_financials():
-    return load_financials()
+def metric_series(frame: pd.DataFrame, name: str) -> pd.Series:
+    if name not in frame.index:
+        return pd.Series(dtype="float64")
+    values = pd.to_numeric(frame.loc[name], errors="coerce")
+    return values.dropna()
 
-income_df, balance_df, cashflow_df = (
-    load_cached_financials()
-)
-# -----------------------------
-# Sidebar
-# -----------------------------
 
-st.sidebar.title("📈 TCS Snapshot")
+def latest_value(frame: pd.DataFrame, name: str) -> tuple[float | None, str | None]:
+    values = metric_series(frame, name)
+    if values.empty:
+        return None, None
+    dated = [(str(k), float(v)) for k, v in values.items() if str(k)[:4].isdigit()]
+    if not dated:
+        return None, None
+    year, value = max(dated, key=lambda item: item[0])
+    return value, year
 
-st.sidebar.metric(
-    "Revenue FY2024",
-    "₹240,893 Cr"
-)
 
-st.sidebar.metric(
-    "Growth",
-    "6.8%"
-)
+def crore(value: float | None, decimals: int = 0) -> str:
+    if value is None or pd.isna(value):
+        return "—"
+    return f"₹{value / 1e7:,.{decimals}f} Cr"
 
-st.sidebar.metric(
-    "Employees",
-    "600K+"
-)
 
-st.sidebar.divider()
+def growth_text(frame: pd.DataFrame, name: str) -> str:
+    values = metric_series(frame, name)
+    dated = [(str(k), float(v)) for k, v in values.items() if str(k)[:4].isdigit()]
+    dated.sort(key=lambda item: item[0])
+    if len(dated) < 2 or dated[-2][1] == 0:
+        return "Year-on-year change unavailable"
+    change = (dated[-1][1] / dated[-2][1] - 1) * 100
+    return f"{change:+.1f}% vs previous FY"
 
-st.sidebar.subheader(
-    "Suggested Questions"
-)
 
-suggestions = [
-    "What was TCS revenue in FY2024?",
-    "Summarize FY2024 performance",
-    "What did TCS say about AI?",
-    "What are key risks?"
-]
+def chart_frame(frame: pd.DataFrame, names: list[str]) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    for name in names:
+        values = metric_series(frame, name)
+        for year, value in values.items():
+            if str(year)[:4].isdigit():
+                rows.append({"Financial year": "FY" + str(year)[:4], "Metric": name, "₹ Crore": value / 1e7})
+    return pd.DataFrame(rows)
 
-selected_question = None
 
-for q in suggestions:
+def style_chart(fig: go.Figure, height: int = 330) -> go.Figure:
+    fig.update_layout(
+        template="plotly_dark",
+        height=height,
+        margin=dict(l=8, r=8, t=38, b=8),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Manrope, sans-serif", color="#b9c9d6", size=11),
+        title_font=dict(size=14, color="#eaf2f8"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        xaxis=dict(showgrid=False, linecolor="rgba(148,178,204,.15)"),
+        yaxis=dict(gridcolor="rgba(148,178,204,.12)", zerolinecolor="rgba(148,178,204,.12)"),
+    )
+    return fig
 
-    if st.sidebar.button(q):
-        selected_question = q
 
-# -----------------------------
-# Tabs
-# -----------------------------
-
-tab1, tab2, tab3, tab4, tab5 = st.tabs(
-    [
-        "💬 Chat",
-        "📈 Financials",
-        "🏦 Balance Sheet",
-        "💰 Cash Flow",
-        "🧠 Executive Insights"
-    ]
-)
-
-# ==================================================
-# CHAT TAB
-# ==================================================
-
-with tab1:
-
-    for msg in st.session_state.messages:
-
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-
-    question = st.chat_input(
-        "Ask a question about TCS..."
+def metric_card(label: str, value: str, foot: str) -> None:
+    st.markdown(
+        f'<div class="metric-card"><div class="metric-label">{label}</div>'
+        f'<div class="metric-value">{value}</div><div class="metric-foot">{foot}</div></div>',
+        unsafe_allow_html=True,
     )
 
-    if selected_question:
-        question = selected_question
 
+def section_heading(kicker: str, title: str, note: str) -> None:
+    st.markdown(
+        f'<div class="section-kicker">{kicker}</div><div class="section-title">{title}</div>'
+        f'<div class="section-note">{note}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def set_prompt(prompt: str) -> None:
+    st.session_state.pending_prompt = prompt
+
+
+# -------------------------------------------------------------------
+# API health and question answering
+# -------------------------------------------------------------------
+@st.cache_data(ttl=25, show_spinner=False)
+def backend_health() -> tuple[bool, str]:
+    try:
+        response = requests.get(HEALTH_URL, timeout=8)
+        response.raise_for_status()
+        return True, "Connected"
+    except requests.RequestException:
+        return False, "Temporarily unavailable"
+
+
+def ask_question(question: str) -> dict[str, Any]:
+    response = requests.post(API_URL, json={"question": question}, timeout=180)
+    response.raise_for_status()
+    payload = response.json()
+    if not isinstance(payload, dict):
+        raise ValueError("The research API returned an unexpected response.")
+    return payload
+
+
+def render_sources(sources: list[Any]) -> None:
+    if not sources:
+        st.caption("No source records were returned for this answer.")
+        return
+    with st.expander(f"Evidence trail · {len(sources)} source(s)", expanded=False):
+        for index, source in enumerate(sources, start=1):
+            if isinstance(source, dict):
+                source_name = Path(str(source.get("source", "Unknown source"))).name
+                page = source.get("page")
+                chunk = source.get("chunk_id")
+                methods = source.get("retrieval_methods") or source.get("methods") or []
+                details = []
+                if page:
+                    details.append(f"page {page}")
+                if chunk:
+                    details.append(f"chunk {chunk}")
+                st.markdown(f"**{index:02d} · {source_name}**")
+                if details:
+                    st.caption(" · ".join(details))
+                if methods:
+                    st.caption("Retrieved via: " + ", ".join(map(str, methods)))
+            else:
+                st.markdown(f"**{index:02d} · {Path(str(source)).name}**")
+
+
+# -------------------------------------------------------------------
+# Load financial datasets
+# -------------------------------------------------------------------
+try:
+    income_df, balance_df, cash_df, ratio_df = load_data()
+except Exception as exc:
+    st.error(f"Financial datasets could not be loaded: {exc}")
+    st.stop()
+
+api_ok, api_message = backend_health()
+revenue, revenue_year = latest_value(income_df, "Total Revenue")
+operating_income, _ = latest_value(income_df, "Operating Income")
+net_income, _ = latest_value(income_df, "Net Income")
+free_cash_flow, _ = latest_value(cash_df, "Free Cash Flow")
+latest_fy = "FY" + revenue_year[:4] if revenue_year else "Latest available FY"
+
+
+# -------------------------------------------------------------------
+# Sidebar
+# -------------------------------------------------------------------
+with st.sidebar:
+    st.markdown(
+        '<div class="eyebrow">Research workspace</div>'
+        '<div style="font-size:1.2rem;font-weight:800;color:#eef5fa;letter-spacing:-.04em">TCS Intelligence</div>'
+        '<div style="color:#8198ac;font-size:.75rem;margin-top:.25rem">Company research · India</div>',
+        unsafe_allow_html=True,
+    )
+    st.divider()
+    if api_ok:
+        st.markdown('<span class="status-pill"><span class="status-dot"></span> RESEARCH API ONLINE</span>', unsafe_allow_html=True)
+    else:
+        st.markdown('<span class="status-pill" style="border-color:rgba(241,200,121,.35);color:#f1c879"><span class="status-dot" style="background:#f1c879"></span> API UNAVAILABLE</span>', unsafe_allow_html=True)
+    st.caption("Financial data period: " + latest_fy)
+    st.divider()
+    st.markdown("**Company snapshot**")
+    st.metric("Revenue · " + latest_fy, crore(revenue))
+    st.metric("Net income · " + latest_fy, crore(net_income))
+    st.metric("Free cash flow · " + latest_fy, crore(free_cash_flow))
+    st.divider()
+    st.markdown("**Explore with a question**")
+    sidebar_prompts = [
+        "Summarise TCS financial performance over the last five fiscal years.",
+        "What are the main risks discussed in recent TCS disclosures?",
+        "What has management said about generative AI and its revenue opportunity?",
+        "Explain the trend in TCS operating cash flow and free cash flow.",
+    ]
+    for prompt in sidebar_prompts:
+        st.button(prompt, key="sidebar_" + str(sidebar_prompts.index(prompt)), use_container_width=True, on_click=set_prompt, args=(prompt,))
+    st.divider()
+    st.caption("Answers are generated from retrieved company documents. Verify material figures against the cited source.")
+
+
+# -------------------------------------------------------------------
+# Header
+# -------------------------------------------------------------------
+header_left, header_right = st.columns([5, 1.35], vertical_alignment="center")
+with header_left:
+    st.markdown('<div class="eyebrow">Equity research · TATA CONSULTANCY SERVICES</div>', unsafe_allow_html=True)
+    st.markdown('<h1 class="hero-title">Financial intelligence,<br>with an evidence trail.</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="hero-subtitle">Explore company performance, interrogate disclosures and trace AI-generated research back to the source documents.</div>'
+        '<div class="hero-meta">HYBRID RETRIEVAL&nbsp;&nbsp; / &nbsp;&nbsp;KNOWLEDGE GRAPH&nbsp;&nbsp; / &nbsp;&nbsp;GROUNDED GENERATION</div>',
+        unsafe_allow_html=True,
+    )
+with header_right:
+    if api_ok:
+        st.markdown('<div style="text-align:right"><span class="status-pill"><span class="status-dot"></span> SYSTEM READY</span></div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div style="text-align:right"><span class="status-pill" style="color:#f1c879;border-color:rgba(241,200,121,.35)">● API OFFLINE</span></div>', unsafe_allow_html=True)
+
+st.write("")
+
+
+# -------------------------------------------------------------------
+# Main navigation
+# -------------------------------------------------------------------
+overview_tab, research_tab, financials_tab, balance_tab, cash_tab, about_tab = st.tabs(
+    ["Overview", "AI Research", "Financial performance", "Balance sheet", "Cash flow", "How it works"]
+)
+
+with overview_tab:
+    section_heading("01 / Company dashboard", "TCS at a glance", f"Latest available annual financial data · {latest_fy}")
+    cards = st.columns(4, gap="medium")
+    with cards[0]:
+        metric_card("Total revenue", crore(revenue), growth_text(income_df, "Total Revenue"))
+    with cards[1]:
+        metric_card("Operating income", crore(operating_income), growth_text(income_df, "Operating Income"))
+    with cards[2]:
+        metric_card("Net income", crore(net_income), growth_text(income_df, "Net Income"))
+    with cards[3]:
+        metric_card("Free cash flow", crore(free_cash_flow), growth_text(cash_df, "Free Cash Flow"))
+
+    st.write("")
+    left, right = st.columns([1.45, 1], gap="large")
+    with left:
+        st.markdown('<div class="panel-title">Revenue trajectory</div><div class="panel-copy">Annual revenue, converted from reported rupees to ₹ crore.</div>', unsafe_allow_html=True)
+        revenue_chart = chart_frame(income_df, ["Total Revenue"])
+        if not revenue_chart.empty:
+            fig = px.area(revenue_chart, x="Financial year", y="₹ Crore", markers=True)
+            fig.update_traces(line=dict(color="#53d6df", width=3), fillcolor="rgba(83,214,223,.12)", marker=dict(size=7))
+            st.plotly_chart(style_chart(fig, 350), use_container_width=True, config={"displayModeBar": False})
+        else:
+            st.info("Revenue history is not available in the financial dataset.")
+    with right:
+        st.markdown('<div class="panel-title">Profit conversion</div><div class="panel-copy">Net income as a share of reported revenue.</div>', unsafe_allow_html=True)
+        rev_s = metric_series(income_df, "Total Revenue")
+        ni_s = metric_series(income_df, "Net Income")
+        common = sorted(set(map(str, rev_s.index)) & set(map(str, ni_s.index)))
+        margin_rows = []
+        for year in common:
+            if rev_s.get(year) and pd.notna(ni_s.get(year)):
+                margin_rows.append({"Financial year": "FY" + year[:4], "Net margin": float(ni_s[year] / rev_s[year] * 100)})
+        if margin_rows:
+            margin_df = pd.DataFrame(margin_rows)
+            fig = px.bar(margin_df, x="Financial year", y="Net margin", text=margin_df["Net margin"].map(lambda x: f"{x:.1f}%"))
+            fig.update_traces(marker_color="#9be4c1", textposition="outside")
+            fig.update_yaxes(title="Net margin (%)", ticksuffix="%", rangemode="tozero")
+            st.plotly_chart(style_chart(fig, 350), use_container_width=True, config={"displayModeBar": False})
+        else:
+            st.info("Profit margin history is not available.")
+
+    st.markdown('<div class="panel"><div class="panel-title">Research desk</div><div class="panel-copy">Move from reported numbers to the underlying explanation. Ask about business segments, strategy, risks, AI initiatives or the drivers behind a financial trend.</div></div>', unsafe_allow_html=True)
+    prompt_cols = st.columns(3)
+    quick_prompts = [
+        "What drove TCS revenue growth in the latest fiscal year?",
+        "How has free cash flow changed over time?",
+        "What are the key strategic risks for TCS?",
+    ]
+    for idx, prompt in enumerate(quick_prompts):
+        with prompt_cols[idx]:
+            st.button(prompt, key=f"overview_prompt_{idx}", use_container_width=True, on_click=set_prompt, args=(prompt,))
+
+
+with research_tab:
+    section_heading("02 / Ask the documents", "AI research assistant", "Ask a focused question. Answers include the retrieved evidence returned by the research API.")
+    if not api_ok:
+        st.warning("The research API is currently unavailable. Financial dashboards remain available; try the research assistant again when the backend is online.")
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    if "pending_prompt" not in st.session_state:
+        st.session_state.pending_prompt = ""
+
+    action_row = st.columns([5, 1])
+    with action_row[0]:
+        st.caption("Suggested starting points")
+    with action_row[1]:
+        if st.button("Clear chat", use_container_width=True):
+            st.session_state.messages = []
+            st.rerun()
+
+    suggestion_cols = st.columns(3)
+    research_prompts = [
+        "What does management say about AI and its impact on TCS?",
+        "Summarise the key risks and uncertainties in TCS disclosures.",
+        "Compare revenue and profitability trends across recent years.",
+    ]
+    for idx, prompt in enumerate(research_prompts):
+        with suggestion_cols[idx]:
+            st.button(prompt, key=f"research_prompt_{idx}", use_container_width=True, on_click=set_prompt, args=(prompt,))
+
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+            if message["role"] == "assistant":
+                render_sources(message.get("sources", []))
+
+    typed_question = st.chat_input("Ask about TCS strategy, financials, risks or disclosures…")
+    question = typed_question or st.session_state.get("pending_prompt", "")
     if question:
-
-        st.session_state.messages.append(
-            {
-                "role": "user",
-                "content": question
-            }
-        )
-
+        st.session_state.pending_prompt = ""
+        st.session_state.messages.append({"role": "user", "content": question})
         with st.chat_message("user"):
             st.markdown(question)
-
-        with st.spinner(
-                        "🔍 Searching reports and generating answer..."
-        ):
-
-            try:
-
-                data = ask_question(question)
-
-            except Exception as e:
-
-                st.error(str(e))
-                st.stop()
-
         with st.chat_message("assistant"):
-
-            if "answer" in data:
-
-                answer = data["answer"]
-
-                st.success(
-                    "Answer Generated"
-                )
-
-                st.markdown(answer)
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-                        "content": answer
-                    }
-                )
-
-            else:
-
-                st.error(
-                    data.get(
-                        "error",
-                        "Unknown API Error"
-                    )
-                )
-
-                st.stop()
-
-            sources = data.get(
-                "sources",
-                []
-            )
-
-            if sources:
-
-                with st.expander(
-                    f"📚 Sources ({len(sources)})"
-                ):
-                    
-
-
-                    import os
-
-                    for source in sources:
-
-                        if isinstance(source, dict):
-                            file_name = os.path.basename(source.get("source", "Unknown"))
-                            page = f" · page {source['page']}" if source.get("page") else ""
-                            st.markdown(f"- **{file_name}**{page}")
-                        else:
-                            st.markdown(f"- {os.path.basename(source)}")
-
-# ==================================================
-# FINANCIALS TAB
-# ==================================================
-
-with tab2:
-
-    st.subheader(
-        "Financial Performance"
-    )
-
-    revenue = get_metric(
-        income_df,
-        "Total Revenue"
-    )
-
-    net_income = get_metric(
-        income_df,
-        "Net Income"
-    )
-
-    fcf = get_metric(
-        cashflow_df,
-        "Free Cash Flow"
-    )
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.metric(
-            "Revenue FY2024",
-            f"₹{revenue['2024-03-31']/1e7:.0f} Cr"
-        )
-
-    with col2:
-        st.metric(
-            "Net Income FY2024",
-            f"₹{net_income['2024-03-31']/1e7:.0f} Cr"
-        )
-
-    with col3:
-        st.metric(
-            "Free Cash Flow FY2024",
-            f"₹{fcf['2024-03-31']/1e7:.0f} Cr"
-        )
-
-    years = [
-        "2022-03-31",
-        "2023-03-31",
-        "2024-03-31",
-        "2025-03-31",
-        "2026-03-31"
-    ]
-
-    revenue_df = pd.DataFrame(
-        {
-            "Year": years,
-            "Revenue": [
-                revenue[y]
-                for y in years
-            ]
-        }
-    )
-
-    fig = px.line(
-        revenue_df,
-        x="Year",
-        y="Revenue",
-        markers=True,
-        title="Revenue Trend"
-    )
-
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
-
-    profit_df = pd.DataFrame(
-        {
-            "Year": years,
-            "Profit": [
-                net_income[y]
-                for y in years
-            ]
-        }
-    )
-
-    fig2 = px.bar(
-        profit_df,
-        x="Year",
-        y="Profit",
-        title="Net Income Trend"
-    )
-
-    st.plotly_chart(
-        fig2,
-        use_container_width=True
-    )
-
-# ==================================================
-# BALANCE SHEET TAB
-# ==================================================
-
-with tab3:
-
-    st.subheader(
-        "Balance Sheet Snapshot"
-    )
-
-    total_assets = get_metric(
-        balance_df,
-        "Total Assets"
-    )
-
-    total_debt = get_metric(
-        balance_df,
-        "Total Debt"
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        st.metric(
-            "Total Assets FY2024",
-            f"₹{total_assets['2024-03-31']/1e7:.0f} Cr"
-        )
-
-    with col2:
-
-        st.metric(
-            "Total Debt FY2024",
-            f"₹{total_debt['2024-03-31']/1e7:.0f} Cr"
-        )
-
-# ==================================================
-# CASH FLOW TAB
-# ==================================================
-
-with tab4:
-
-    st.subheader(
-        "Cash Flow Analysis"
-    )
-
-    free_cash_flow = get_metric(
-        cashflow_df,
-        "Free Cash Flow"
-    )
-
-    capex = get_metric(
-        cashflow_df,
-        "Capital Expenditure"
-    )
-
-    cash_position = get_metric(
-        cashflow_df,
-        "End Cash Position"
-    )
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-
-        st.metric(
-            "Free Cash Flow",
-            f"₹{free_cash_flow['2024-03-31']/1e7:.0f} Cr"
-        )
-
-    with col2:
-
-        st.metric(
-            "Capital Expenditure",
-            f"₹{capex['2024-03-31']/1e7:.0f} Cr"
-        )
-
-    with col3:
-
-        st.metric(
-            "Cash Position",
-            f"₹{cash_position['2024-03-31']/1e7:.0f} Cr"
-        )
-
-# ==================================================
-# EXECUTIVE INSIGHTS
-# ==================================================
-
-with tab5:
-
-    st.subheader(
-        "AI Executive Insights"
-    )
-
-    if st.button(
-        "Generate Executive Insights"
-    ):
-
-        questions = [
-            "What are the key growth drivers for TCS?",
-            "What are the major risks facing TCS?",
-            "What did management say about AI?"
-        ]
-
-        with st.spinner(
-            "Generating executive insights..."
-        ):
-
-            for q in questions:
-
+            with st.spinner("Searching disclosures, ranking evidence and preparing a grounded response…"):
                 try:
-                    data = ask_question(q)
-
-                except Exception as e:
-
-                    st.error(str(e))
-                    continue
-
-                   
-
-                    st.markdown(
-                        f"### {q}"
+                    result = ask_question(question)
+                    answer = result.get("answer") or result.get("detail") or "The API returned no answer."
+                    sources = result.get("sources", [])
+                    st.markdown(answer)
+                    render_sources(sources)
+                    st.session_state.messages.append(
+                        {"role": "assistant", "content": answer, "sources": sources}
                     )
+                except requests.RequestException as exc:
+                    message = f"The research service could not complete this request: {exc}"
+                    st.error(message)
+                    st.session_state.messages.append({"role": "assistant", "content": message, "sources": []})
+                except Exception as exc:
+                    message = f"Unable to process the response: {exc}"
+                    st.error(message)
+                    st.session_state.messages.append({"role": "assistant", "content": message, "sources": []})
 
-                    if "answer" in data:
 
-                        st.write(
-                            data["answer"]
-                        )
+with financials_tab:
+    section_heading("03 / Income statement", "Growth and profitability", "Reported annual financial metrics. Values are displayed in ₹ crore.")
+    rev_value, _ = latest_value(income_df, "Total Revenue")
+    gross_profit, _ = latest_value(income_df, "Gross Profit")
+    op_income, _ = latest_value(income_df, "Operating Income")
+    ni_value, _ = latest_value(income_df, "Net Income")
+    metric_cols = st.columns(4)
+    for col, label, value, foot in [
+        (metric_cols[0], "Revenue", rev_value, growth_text(income_df, "Total Revenue")),
+        (metric_cols[1], "Gross profit", gross_profit, growth_text(income_df, "Gross Profit")),
+        (metric_cols[2], "Operating income", op_income, growth_text(income_df, "Operating Income")),
+        (metric_cols[3], "Net income", ni_value, growth_text(income_df, "Net Income")),
+    ]:
+        with col:
+            metric_card(label, crore(value), foot)
 
-                    else:
+    st.write("")
+    chart_left, chart_right = st.columns(2, gap="large")
+    with chart_left:
+        df = chart_frame(income_df, ["Total Revenue", "Gross Profit"])
+        if not df.empty:
+            fig = px.line(df, x="Financial year", y="₹ Crore", color="Metric", markers=True, color_discrete_sequence=["#53d6df", "#9be4c1"])
+            st.plotly_chart(style_chart(fig, 360), use_container_width=True, config={"displayModeBar": False})
+    with chart_right:
+        df = chart_frame(income_df, ["Operating Income", "Net Income"])
+        if not df.empty:
+            fig = px.bar(df, x="Financial year", y="₹ Crore", color="Metric", barmode="group", color_discrete_sequence=["#6fa9d8", "#e8bd73"])
+            st.plotly_chart(style_chart(fig, 360), use_container_width=True, config={"displayModeBar": False})
 
-                        st.error(
-                            data.get(
-                                "error",
-                                "Unknown API Error"
-                            )
-                        )
+    with st.expander("View reported income statement metrics"):
+        visible = income_df.copy()
+        visible.index.name = "Metric"
+        st.dataframe((visible / 1e7).round(2), use_container_width=True, height=430)
+        st.caption("Displayed values are converted from rupees to ₹ crore. Missing source values remain blank.")
 
-                    st.divider()
 
-                except Exception as e:
+with balance_tab:
+    section_heading("04 / Financial position", "Balance sheet strength", "Assets, liabilities, equity and debt across the available fiscal years.")
+    assets, _ = latest_value(balance_df, "Total Assets")
+    liabilities, _ = latest_value(balance_df, "Total Liabilities Net Minority Interest")
+    equity, _ = latest_value(balance_df, "Stockholders Equity")
+    debt, _ = latest_value(balance_df, "Total Debt")
+    metric_cols = st.columns(4)
+    for col, label, value in [
+        (metric_cols[0], "Total assets", assets),
+        (metric_cols[1], "Total liabilities", liabilities),
+        (metric_cols[2], "Shareholders' equity", equity),
+        (metric_cols[3], "Total debt", debt),
+    ]:
+        with col:
+            metric_card(label, crore(value), "Latest available annual figure")
 
-                    st.error(
-                        f"Failed to fetch insight: {e}"
-                    )
-                    
-                    # -----------------------------
-# Footer
-# -----------------------------
+    st.write("")
+    balance_chart = chart_frame(balance_df, ["Total Assets", "Total Liabilities Net Minority Interest", "Stockholders Equity"])
+    if not balance_chart.empty:
+        fig = px.area(balance_chart, x="Financial year", y="₹ Crore", color="Metric", markers=True, color_discrete_sequence=["#53d6df", "#e8bd73", "#9be4c1"])
+        st.plotly_chart(style_chart(fig, 390), use_container_width=True, config={"displayModeBar": False})
 
-                    st.divider()
+    with st.expander("View reported balance sheet metrics"):
+        visible = balance_df.copy()
+        visible.index.name = "Metric"
+        st.dataframe((visible / 1e7).round(2), use_container_width=True, height=430)
 
-                    st.caption(
-                            "Built with FastAPI • ChromaDB • BAAI/bge-small-en-v1.5 • Groq LLM • Streamlit"
-                            )
+
+with cash_tab:
+    section_heading("05 / Cash generation", "Cash flow quality", "Operating cash flow, reinvestment and free cash flow.")
+    operating_cash, _ = latest_value(cash_df, "Operating Cash Flow")
+    capex, _ = latest_value(cash_df, "Capital Expenditure")
+    end_cash, _ = latest_value(cash_df, "End Cash Position")
+    metric_cols = st.columns(4)
+    for col, label, value, foot in [
+        (metric_cols[0], "Operating cash flow", operating_cash, growth_text(cash_df, "Operating Cash Flow")),
+        (metric_cols[1], "Free cash flow", free_cash_flow, growth_text(cash_df, "Free Cash Flow")),
+        (metric_cols[2], "Capital expenditure", abs(capex) if capex is not None else None, "Absolute investment outflow"),
+        (metric_cols[3], "Cash position", end_cash, "Year-end cash position"),
+    ]:
+        with col:
+            metric_card(label, crore(value), foot)
+
+    st.write("")
+    cash_chart = chart_frame(cash_df, ["Operating Cash Flow", "Free Cash Flow"])
+    if not cash_chart.empty:
+        fig = px.line(cash_chart, x="Financial year", y="₹ Crore", color="Metric", markers=True, color_discrete_sequence=["#53d6df", "#9be4c1"])
+        st.plotly_chart(style_chart(fig, 370), use_container_width=True, config={"displayModeBar": False})
+
+    with st.expander("View reported cash flow metrics"):
+        visible = cash_df.copy()
+        visible.index.name = "Metric"
+        st.dataframe((visible / 1e7).round(2), use_container_width=True, height=430)
+
+
+with about_tab:
+    section_heading("06 / System design", "How the research engine works", "A transparent overview of the retrieval and generation pipeline.")
+    stages = [
+        ("01", "Source documents", "TCS annual reports, quarterly disclosures, financial statements, earnings-call transcripts and company news."),
+        ("02", "Evidence indexing", "Documents are chunked with source metadata; dense embeddings are stored in ChromaDB and lexical terms are indexed with BM25."),
+        ("03", "Knowledge graph", "A NetworkX graph links financial entities and reporting periods to the evidence chunks where they appear."),
+        ("04", "Hybrid retrieval", "Dense, lexical and graph evidence are combined using reciprocal-rank fusion before the LLM receives context."),
+        ("05", "Grounded response", "The model is instructed to answer from retrieved evidence and return source references for verification."),
+    ]
+    for number, title, copy in stages:
+        st.markdown(
+            f'<div class="panel"><div style="display:flex;gap:1rem;align-items:flex-start">'
+            f'<div style="font-family:DM Mono,monospace;color:#53d6df;font-size:.85rem;padding-top:.12rem">{number}</div>'
+            f'<div><div class="panel-title">{title}</div><div class="panel-copy">{copy}</div></div></div></div>',
+            unsafe_allow_html=True,
+        )
+    st.markdown("**Important scope notes**")
+    st.info(
+        "The current graph uses rule-based financial entity extraction and evidence co-mention edges. "
+        "Those edges do not imply causality or directional business relationships. The graph is a local "
+        "NetworkX index, not a Neo4j deployment. Retrieval metrics should only be reported after a manually "
+        "reviewed benchmark has been completed."
+    )
+    st.caption("Research support only — not investment advice. Confirm material statements against original filings.")
+
+
+st.markdown(
+    '<div class="footer">TCS FINANCIAL INTELLIGENCE &nbsp;·&nbsp; HYBRID GRAPH RAG &nbsp;·&nbsp; BUILT WITH STREAMLIT, FASTAPI, CHROMADB AND GROQ</div>',
+    unsafe_allow_html=True,
+)
