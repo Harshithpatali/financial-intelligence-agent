@@ -1,8 +1,4 @@
-"""Install the latest precomputed RAG index without using the GitHub Releases API.
-
-The /releases/latest/download URL is served as a browser download and avoids
-GitHub's unauthenticated REST API rate limit on small Render instances.
-"""
+"""Install the latest precomputed RAG index without using the GitHub Releases API."""
 from __future__ import annotations
 
 import json
@@ -18,9 +14,7 @@ from pathlib import Path
 REPOSITORY = os.getenv("RAG_INDEX_REPOSITORY", "Harshithpatali/financial-intelligence-agent")
 ASSET_NAME = "rag-index.zip"
 ROOT = Path(__file__).resolve().parents[2]
-DOWNLOAD_URL = (
-    f"https://github.com/{REPOSITORY}/releases/latest/download/{ASSET_NAME}"
-)
+DOWNLOAD_URL = f"https://github.com/{REPOSITORY}/releases/latest/download/{ASSET_NAME}"
 GRAPH_MEMBER = "backend/indexes/tcs_knowledge_graph.json"
 CHROMA_MEMBER = "backend/chroma_db/chroma.sqlite3"
 
@@ -56,38 +50,58 @@ def _validate_archive(archive: Path, staging: Path) -> tuple[int, int]:
     with zipfile.ZipFile(archive) as bundle:
         if bundle.testzip() is not None:
             raise RuntimeError("RAG index ZIP failed its integrity check.")
-
         members = set(bundle.namelist())
         if GRAPH_MEMBER not in members or CHROMA_MEMBER not in members:
             raise RuntimeError("RAG index archive is missing the Chroma database or knowledge graph.")
-
-        root = ROOT.resolve()
         for member in members:
             target = (staging / member).resolve()
             if not target.is_relative_to(staging.resolve()):
                 raise RuntimeError(f"Unsafe path in RAG index archive: {member}")
-
         bundle.extractall(staging)
 
     graph_path = staging / GRAPH_MEMBER
     graph_data = json.loads(graph_path.read_text(encoding="utf-8"))
     nodes = graph_data.get("nodes", [])
-    edges = graph_data.get("edges", graph_data.get("links", []))
     if not nodes:
         raise RuntimeError("Downloaded knowledge graph contains zero nodes.")
 
     chroma_path = staging / "backend" / "chroma_db"
     client = chromadb.PersistentClient(path=str(chroma_path))
     try:
-        collection = client.get_collection("tcs_knowledge_base")
-        chunks = collection.count()
+        chunks = client.get_collection("tcs_knowledge_base").count()
     finally:
-        # Release SQLite handles before moving the validated database.
         del client
-
     if chunks <= 0:
         raise RuntimeError("Downloaded Chroma collection contains zero document chunks.")
     return len(nodes), chunks
+
+
+def _install_one(source: Path, target: Path) -> tuple[Path, Path | None]:
+    """Copy to the target filesystem first, then rename locally to avoid EXDEV."""
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix=f".{target.name}-new-", dir=target.parent))
+    staged_target = temporary / target.name
+    backup_target = temporary / f"{target.name}.backup"
+    try:
+        if source.is_dir():
+            shutil.copytree(source, staged_target)
+        else:
+            shutil.copy2(source, staged_target)
+
+        had_old = target.exists()
+        if had_old:
+            os.replace(target, backup_target)
+        try:
+            os.replace(staged_target, target)
+        except Exception:
+            if had_old and backup_target.exists():
+                os.replace(backup_target, target)
+            raise
+        return target, backup_target if had_old else None
+    finally:
+        # Keep backup until both index components have installed successfully.
+        if not (temporary / f"{target.name}.backup").exists():
+            shutil.rmtree(temporary, ignore_errors=True)
 
 
 def _install(staging: Path) -> None:
@@ -95,31 +109,22 @@ def _install(staging: Path) -> None:
     source_graph = staging / GRAPH_MEMBER
     target_chroma = ROOT / "backend" / "chroma_db"
     target_graph = ROOT / GRAPH_MEMBER
-    backup = staging / "backup"
-    backup.mkdir()
-
-    targets = [(target_chroma, source_chroma), (target_graph, source_graph)]
-    moved_old: list[tuple[Path, Path]] = []
-    installed: list[Path] = []
+    installed: list[tuple[Path, Path | None]] = []
     try:
-        for target, source in targets:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            if target.exists():
-                old = backup / ("chroma_db" if target == target_chroma else "knowledge_graph.json")
-                os.replace(target, old)
-                moved_old.append((target, old))
-            os.replace(source, target)
-            installed.append(target)
+        installed.append(_install_one(source_chroma, target_chroma))
+        installed.append(_install_one(source_graph, target_graph))
     except Exception:
-        for target in reversed(installed):
+        for target, backup in reversed(installed):
             if target.is_dir():
-                shutil.rmtree(target)
+                shutil.rmtree(target, ignore_errors=True)
             elif target.exists():
                 target.unlink()
-        for target, old in reversed(moved_old):
-            if old.exists():
-                os.replace(old, target)
+            if backup is not None and backup.exists():
+                os.replace(backup, target)
         raise
+    for _, backup in installed:
+        if backup is not None:
+            shutil.rmtree(backup.parent, ignore_errors=True)
 
 
 def main() -> None:
@@ -130,11 +135,7 @@ def main() -> None:
         _download(DOWNLOAD_URL, archive)
         nodes, chunks = _validate_archive(archive, staging)
         _install(staging)
-
-    print(
-        f"Installed latest RAG index: {chunks} document chunks, "
-        f"{nodes} knowledge-graph nodes."
-    )
+    print(f"Installed latest RAG index: {chunks} document chunks, {nodes} knowledge-graph nodes.")
 
 
 if __name__ == "__main__":
