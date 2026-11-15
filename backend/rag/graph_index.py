@@ -29,10 +29,10 @@ ENTITY_ALIASES = {
     "North America": ["north america", "united states"],
     "Europe": ["europe", "uk market"],
 }
-YEAR_RE = re.compile(r"\\b(?:FY\\s*)?(20\\d{2})(?:[-–/](\\d{2,4}))?\\b", re.I)
+YEAR_RE = re.compile(r"\b(?:FY\s*)?(20\d{2})(?:[-–/](\d{2,4}))?\b", re.I)
 TREND_PATTERNS = {
-    "INCREASED": re.compile(r"\\b(increased|grew|growth|rose|higher|improved)\\b", re.I),
-    "DECREASED": re.compile(r"\\b(decreased|declined|fell|lower|reduced|contracted)\\b", re.I),
+    "INCREASED": re.compile(r"\b(increased|grew|growth|rose|higher|improved)\b", re.I),
+    "DECREASED": re.compile(r"\b(decreased|declined|fell|lower|reduced|contracted)\b", re.I),
 }
 
 
@@ -41,7 +41,7 @@ def _contains_alias(text, alias):
 
 
 def extract_entities(text):
-    normalized = re.sub(r"\\s+", " ", str(text).lower())
+    normalized = re.sub(r"\s+", " ", str(text).lower())
     found = {entity for entity, aliases in ENTITY_ALIASES.items()
              if any(_contains_alias(normalized, alias) for alias in aliases)}
     for match in YEAR_RE.finditer(str(text)):
