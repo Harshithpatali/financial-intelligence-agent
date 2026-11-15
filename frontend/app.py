@@ -106,10 +106,38 @@ st.markdown(
       background: rgba(83,214,223,.07); border-radius: 7px; padding: .2rem .5rem;
       font-family: 'DM Mono', monospace; font-size: .7rem; margin: .15rem .25rem .15rem 0;
     }
-    div[data-testid="stTabs"] [role="tablist"] { flex-wrap: wrap; gap: .25rem; }
-    div[data-testid="stTabs"] button { font-weight: 700; color: #91a5b7; white-space: nowrap; }
-    div[data-testid="stTabs"] button[aria-selected="true"] { color: #75e0df; }
-    div[data-testid="stTabs"] [data-baseweb="tab-highlight"] { background: #53d6df; }
+    /* Navigation tabs styled as independent, tactile buttons. */
+    div[data-testid="stTabs"] [role="tablist"] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      border: 0;
+      padding: .35rem 0 .75rem;
+    }
+    div[data-testid="stTabs"] button[role="tab"] {
+      flex: 0 0 auto;
+      border: 1px solid rgba(120,160,190,.24);
+      border-radius: 11px;
+      background: linear-gradient(145deg, #142638, #101e2d);
+      color: #aebfcd;
+      font-weight: 700;
+      white-space: nowrap;
+      padding: .62rem .9rem;
+      min-height: 2.7rem;
+      transition: border-color .18s ease, background .18s ease, color .18s ease;
+    }
+    div[data-testid="stTabs"] button[role="tab"]:hover {
+      border-color: rgba(83,214,223,.65);
+      color: #dffbfa;
+      background: #193247;
+    }
+    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+      color: #9ce8e7;
+      border-color: #53d6df;
+      background: linear-gradient(145deg, rgba(36,91,107,.55), rgba(20,48,65,.95));
+      box-shadow: 0 0 0 1px rgba(83,214,223,.12), 0 6px 18px rgba(0,0,0,.16);
+    }
+    div[data-testid="stTabs"] [data-baseweb="tab-highlight"] { display: none; }
     div[data-testid="stButton"] button {
       border: 1px solid rgba(120,160,190,.22); background: #142638; color: #dce9f2;
       border-radius: 10px; font-weight: 650; transition: all .18s ease;
@@ -126,9 +154,9 @@ st.markdown(
         flex-wrap: nowrap;
         overflow-x: auto;
         scrollbar-width: thin;
-        padding-bottom: .35rem;
+        padding-bottom: .65rem;
       }
-      div[data-testid="stTabs"] button { flex: 0 0 auto; }
+      div[data-testid="stTabs"] button[role="tab"] { flex: 0 0 auto; }
       .metric-value { font-size: clamp(1.2rem, 3vw, 1.65rem); overflow-wrap: anywhere; }
     }
     @media (max-width: 760px) {
@@ -149,13 +177,11 @@ st.markdown(
         min-width: 100% !important;
         width: 100% !important;
       }
-      div[data-testid="stTabs"] [role="tablist"] {
-        gap: .15rem;
-        border-bottom: 1px solid var(--line);
-      }
-      div[data-testid="stTabs"] button {
+      div[data-testid="stTabs"] [role="tablist"] { gap: .4rem; }
+      div[data-testid="stTabs"] button[role="tab"] {
         font-size: .78rem;
-        padding: .55rem .65rem;
+        padding: .55rem .72rem;
+        min-height: 2.6rem;
       }
       div[data-testid="stButton"] button {
         min-height: 2.8rem;
