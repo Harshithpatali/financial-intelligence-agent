@@ -53,6 +53,12 @@ jobs:
           if count <= 0:
               raise SystemExit("The generated Chroma collection is empty.")
           print(f"Verified {count} indexed document chunks.")
+          from backend.rag.graph_index import INDEX_PATH, load_graph
+          graph = load_graph()
+          nodes, edges = graph.number_of_nodes(), graph.number_of_edges()
+          if not INDEX_PATH.exists() or nodes <= 0:
+              raise SystemExit(f"The generated knowledge graph is empty: nodes={nodes}, edges={edges}.")
+          print(f"Verified knowledge graph: {nodes} nodes and {edges} edges.")
           PY
 
       - name: Package index
