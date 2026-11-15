@@ -40,7 +40,7 @@ def test_market_cache_returns_last_successful_value_when_provider_fails(monkeypa
     from backend import market_data
 
     key = ("quote", "STALE_TEST")
-    monkeypatch.setitem(market_data._CACHE, key, (0.0, {"ticker": "STALE_TEST", "price": 100.0}))
+    monkeypatch.setitem(market_data._CACHE, key, (-1000.0, {"ticker": "STALE_TEST", "price": 100.0}))
     result = market_data._cached(
         "quote",
         ("STALE_TEST",),
