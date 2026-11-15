@@ -27,7 +27,24 @@ def _cached(kind: str, key: tuple, loader):
         item = _CACHE.get(cache_key)
         if item and now - item[0] < _TTL[kind]:
             return item[1]
-    value = loader()
+    try:
+        value = loader()
+    except Exception:
+        # Keep the last successful response available during provider outages.
+        with _LOCK:
+            stale_item = _CACHE.get(cache_key)
+        if stale_item and isinstance(stale_item[1], dict):
+            stale_value = dict(stale_item[1])
+            stale_value["data_status"] = "stale"
+            stale_value["price_note"] = (
+                str(stale_value.get("price_note", "")).strip()
+                + " Provider request failed; showing the last successfully cached observation."
+            ).strip()
+            return stale_value
+        raise
+    if isinstance(value, dict):
+        value = dict(value)
+        value["data_status"] = "fresh"
     with _LOCK:
         _CACHE[cache_key] = (now, value)
     return value
