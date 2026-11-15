@@ -5,4 +5,4 @@ services:
 
     buildCommand: pip install -r backend/requirements.txt
 
-    startCommand: python -m backend.rag.build_graph_from_collection && uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
+    startCommand: python -m backend.rag.download_index && uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
