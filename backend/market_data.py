@@ -16,7 +16,7 @@ from typing import Any
 
 _CACHE: dict[tuple, tuple[float, Any]] = {}
 _LOCK = threading.Lock()
-_TTL = {"quote": 60, "history": 300, "news": 300, "sentiment": 21600}
+_TTL = {"quote": 60, "history": 300, "news": 300, "sentiment": 86400}
 _ALLOWED = re.compile(r"^[A-Z0-9^=.-]{1,20}$")
 
 
@@ -163,8 +163,11 @@ def _classify_financial_text(text: str) -> dict:
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=35) as response:
+    with urllib.request.urlopen(request, timeout=18) as response:
         result = json.loads(response.read(500_000).decode("utf-8"))
+    # HF providers may wrap token-classification output in one extra list.
+    while isinstance(result, list) and len(result) == 1 and isinstance(result[0], list):
+        result = result[0]
     if not isinstance(result, list) or not result:
         raise RuntimeError("FinBERT returned an unexpected classification response.")
     scores = {str(item["label"]).lower(): float(item["score"]) for item in result if isinstance(item, dict) and "label" in item and "score" in item}
@@ -184,41 +187,59 @@ def _classify_financial_text(text: str) -> dict:
     }
 
 
-def get_daily_sentiment(query: str, limit: int = 12) -> dict:
+def get_daily_sentiment(query: str, limit: int = 8) -> dict:
     """Fetch current headlines and score them with financial-domain FinBERT."""
     cleaned = " ".join((query or "").split())
     if not cleaned or len(cleaned) > 160:
         raise ValueError("Sentiment query must contain 1–160 characters.")
-    limit = max(1, min(int(limit), 12))
+    limit = max(1, min(int(limit), 8))
 
     def load():
         from email.utils import parsedate_to_datetime
 
         news = get_news(cleaned, limit)
-        articles = []
-        for article in news.get("items", []):
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        candidates = []
+        for article in news.get("items", [])[:limit]:
             title = str(article.get("title", "")).strip()
-            summary = " ".join(str(article.get("summary", "")).split())
             if not title:
                 continue
-            text = title + (". " + summary[:900] if summary else "")
-            scores = _classify_financial_text(text)
-            published = str(article.get("published", ""))
-            try:
-                published_day = parsedate_to_datetime(published).date().isoformat()
-            except (TypeError, ValueError, OverflowError):
-                published_day = "Date unavailable"
-            articles.append({
-                "title": title,
-                "url": str(article.get("url", "")),
-                "publisher": str(article.get("publisher", "Publisher not identified")),
-                "published": published,
-                "published_date": published_day,
-                **scores,
-            })
+            summary = " ".join(str(article.get("summary", "")).split())
+            candidates.append((article, title + (". " + summary[:900] if summary else "")))
+
+        articles = []
+        failed = 0
+
+        def classify(candidate):
+            article, text = candidate
+            return article, _classify_financial_text(text)
+
+        # Bounded concurrency lowers response time without loading FinBERT on Render.
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            futures = [pool.submit(classify, candidate) for candidate in candidates]
+            for future in as_completed(futures):
+                try:
+                    article, scores = future.result()
+                except Exception:
+                    failed += 1
+                    continue
+                published = str(article.get("published", ""))
+                try:
+                    published_day = parsedate_to_datetime(published).date().isoformat()
+                except (TypeError, ValueError, OverflowError):
+                    published_day = "Date unavailable"
+                articles.append({
+                    "title": str(article.get("title", "Untitled")).strip(),
+                    "url": str(article.get("url", "")),
+                    "publisher": str(article.get("publisher", "Publisher not identified")),
+                    "published": published,
+                    "published_date": published_day,
+                    **scores,
+                })
 
         if not articles:
-            raise LookupError("No headlines were available to classify.")
+            raise RuntimeError("FinBERT could not classify any headlines. Check the Hugging Face token and Inference Providers access.")
         counts = {label: sum(item["label"] == label for item in articles) for label in ("positive", "negative", "neutral")}
         average = sum(item["sentiment_score"] for item in articles) / len(articles)
         daily = {}
@@ -237,6 +258,7 @@ def get_daily_sentiment(query: str, limit: int = 12) -> dict:
             "source": "Google News RSS",
             "retrieved_at": datetime.now(timezone.utc).isoformat(),
             "article_count": len(articles),
+            "failed_article_count": failed,
             "sentiment_score": round(average, 4),
             "sentiment_label": "positive" if average > 0.08 else "negative" if average < -0.08 else "neutral",
             "counts": counts,
