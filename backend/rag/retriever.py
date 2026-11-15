@@ -1,120 +1,36 @@
+"""Hybrid retrieval using dense embeddings, BM25 and graph expansion."""
 import os
-
 from dotenv import load_dotenv
 load_dotenv()
-
 from backend.rag.vector_store import get_collection
-
-print("retriever.py imported")
-
-_model = None
-
-
+from backend.rag.graph_index import graph_retrieve
+_model=None
 def get_model():
-
-    global _model
-
-    if _model is None:
-
-        print("STEP A: importing SentenceTransformer")
-
-        try:
-            import torch
-            print("TORCH VERSION:", torch.__version__)
-
-            from sentence_transformers import SentenceTransformer
-            print("SentenceTransformer imported")
-
-        except Exception as e:
-            print("IMPORT ERROR:", str(e))
-            raise
-
-        print("STEP B: creating model")
-
-        hf_token = os.getenv("HF_TOKEN")
-
-        print(f"HF Token Found: {bool(hf_token)}")
-
-        print("About to load SentenceTransformer")
-
-        _model = SentenceTransformer(
-            "BAAI/bge-small-en-v1.5",
-            token=hf_token
-        )
-
-        print("STEP C: model loaded")
-
-    return _model
-print("Model loaded")
-
-
-def retrieve(
-    query: str,
-    top_k: int = 5
-):
-
-    print("Retrieve called")
-
-    model = get_model()
-
-    print("Model obtained")
-
-    collection = get_collection()
-
-    print("Collection obtained")
-
-    print("Creating embedding")
-
-    query_embedding = (
-        model.encode(query)
-        .tolist()
-    )
-
-    print("Embedding created")
-
-    print("Querying ChromaDB")
-
-    results = collection.query(
-        query_embeddings=[
-            query_embedding
-        ],
-        n_results=top_k,
-        include=[
-            "documents",
-            "metadatas",
-            "distances"
-        ]
-    )
-
-    print("Chroma query completed")
-
-    documents = (
-        results.get(
-            "documents",
-            [[]]
-        )[0]
-    )
-
-    metadatas = (
-        results.get(
-            "metadatas",
-            [[]]
-        )[0]
-    )
-
-    distances = (
-        results.get(
-            "distances",
-            [[]]
-        )[0]
-    )
-
-    print(
-        f"Retrieved {len(documents)} documents"
-    )
-
-    return {
-        "documents": documents,
-        "sources": metadatas,
-        "distances": distances
-    }
+ global _model
+ if _model is None:
+  from sentence_transformers import SentenceTransformer
+  _model=SentenceTransformer(os.getenv("EMBEDDING_MODEL","BAAI/bge-small-en-v1.5"),token=os.getenv("HF_TOKEN") or None)
+ return _model
+def _all_records(collection):
+ r=collection.get(include=["documents","metadatas"]); ids=r.get("ids") or []; docs=r.get("documents") or []; metas=r.get("metadatas") or []
+ return [{"id":ids[i],"text":docs[i],"metadata":metas[i] or {}} for i in range(min(len(ids),len(docs)))]
+def _bm25_scores(query,records):
+ if not records:return {}
+ from rank_bm25 import BM25Okapi
+ scores=BM25Okapi([r["text"].lower().split() for r in records]).get_scores(query.lower().split())
+ return {records[i]["id"]:float(scores[i]) for i in range(len(records)) if scores[i]>0}
+def retrieve(query,top_k=5):
+ if not query or not query.strip():raise ValueError("Query must not be empty")
+ if top_k<1 or top_k>50:raise ValueError("top_k must be between 1 and 50")
+ collection=get_collection(); count=collection.count()
+ if not count:return {"documents":[],"sources":[],"distances":[],"retrieval":[]}
+ records=_all_records(collection); model=get_model()
+ vector=collection.query(query_embeddings=[model.encode(query).tolist()],n_results=min(top_k*3,count),include=["documents","metadatas","distances"])
+ dense={doc_id:1/(1+max(float(vector["distances"][0][i]),0)) for i,doc_id in enumerate(vector["ids"][0])}
+ lexical=_bm25_scores(query,records); graph_hits=graph_retrieve(query,top_k=top_k*3); graph_scores={x["id"]:x["score"] for x in graph_hits}
+ rankings=[[k for k,_ in sorted(s.items(),key=lambda x:x[1],reverse=True)] for s in (dense,lexical,graph_scores)]
+ fused={}
+ for ranking in rankings:
+  for rank,key in enumerate(ranking,1):fused[key]=fused.get(key,0)+1/(60+rank)
+ by_id={r["id"]:r for r in records}; ordered=sorted(fused,key=fused.get,reverse=True)[:top_k]; selected=[by_id[k] for k in ordered if k in by_id]
+ return {"documents":[r["text"] for r in selected],"sources":[{"source":r["metadata"].get("source","Unknown"),"page":r["metadata"].get("page") or None,"chunk_id":r["id"],"score":round(fused[r["id"]],6)} for r in selected],"distances":[fused[r["id"]] for r in selected],"retrieval":["dense","bm25","knowledge_graph"]}
