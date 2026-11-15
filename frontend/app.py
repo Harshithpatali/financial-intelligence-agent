@@ -257,11 +257,12 @@ with tab1:
 
                     for source in sources:
 
-                        file_name = os.path.basename(source)
-
-                        st.markdown(
-                                f"- {file_name}"
-                                     )
+                        if isinstance(source, dict):
+                            file_name = os.path.basename(source.get("source", "Unknown"))
+                            page = f" · page {source['page']}" if source.get("page") else ""
+                            st.markdown(f"- **{file_name}**{page}")
+                        else:
+                            st.markdown(f"- {os.path.basename(source)}")
 
 # ==================================================
 # FINANCIALS TAB
