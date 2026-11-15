@@ -95,17 +95,17 @@ def find_conflicting_disclosures(records: list[dict], relative_tolerance: float 
         raise ValueError("relative_tolerance must be in [0, 1)")
     grouped = defaultdict(list)
     for item in records:
-        required = {"metric", "period", "value", "source"}
+        required = {"metric", "period", "value", "source", "unit", "basis"}
         if not required.issubset(item):
             raise ValueError(f"Each disclosure must include {sorted(required)}")
         value = float(item["value"])
         if not math.isfinite(value):
             raise ValueError("Disclosure values must be finite")
-        key = (str(item["metric"]).strip().lower(), normalize_period(item["period"]))
+        key = (str(item["metric"]).strip().lower(), normalize_period(item["period"]), str(item["unit"]).strip().lower(), str(item["basis"]).strip().lower())
         grouped[key].append({**item, "value": value, "period": key[1]})
 
     conflicts = []
-    for (metric, period), items in grouped.items():
+    for (metric, period, unit, basis), items in grouped.items():
         if len(items) < 2:
             continue
         values = [item["value"] for item in items]
