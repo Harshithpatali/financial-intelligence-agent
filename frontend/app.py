@@ -106,7 +106,8 @@ st.markdown(
       background: rgba(83,214,223,.07); border-radius: 7px; padding: .2rem .5rem;
       font-family: 'DM Mono', monospace; font-size: .7rem; margin: .15rem .25rem .15rem 0;
     }
-    div[data-testid="stTabs"] button { font-weight: 700; color: #91a5b7; }
+    div[data-testid="stTabs"] [role="tablist"] { flex-wrap: wrap; gap: .25rem; }
+    div[data-testid="stTabs"] button { font-weight: 700; color: #91a5b7; white-space: nowrap; }
     div[data-testid="stTabs"] button[aria-selected="true"] { color: #75e0df; }
     div[data-testid="stTabs"] [data-baseweb="tab-highlight"] { background: #53d6df; }
     div[data-testid="stButton"] button {
