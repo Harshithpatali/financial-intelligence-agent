@@ -8,6 +8,7 @@ import uuid
 from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 
@@ -38,6 +39,18 @@ app = FastAPI(
     version="2.1.0",
     description="Source-grounded financial research using hybrid Graph RAG.",
 )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Return safe validation details without echoing untrusted non-finite inputs."""
+    errors = [
+        {"location": [str(part) for part in error.get("loc", ())],
+         "message": error.get("msg", "Invalid request"),
+         "type": error.get("type", "value_error")}
+        for error in exc.errors()
+    ]
+    return JSONResponse({"detail": errors}, status_code=422)
 
 
 class AskRequest(BaseModel):
