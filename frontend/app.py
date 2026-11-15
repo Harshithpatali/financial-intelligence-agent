@@ -225,14 +225,32 @@ def set_prompt(prompt: str) -> None:
 # -------------------------------------------------------------------
 # API health and question answering
 # -------------------------------------------------------------------
-@st.cache_data(ttl=25, show_spinner=False)
+@st.cache_data(ttl=10, show_spinner=False)
 def backend_health() -> tuple[bool, str]:
-    try:
-        response = requests.get(HEALTH_URL, timeout=8)
-        response.raise_for_status()
-        return True, "Connected"
-    except requests.RequestException:
-        return False, "Temporarily unavailable"
+    """Check only FastAPI liveness; this does not test Groq availability.
+
+    A short-lived timeout during a long AI generation must not immediately
+    label the whole service offline, so retry once and report an unknown /
+    delayed state rather than a definitive outage.
+    """
+    last_error: Exception | None = None
+    for attempt in range(2):
+        try:
+            response = requests.get(HEALTH_URL, timeout=15)
+            response.raise_for_status()
+            payload = response.json()
+            if isinstance(payload, dict) and payload.get("status") == "ok":
+                return True, "Backend reachable"
+            return False, "Unexpected health response"
+        except requests.RequestException as exc:
+            last_error = exc
+            if attempt == 0:
+                import time
+                time.sleep(0.6)
+
+    if isinstance(last_error, requests.Timeout):
+        return False, "Health check delayed"
+    return False, "Backend unreachable"
 
 
 def ask_question(question: str) -> dict[str, Any]:
@@ -298,9 +316,9 @@ with st.sidebar:
     )
     st.divider()
     if api_ok:
-        st.markdown('<span class="status-pill"><span class="status-dot"></span> RESEARCH API ONLINE</span>', unsafe_allow_html=True)
+        st.markdown('<span class="status-pill"><span class="status-dot"></span> BACKEND REACHABLE</span>', unsafe_allow_html=True)
     else:
-        st.markdown('<span class="status-pill" style="border-color:rgba(241,200,121,.35);color:#f1c879"><span class="status-dot" style="background:#f1c879"></span> API UNAVAILABLE</span>', unsafe_allow_html=True)
+        st.markdown('<span class="status-pill" style="border-color:rgba(241,200,121,.35);color:#f1c879"><span class="status-dot" style="background:#f1c879"></span> BACKEND CHECK DELAYED / UNAVAILABLE</span>', unsafe_allow_html=True)
     st.caption("Financial data period: " + latest_fy)
     st.divider()
     st.markdown("**Company snapshot**")
@@ -335,9 +353,9 @@ with header_left:
     )
 with header_right:
     if api_ok:
-        st.markdown('<div style="text-align:right"><span class="status-pill"><span class="status-dot"></span> SYSTEM READY</span></div>', unsafe_allow_html=True)
+        st.markdown('<div style="text-align:right"><span class="status-pill"><span class="status-dot"></span> BACKEND REACHABLE</span></div>', unsafe_allow_html=True)
     else:
-        st.markdown('<div style="text-align:right"><span class="status-pill" style="color:#f1c879;border-color:rgba(241,200,121,.35)">● API OFFLINE</span></div>', unsafe_allow_html=True)
+        st.markdown('<div style="text-align:right"><span class="status-pill" style="color:#f1c879;border-color:rgba(241,200,121,.35)">● BACKEND NOT CONFIRMED</span></div>', unsafe_allow_html=True)
 
 st.write("")
 
@@ -405,7 +423,7 @@ with overview_tab:
 with research_tab:
     section_heading("02 / Ask the documents", "AI research assistant", "Ask a focused question. Answers include the retrieved evidence returned by the research API.")
     if not api_ok:
-        st.warning("The research API is currently unavailable. Financial dashboards remain available; try the research assistant again when the backend is online.")
+        st.warning("The backend health check did not complete. This does not necessarily mean Groq or the whole service is offline; financial dashboards remain available. Retry your question in a moment.")
     if "messages" not in st.session_state:
         st.session_state.messages = []
     if "pending_prompt" not in st.session_state:
