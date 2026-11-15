@@ -28,8 +28,8 @@ def test_wrong_period_or_value_is_not_accepted():
 
 def test_conflicting_disclosures_are_flagged_not_averaged():
     conflicts = find_conflicting_disclosures([
-        {"metric": "Revenue", "period": "FY2025", "value": 100, "source": "annual_report.pdf"},
-        {"metric": "Revenue", "period": "2025-03-31", "value": 110, "source": "earnings_call.md"},
+        {"metric": "Revenue", "period": "FY2025", "value": 100, "source": "annual_report.pdf", "unit": "INR", "basis": "consolidated"},
+        {"metric": "Revenue", "period": "2025-03-31", "value": 110, "source": "earnings_call.md", "unit": "INR", "basis": "consolidated"},
     ])
     assert len(conflicts) == 1
     assert conflicts[0]["status"] == "conflict_requires_review"
@@ -38,8 +38,8 @@ def test_conflicting_disclosures_are_flagged_not_averaged():
 
 def test_same_value_disclosures_are_not_flagged():
     assert find_conflicting_disclosures([
-        {"metric": "Revenue", "period": "FY2025", "value": 100, "source": "a"},
-        {"metric": "Revenue", "period": "FY2025", "value": 100.1, "source": "b"},
+        {"metric": "Revenue", "period": "FY2025", "value": 100, "source": "a", "unit": "INR", "basis": "consolidated"},
+        {"metric": "Revenue", "period": "FY2025", "value": 100.1, "source": "b", "unit": "INR", "basis": "consolidated"},
     ]) == []
 
 
