@@ -9,6 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import requests
 import streamlit as st
+from sentence_transformers import SentenceTransformer
 
 # -------------------------------------------------------------------
 # App configuration
@@ -258,8 +259,24 @@ def backend_health() -> tuple[bool, str]:
     return False, f"Health check failed ({type(last_error).__name__})."
 
 
+@st.cache_resource(show_spinner=False)
+def load_query_embedding_model() -> SentenceTransformer:
+    """Load the same BGE model used by the offline document-index build."""
+    return SentenceTransformer("BAAI/bge-small-en-v1.5", device="cpu")
+
+
 def ask_question(question: str) -> dict[str, Any]:
-    response = requests.post(API_URL, json={"question": question}, timeout=180)
+    model = load_query_embedding_model()
+    query_embedding = model.encode(
+        question,
+        normalize_embeddings=True,
+        show_progress_bar=False,
+    ).tolist()
+    response = requests.post(
+        API_URL,
+        json={"question": question, "query_embedding": query_embedding},
+        timeout=180,
+    )
     response.raise_for_status()
     payload = response.json()
     if not isinstance(payload, dict):
