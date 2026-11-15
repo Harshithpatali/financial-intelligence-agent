@@ -106,36 +106,6 @@ st.markdown(
       background: rgba(83,214,223,.07); border-radius: 7px; padding: .2rem .5rem;
       font-family: 'DM Mono', monospace; font-size: .7rem; margin: .15rem .25rem .15rem 0;
     }
-    /* Real radio navigation rendered as separate button-like pills. */
-    div[data-testid="stRadio"] > label { display: none !important; }
-    div[data-testid="stRadio"] > div[role="radiogroup"] {
-      display: flex !important;
-      flex-wrap: wrap !important;
-      gap: .55rem !important;
-      align-items: center !important;
-    }
-    div[data-testid="stRadio"] label {
-      display: inline-flex !important;
-      align-items: center !important;
-      width: auto !important;
-      min-height: 2.75rem !important;
-      padding: .62rem .9rem !important;
-      margin: 0 !important;
-      border: 1px solid rgba(120,160,190,.3) !important;
-      border-radius: 12px !important;
-      background: #142638 !important;
-      color: #b7c8d6 !important;
-      cursor: pointer !important;
-      box-shadow: 0 3px 10px rgba(0,0,0,.12) !important;
-    }
-    div[data-testid="stRadio"] label:has(input:checked) {
-      border-color: #53d6df !important;
-      background: linear-gradient(145deg, #21465a, #173247) !important;
-      color: #aaf1ed !important;
-      box-shadow: 0 0 0 1px rgba(83,214,223,.16), 0 6px 16px rgba(0,0,0,.2) !important;
-    }
-    div[data-testid="stRadio"] label > div:first-child { display: none !important; }
-    div[data-testid="stRadio"] label p { color: inherit !important; font-weight: 700 !important; margin: 0 !important; }
     div[data-testid="stButton"] button {
       border: 1px solid rgba(120,160,190,.22); background: #142638; color: #dce9f2;
       border-radius: 10px; font-weight: 650; transition: all .18s ease;
@@ -473,22 +443,18 @@ with st.sidebar:
             st.rerun()
     st.caption("Financial data period: " + latest_fy)
     st.divider()
-    st.markdown("**NAVIGATION**")
     navigation_options = [
         "Overview", "AI Research", "Financial performance",
         "Balance sheet", "Cash flow", "Markets & News", "Market Sentiment", "How it works",
     ]
     st.session_state.setdefault("active_dashboard_section", "Overview")
-    for section in navigation_options:
-        is_active = st.session_state.active_dashboard_section == section
-        st.button(
-            ("●  " if is_active else "") + section,
-            key="nav_" + section.lower().replace(" ", "_").replace("&", "and"),
-            type="primary" if is_active else "secondary",
-            use_container_width=True,
-            on_click=set_dashboard_section,
-            args=(section,),
-        )
+    st.markdown("**PAGES**")
+    st.selectbox(
+        "Open page",
+        navigation_options,
+        key="active_dashboard_section",
+        label_visibility="collapsed",
+    )
     st.divider()
     st.markdown("**Company snapshot**")
     st.metric("Revenue · " + latest_fy, crore(revenue))
@@ -530,7 +496,7 @@ st.write("")
 
 
 # -------------------------------------------------------------------
-# Main content — navigation is provided only by the sidebar buttons.
+# Main content — each sidebar selection opens its own page view.
 # -------------------------------------------------------------------
 selected_section = st.session_state.active_dashboard_section
 
