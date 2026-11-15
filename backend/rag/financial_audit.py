@@ -21,6 +21,10 @@ STATEMENTS = {
 
 def normalize_period(period: str) -> str:
     text = str(period).strip().upper().replace(" ", "")
+    fiscal_span = re.fullmatch(r"FY?(\d{2})[-/](\d{2})", text)
+    if fiscal_span:
+        _, suffix = fiscal_span.groups()
+        return "FY20" + suffix
     match = re.fullmatch(r"(?:FY)?(20\d{2})(?:[-/]?(\d{2,4}))?", text)
     if match:
         year, suffix = match.groups()
