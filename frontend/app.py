@@ -268,7 +268,7 @@ def load_query_embedding_model():
 def ask_question(question: str) -> dict[str, Any]:
     model = load_query_embedding_model()
     query_embedding = model.encode(
-        question,
+        "Represent this sentence for searching relevant passages: " + question,
         normalize_embeddings=True,
         show_progress_bar=False,
     ).tolist()
