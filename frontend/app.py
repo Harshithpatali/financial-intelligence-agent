@@ -373,8 +373,8 @@ def load_financial_news(query: str) -> dict[str, Any]:
 def load_daily_sentiment(query: str) -> dict[str, Any]:
     response = requests.get(
         f"{API_BASE}/sentiment/daily",
-        params={"q": query, "limit": 12},
-        timeout=180,
+        params={"q": query, "limit": 8},
+        timeout=75,
     )
     response.raise_for_status()
     return response.json()
@@ -816,7 +816,7 @@ elif selected_section == "Market Sentiment":
     if st.button("↻ Refresh analysis", key="refresh_sentiment", use_container_width=True):
         load_daily_sentiment.clear()
         st.rerun()
-    st.caption("Results are cached for 24 hours to reduce duplicate inference calls. Refresh manually to request a new analysis.")
+    st.caption("Up to 8 headlines are scored. Results are cached for 24 hours; refresh is manual and does not run continuously.")
 
     try:
         with st.spinner("Collecting headlines and running financial sentiment classification…"):
@@ -834,6 +834,7 @@ elif selected_section == "Market Sentiment":
         negative = int(counts.get("negative", 0))
         neutral = int(counts.get("neutral", 0))
         total = int(sentiment_data.get("article_count", positive + negative + neutral))
+        failed_articles = int(sentiment_data.get("failed_article_count", 0))
         sentiment_cols = st.columns(4)
         sentiment_cols[0].metric("Articles scored", total)
         sentiment_cols[1].metric("Positive", positive, f"{positive / total:.0%}" if total else None)
@@ -867,6 +868,8 @@ elif selected_section == "Market Sentiment":
             else:
                 st.info("Publication dates were not available for a daily trend.")
 
+        if failed_articles:
+            st.caption(f"{failed_articles} headline(s) could not be classified; successful results are shown.")
         st.markdown("**Classified headlines**")
         for article in sentiment_data.get("articles", []):
             headline = str(article.get("title", "Untitled"))
