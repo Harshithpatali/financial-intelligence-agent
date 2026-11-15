@@ -515,10 +515,9 @@ navigation_options = [
     "Overview", "AI Research", "Financial performance",
     "Balance sheet", "Cash flow", "Markets & News", "Market Sentiment", "How it works",
 ]
-selected_section = st.radio(
-    "Navigate dashboard",
+selected_section = st.selectbox(
+    "Dashboard section",
     navigation_options,
-    horizontal=True,
     label_visibility="collapsed",
     key="active_dashboard_section",
 )
@@ -755,7 +754,7 @@ elif selected_section == "Markets & News":
     with period_col:
         history_period = st.selectbox("Chart period", ["1mo", "3mo", "6mo", "1y", "2y", "5y"], index=3, key="market_period")
 
-    if st.button("↻  Refresh market data", key="refresh_market", use_container_width=True):
+    if st.button("↻ Refresh", key="refresh_market", use_container_width=True):
         load_market_quote.clear()
         load_market_history.clear()
         load_financial_news.clear()
@@ -836,7 +835,7 @@ elif selected_section == "Market Sentiment":
     }
     sentiment_company = st.selectbox("Company or market", list(sentiment_options), key="sentiment_company")
     sentiment_query = sentiment_options[sentiment_company]
-    if st.button("↻  Refresh today's analysis", key="refresh_sentiment", use_container_width=True):
+    if st.button("↻ Refresh analysis", key="refresh_sentiment", use_container_width=True):
         load_daily_sentiment.clear()
         st.rerun()
     st.caption("Results are cached for 24 hours to reduce duplicate inference calls. Refresh manually to request a new analysis.")
