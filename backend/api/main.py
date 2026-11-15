@@ -19,7 +19,8 @@ class JsonFormatter(logging.Formatter):
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "level": record.levelname,
             "logger": record.name,
-            "message": record.getMessage(),\n            "exception": self.formatException(record.exc_info) if record.exc_info else None,
+            "message": record.getMessage(),
+            "exception": self.formatException(record.exc_info) if record.exc_info else None,
         }, ensure_ascii=False)
 
 
