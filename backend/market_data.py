@@ -16,7 +16,7 @@ from typing import Any
 
 _CACHE: dict[tuple, tuple[float, Any]] = {}
 _LOCK = threading.Lock()
-_TTL = {"quote": 60, "history": 300, "news": 300}
+_TTL = {"quote": 60, "history": 300, "news": 300, "sentiment": 21600}
 _ALLOWED = re.compile(r"^[A-Z0-9^=.-]{1,20}$")
 
 
@@ -145,3 +145,104 @@ def get_news(query: str, limit: int = 10) -> dict:
         }
 
     return _cached("news", (cleaned, limit), load)
+
+
+def _classify_financial_text(text: str) -> dict:
+    """Classify one headline with ProsusAI/FinBERT through Hugging Face Inference."""
+    import json
+    import os
+
+    token = os.getenv("HF_TOKEN")
+    if not token:
+        raise RuntimeError("FinBERT is not configured. Add an HF_TOKEN with Inference Providers permission to Render.")
+    url = "https://router.huggingface.co/hf-inference/models/ProsusAI/finbert"
+    payload = {"inputs": text[:1800], "parameters": {"function_to_apply": "softmax", "top_k": 3}}
+    request = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=35) as response:
+        result = json.loads(response.read(500_000).decode("utf-8"))
+    if not isinstance(result, list) or not result:
+        raise RuntimeError("FinBERT returned an unexpected classification response.")
+    scores = {str(item["label"]).lower(): float(item["score"]) for item in result if isinstance(item, dict) and "label" in item and "score" in item}
+    if not scores:
+        raise RuntimeError("FinBERT did not return sentiment scores.")
+    label = max(scores, key=scores.get)
+    positive = scores.get("positive", 0.0)
+    negative = scores.get("negative", 0.0)
+    neutral = scores.get("neutral", 0.0)
+    return {
+        "label": label,
+        "confidence": round(scores[label], 4),
+        "positive_score": round(positive, 4),
+        "negative_score": round(negative, 4),
+        "neutral_score": round(neutral, 4),
+        "sentiment_score": round(positive - negative, 4),
+    }
+
+
+def get_daily_sentiment(query: str, limit: int = 12) -> dict:
+    """Fetch current headlines and score them with financial-domain FinBERT."""
+    cleaned = " ".join((query or "").split())
+    if not cleaned or len(cleaned) > 160:
+        raise ValueError("Sentiment query must contain 1–160 characters.")
+    limit = max(1, min(int(limit), 12))
+
+    def load():
+        from email.utils import parsedate_to_datetime
+
+        news = get_news(cleaned, limit)
+        articles = []
+        for article in news.get("items", []):
+            title = str(article.get("title", "")).strip()
+            summary = " ".join(str(article.get("summary", "")).split())
+            if not title:
+                continue
+            text = title + (". " + summary[:900] if summary else "")
+            scores = _classify_financial_text(text)
+            published = str(article.get("published", ""))
+            try:
+                published_day = parsedate_to_datetime(published).date().isoformat()
+            except (TypeError, ValueError, OverflowError):
+                published_day = "Date unavailable"
+            articles.append({
+                "title": title,
+                "url": str(article.get("url", "")),
+                "publisher": str(article.get("publisher", "Publisher not identified")),
+                "published": published,
+                "published_date": published_day,
+                **scores,
+            })
+
+        if not articles:
+            raise LookupError("No headlines were available to classify.")
+        counts = {label: sum(item["label"] == label for item in articles) for label in ("positive", "negative", "neutral")}
+        average = sum(item["sentiment_score"] for item in articles) / len(articles)
+        daily = {}
+        for item in articles:
+            day = item["published_date"]
+            if day == "Date unavailable":
+                continue
+            daily.setdefault(day, []).append(item["sentiment_score"])
+        trend = [
+            {"date": day, "sentiment_score": round(sum(values) / len(values), 4), "article_count": len(values)}
+            for day, values in sorted(daily.items())
+        ]
+        return {
+            "query": cleaned,
+            "model": "ProsusAI/finbert",
+            "source": "Google News RSS",
+            "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            "article_count": len(articles),
+            "sentiment_score": round(average, 4),
+            "sentiment_label": "positive" if average > 0.08 else "negative" if average < -0.08 else "neutral",
+            "counts": counts,
+            "trend": trend,
+            "articles": articles,
+            "methodology_note": "FinBERT classifies headline text; sentiment is not a prediction of stock returns or investment advice.",
+        }
+
+    return _cached("sentiment", (cleaned, limit), load)
