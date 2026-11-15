@@ -7,4 +7,5 @@ def test_graph_build_and_query(tmp_path):
  chunks=[{"id":"c1","source":"annual.md","page":3,"text":"TCS revenue grew in FY2024 with cloud services."},{"id":"c2","source":"annual.md","page":4,"text":"TCS reported operating margin in FY2024."}]
  graph=build_graph(chunks,path)
  assert graph.number_of_nodes()>0 and graph.number_of_edges()>0
+ assert any(data.get("relation")=="MENTIONS" for _,_,data in graph.edges(data=True))
  assert graph_retrieve("TCS revenue FY2024",path=path)
