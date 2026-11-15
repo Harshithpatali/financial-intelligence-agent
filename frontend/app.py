@@ -149,12 +149,13 @@ st.markdown(
     @media (max-width: 1100px) {
       .block-container { padding-left: 1.35rem; padding-right: 1.35rem; }
       div[data-testid="stRadio"] > div[role="radiogroup"] {
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        scrollbar-width: thin;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        overflow: visible !important;
+        gap: .45rem !important;
         padding-bottom: .5rem;
       }
-      div[data-testid="stRadio"] label { flex: 0 0 auto !important; }
+      div[data-testid="stRadio"] label { flex: 0 1 auto !important; min-width: max-content !important; }
       .metric-value { font-size: clamp(1.2rem, 3vw, 1.65rem); overflow-wrap: anywhere; }
     }
     @media (max-width: 760px) {
@@ -754,15 +755,12 @@ elif selected_section == "Markets & News":
     with period_col:
         history_period = st.selectbox("Chart period", ["1mo", "3mo", "6mo", "1y", "2y", "5y"], index=3, key="market_period")
 
-    refresh_col, note_col = st.columns([1, 4])
-    with refresh_col:
-        if st.button("Refresh market data", key="refresh_market"):
-            load_market_quote.clear()
-            load_market_history.clear()
-            load_financial_news.clear()
-            st.rerun()
-    with note_col:
-        st.caption("Quotes are not guaranteed real-time. Provider availability and rate limits may vary.")
+    if st.button("↻  Refresh market data", key="refresh_market", use_container_width=True):
+        load_market_quote.clear()
+        load_market_history.clear()
+        load_financial_news.clear()
+        st.rerun()
+    st.caption("Quotes are not guaranteed real-time. Provider availability and rate limits may vary.")
 
     try:
         with st.spinner("Loading public market data…"):
@@ -838,13 +836,10 @@ elif selected_section == "Market Sentiment":
     }
     sentiment_company = st.selectbox("Company or market", list(sentiment_options), key="sentiment_company")
     sentiment_query = sentiment_options[sentiment_company]
-    refresh_sentiment_col, refresh_note_col = st.columns([1, 3])
-    with refresh_sentiment_col:
-        if st.button("Refresh today's analysis", key="refresh_sentiment"):
-            load_daily_sentiment.clear()
-            st.rerun()
-    with refresh_note_col:
-        st.caption("Results are cached for 24 hours to reduce duplicate inference calls. Refresh manually to request a new analysis.")
+    if st.button("↻  Refresh today's analysis", key="refresh_sentiment", use_container_width=True):
+        load_daily_sentiment.clear()
+        st.rerun()
+    st.caption("Results are cached for 24 hours to reduce duplicate inference calls. Refresh manually to request a new analysis.")
 
     try:
         with st.spinner("Collecting headlines and running financial sentiment classification…"):
