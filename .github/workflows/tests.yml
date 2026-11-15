@@ -1,0 +1,19 @@
+name: tests
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["main"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install test dependencies
+        run: pip install fastapi==0.116.1 httpx==0.27.2 pytest==8.3.5 networkx==3.4.2
+      - name: Run tests
+        run: pytest -q
