@@ -1,33 +1,7 @@
-print("llm.py imported")
-
-from groq import Groq
 import os
-
-print("Creating Groq client")
-
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
-)
-
-print("Groq client created")
-
-
+from groq import Groq
 def generate_answer(prompt):
-
-    print("Sending prompt to Groq")
-
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature=0.1,
-        max_tokens=1200
-    )
-
-    print("Groq response received")
-
-    return response.choices[0].message.content
+ api_key=os.getenv("GROQ_API_KEY")
+ if not api_key:raise RuntimeError("GROQ_API_KEY is not configured")
+ response=Groq(api_key=api_key).chat.completions.create(model=os.getenv("GROQ_MODEL","llama-3.3-70b-versatile"),messages=[{"role":"user","content":prompt}],temperature=0.1,max_tokens=1200)
+ return response.choices[0].message.content
