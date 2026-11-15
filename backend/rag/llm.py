@@ -19,7 +19,7 @@ def generate_answer(prompt):
         max_retries=0,
     )
     response = client.chat.completions.create(
-        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
         messages=[{"role": "user", "content": prompt}],
         temperature=0.1,
         max_tokens=700,
