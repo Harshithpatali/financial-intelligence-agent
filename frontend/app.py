@@ -106,44 +106,36 @@ st.markdown(
       background: rgba(83,214,223,.07); border-radius: 7px; padding: .2rem .5rem;
       font-family: 'DM Mono', monospace; font-size: .7rem; margin: .15rem .25rem .15rem 0;
     }
-    /* Streamlit BaseWeb tabs: style the actual tab-list and tab elements. */
-    div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+    /* Real radio navigation rendered as separate button-like pills. */
+    div[data-testid="stRadio"] > label { display: none !important; }
+    div[data-testid="stRadio"] > div[role="radiogroup"] {
       display: flex !important;
       flex-wrap: wrap !important;
       gap: .55rem !important;
-      border: 0 !important;
-      background: transparent !important;
-      padding: .35rem 0 .85rem !important;
+      align-items: center !important;
     }
-    div[data-testid="stTabs"] [data-baseweb="tab"] {
-      height: auto !important;
-      min-height: 2.8rem !important;
-      flex: 0 0 auto !important;
-      padding: .68rem .95rem !important;
-      border: 1px solid rgba(120,160,190,.28) !important;
+    div[data-testid="stRadio"] label {
+      display: inline-flex !important;
+      align-items: center !important;
+      width: auto !important;
+      min-height: 2.75rem !important;
+      padding: .62rem .9rem !important;
+      margin: 0 !important;
+      border: 1px solid rgba(120,160,190,.3) !important;
       border-radius: 12px !important;
       background: #142638 !important;
       color: #b7c8d6 !important;
-      font-weight: 700 !important;
-      white-space: nowrap !important;
+      cursor: pointer !important;
       box-shadow: 0 3px 10px rgba(0,0,0,.12) !important;
     }
-    div[data-testid="stTabs"] [data-baseweb="tab"]:hover {
+    div[data-testid="stRadio"] label:has(input:checked) {
       border-color: #53d6df !important;
-      background: #1a3347 !important;
-      color: #e6fbfb !important;
-    }
-    div[data-testid="stTabs"] [data-baseweb="tab"][aria-selected="true"] {
-      border: 1px solid #53d6df !important;
       background: linear-gradient(145deg, #21465a, #173247) !important;
       color: #aaf1ed !important;
       box-shadow: 0 0 0 1px rgba(83,214,223,.16), 0 6px 16px rgba(0,0,0,.2) !important;
     }
-    div[data-testid="stTabs"] [data-baseweb="tab-highlight"],
-    div[data-testid="stTabs"] [data-baseweb="tab-border"] {
-      display: none !important;
-      height: 0 !important;
-    }
+    div[data-testid="stRadio"] label > div:first-child { display: none !important; }
+    div[data-testid="stRadio"] label p { color: inherit !important; font-weight: 700 !important; margin: 0 !important; }
     div[data-testid="stButton"] button {
       border: 1px solid rgba(120,160,190,.22); background: #142638; color: #dce9f2;
       border-radius: 10px; font-weight: 650; transition: all .18s ease;
@@ -156,12 +148,13 @@ st.markdown(
     /* Responsive layout: preserve readable cards and charts on phones/tablets. */
     @media (max-width: 1100px) {
       .block-container { padding-left: 1.35rem; padding-right: 1.35rem; }
-      div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+      div[data-testid="stRadio"] > div[role="radiogroup"] {
         flex-wrap: nowrap !important;
-        overflow-x: auto;
+        overflow-x: auto !important;
         scrollbar-width: thin;
+        padding-bottom: .5rem;
       }
-      div[data-testid="stTabs"] [data-baseweb="tab"] { flex: 0 0 auto !important; }
+      div[data-testid="stRadio"] label { flex: 0 0 auto !important; }
       .metric-value { font-size: clamp(1.2rem, 3vw, 1.65rem); overflow-wrap: anywhere; }
     }
     @media (max-width: 760px) {
@@ -182,10 +175,10 @@ st.markdown(
         min-width: 100% !important;
         width: 100% !important;
       }
-      div[data-testid="stTabs"] [data-baseweb="tab-list"] { gap: .4rem !important; }
-      div[data-testid="stTabs"] [data-baseweb="tab"] {
+      div[data-testid="stRadio"] > div[role="radiogroup"] { gap: .4rem !important; }
+      div[data-testid="stRadio"] label {
         font-size: .78rem !important;
-        padding: .58rem .72rem !important;
+        padding: .55rem .72rem !important;
         min-height: 2.6rem !important;
       }
       div[data-testid="stButton"] button {
@@ -506,11 +499,19 @@ st.write("")
 # -------------------------------------------------------------------
 # Main navigation
 # -------------------------------------------------------------------
-overview_tab, research_tab, financials_tab, balance_tab, cash_tab, markets_tab, about_tab = st.tabs(
-    ["Overview", "AI Research", "Financial performance", "Balance sheet", "Cash flow", "Markets & News", "How it works"]
+navigation_options = [
+    "Overview", "AI Research", "Financial performance",
+    "Balance sheet", "Cash flow", "Markets & News", "How it works",
+]
+selected_section = st.radio(
+    "Navigate dashboard",
+    navigation_options,
+    horizontal=True,
+    label_visibility="collapsed",
+    key="active_dashboard_section",
 )
 
-with overview_tab:
+if selected_section == "Overview":
     section_heading("01 / Company dashboard", "TCS at a glance", f"Latest available annual financial data · {latest_fy}")
     cards = st.columns(4, gap="medium")
     with cards[0]:
@@ -563,7 +564,7 @@ with overview_tab:
             st.button(prompt, key=f"overview_prompt_{idx}", use_container_width=True, on_click=set_prompt, args=(prompt,))
 
 
-with research_tab:
+elif selected_section == "AI Research":
     section_heading("02 / Ask the documents", "AI research assistant", "Ask a focused question. Answers include the retrieved evidence returned by the research API.")
     if not api_ok:
         st.warning("The backend health check did not complete. This does not necessarily mean Groq or the whole service is offline; financial dashboards remain available. Retry your question in a moment.")
@@ -624,7 +625,7 @@ with research_tab:
                     st.session_state.messages.append({"role": "assistant", "content": message, "sources": []})
 
 
-with financials_tab:
+elif selected_section == "Financial performance":
     section_heading("03 / Income statement", "Growth and profitability", "Reported annual financial metrics. Values are displayed in ₹ crore.")
     rev_value, _ = latest_value(income_df, "Total Revenue")
     gross_profit, _ = latest_value(income_df, "Gross Profit")
@@ -660,7 +661,7 @@ with financials_tab:
         st.caption("Displayed values are converted from rupees to ₹ crore. Missing source values remain blank.")
 
 
-with balance_tab:
+elif selected_section == "Balance sheet":
     section_heading("04 / Financial position", "Balance sheet strength", "Assets, liabilities, equity and debt across the available fiscal years.")
     assets, _ = latest_value(balance_df, "Total Assets")
     liabilities, _ = latest_value(balance_df, "Total Liabilities Net Minority Interest")
@@ -688,7 +689,7 @@ with balance_tab:
         st.dataframe((visible / 1e7).round(2), use_container_width=True, height=430)
 
 
-with cash_tab:
+elif selected_section == "Cash flow":
     section_heading("05 / Cash generation", "Cash flow quality", "Operating cash flow, reinvestment and free cash flow.")
     operating_cash, _ = latest_value(cash_df, "Operating Cash Flow")
     capex, _ = latest_value(cash_df, "Capital Expenditure")
@@ -715,7 +716,7 @@ with cash_tab:
         st.dataframe((visible / 1e7).round(2), use_container_width=True, height=430)
 
 
-with markets_tab:
+elif selected_section == "Markets & News":
     section_heading(
         "06 / Live public sources",
         "Markets & financial news",
@@ -810,7 +811,7 @@ with markets_tab:
 
 
 
-with about_tab:
+elif selected_section == "How it works":
     section_heading("06 / System design", "How the research engine works", "A transparent overview of the retrieval and generation pipeline.")
     stages = [
         ("01", "Source documents", "TCS annual reports, quarterly disclosures, financial statements, earnings-call transcripts and company news."),
