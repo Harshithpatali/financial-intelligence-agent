@@ -1,4 +1,4 @@
-"""Local NetworkX entity graph; edges represent co-mentions in evidence chunks."""
+"""Local NetworkX evidence graph. Entity links are explicitly provenance-backed co-mentions."""
 import json,re
 from collections import defaultdict
 from pathlib import Path
@@ -17,14 +17,18 @@ def extract_entities(text):
 def build_graph(chunks,output_path=INDEX_PATH):
  graph=nx.Graph()
  for chunk in chunks:
-  entities=extract_entities(chunk["text"]);ref={"chunk_id":str(chunk["id"]),"source":chunk["source"],"page":chunk.get("page"),"text":chunk["text"][:1200]}
+  chunk_id=str(chunk["id"]);entities=extract_entities(chunk["text"])
+  ref={"chunk_id":chunk_id,"source":chunk["source"],"page":chunk.get("page"),"text":chunk["text"][:1200]}
+  evidence_node="CHUNK:"+chunk_id
+  graph.add_node(evidence_node,node_type="evidence_chunk",chunk_id=chunk_id,source=chunk["source"],page=chunk.get("page"),text=chunk["text"][:1200])
   for entity in entities:
-   if not graph.has_node(entity):graph.add_node(entity,entity_type="financial_concept" if entity in ENTITY_ALIASES else "reporting_period",chunks=[])
+   if not graph.has_node(entity):graph.add_node(entity,node_type="entity",entity_type="financial_concept" if entity in ENTITY_ALIASES else "reporting_period",chunks=[])
    graph.nodes[entity]["chunks"].append(ref)
+   graph.add_edge(entity,evidence_node,relation="MENTIONS",weight=1)
   for i,left in enumerate(entities):
    for right in entities[i+1:]:
     if graph.has_edge(left,right):graph[left][right]["weight"]+=1
-    else:graph.add_edge(left,right,relation="co_mentioned_in_source_chunk",weight=1)
+    else:graph.add_edge(left,right,relation="CO_MENTIONED_WITHIN_CHUNK",weight=1)
  output_path=Path(output_path);output_path.parent.mkdir(parents=True,exist_ok=True)
  output_path.write_text(json.dumps(nx.node_link_data(graph),ensure_ascii=False,indent=2),encoding="utf-8")
  return graph
@@ -37,5 +41,8 @@ def graph_retrieve(query,top_k=5,path=INDEX_PATH):
   if entity not in graph:continue
   for ref in graph.nodes[entity].get("chunks",[]):candidates[ref["chunk_id"]]+=1.0
   for neighbor in graph.neighbors(entity):
-   for ref in graph.nodes[neighbor].get("chunks",[]):candidates[ref["chunk_id"]]+=0.35
+   node=graph.nodes[neighbor]
+   if node.get("node_type")=="evidence_chunk":candidates[node["chunk_id"]]+=1.5
+   elif node.get("node_type")=="entity":
+    for ref in node.get("chunks",[]):candidates[ref["chunk_id"]]+=0.35
  return [{"id":key,"score":score,"method":"graph"} for key,score in sorted(candidates.items(),key=lambda x:(-x[1],x[0]))[:top_k]]
