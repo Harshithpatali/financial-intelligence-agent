@@ -288,6 +288,32 @@ def ask_question(question: str) -> dict[str, Any]:
     return payload
 
 
+
+@st.cache_data(ttl=60, show_spinner=False)
+def load_market_quote(ticker: str) -> dict[str, Any]:
+    response = requests.get(f"{API_BASE}/market/quote", params={"ticker": ticker}, timeout=25)
+    response.raise_for_status()
+    return response.json()
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def load_market_history(ticker: str, period: str) -> dict[str, Any]:
+    response = requests.get(
+        f"{API_BASE}/market/history",
+        params={"ticker": ticker, "period": period},
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def load_financial_news(query: str) -> dict[str, Any]:
+    response = requests.get(f"{API_BASE}/news", params={"q": query, "limit": 10}, timeout=20)
+    response.raise_for_status()
+    return response.json()
+
+
 def render_sources(sources: list[Any]) -> None:
     if not sources:
         st.caption("No source records were returned for this answer.")
@@ -393,8 +419,8 @@ st.write("")
 # -------------------------------------------------------------------
 # Main navigation
 # -------------------------------------------------------------------
-overview_tab, research_tab, financials_tab, balance_tab, cash_tab, about_tab = st.tabs(
-    ["Overview", "AI Research", "Financial performance", "Balance sheet", "Cash flow", "How it works"]
+overview_tab, research_tab, financials_tab, balance_tab, cash_tab, markets_tab, about_tab = st.tabs(
+    ["Overview", "AI Research", "Financial performance", "Balance sheet", "Cash flow", "Markets & News", "How it works"]
 )
 
 with overview_tab:
@@ -600,6 +626,101 @@ with cash_tab:
         visible = cash_df.copy()
         visible.index.name = "Metric"
         st.dataframe((visible / 1e7).round(2), use_container_width=True, height=430)
+
+
+with markets_tab:
+    section_heading(
+        "06 / Live public sources",
+        "Markets & financial news",
+        "Market data is retrieved from Yahoo Finance through yfinance; headlines are retrieved from Google News RSS. No paid data API key is required.",
+    )
+    market_col, period_col = st.columns([2, 1])
+    with market_col:
+        ticker = st.selectbox(
+            "Instrument",
+            ["TCS.NS", "INFY.NS", "RELIANCE.NS", "HDFCBANK.NS", "ICICIBANK.NS", "^NSEI", "^BSESN", "AAPL", "MSFT"],
+            format_func=lambda value: {
+                "TCS.NS": "TCS · NSE",
+                "INFY.NS": "Infosys · NSE",
+                "RELIANCE.NS": "Reliance Industries · NSE",
+                "HDFCBANK.NS": "HDFC Bank · NSE",
+                "ICICIBANK.NS": "ICICI Bank · NSE",
+                "^NSEI": "NIFTY 50",
+                "^BSESN": "SENSEX",
+                "AAPL": "Apple · NASDAQ",
+                "MSFT": "Microsoft · NASDAQ",
+            }.get(value, value),
+            key="market_ticker",
+        )
+    with period_col:
+        history_period = st.selectbox("Chart period", ["1mo", "3mo", "6mo", "1y", "2y", "5y"], index=3, key="market_period")
+
+    refresh_col, note_col = st.columns([1, 4])
+    with refresh_col:
+        if st.button("Refresh market data", key="refresh_market"):
+            load_market_quote.clear()
+            load_market_history.clear()
+            load_financial_news.clear()
+            st.rerun()
+    with note_col:
+        st.caption("Quotes are not guaranteed real-time. Provider availability and rate limits may vary.")
+
+    try:
+        with st.spinner("Loading public market data…"):
+            quote = load_market_quote(ticker)
+            history = load_market_history(ticker, history_period)
+        price = float(quote["price"])
+        change = quote.get("change")
+        change_pct = quote.get("change_percent")
+        currency = quote.get("currency") or "quote currency"
+        q1, q2, q3, q4 = st.columns(4)
+        q1.metric("Latest available close", f"{price:,.2f} {currency}", f"{change:+,.2f}" if change is not None else None)
+        q2.metric("Previous close", f"{quote['previous_close']:,.2f}" if quote.get("previous_close") is not None else "—")
+        q3.metric("Day high", f"{quote['day_high']:,.2f}")
+        q4.metric("Day low", f"{quote['day_low']:,.2f}")
+        if change_pct is not None:
+            st.caption(f"Change vs previous available close: {change_pct:+.2f}% · Volume: {quote.get('volume', 0):,}")
+        points = history.get("points", [])
+        if points:
+            price_frame = pd.DataFrame(points)
+            price_frame["date"] = pd.to_datetime(price_frame["date"])
+            fig = px.line(price_frame, x="date", y="close", title=f"{ticker} · daily closing prices")
+            fig.update_traces(line=dict(color="#53d6df", width=2))
+            st.plotly_chart(style_chart(fig, 360), use_container_width=True, config={"displayModeBar": False})
+        st.caption(f"Source: {quote.get('source')} · Quote timestamp: {quote.get('market_data_timestamp', 'not supplied')}")
+        st.caption(quote.get("price_note", "Market data may be delayed."))
+    except requests.RequestException as exc:
+        st.warning(f"Market data is temporarily unavailable: {exc}")
+    except (KeyError, TypeError, ValueError) as exc:
+        st.warning(f"Market data response could not be displayed: {exc}")
+
+    st.divider()
+    section_heading("06B / Headlines", "Financial news", "Search recent headlines by company, ticker or market topic.")
+    news_query = st.text_input("News search", value="Tata Consultancy Services TCS", key="financial_news_query")
+    if st.button("Search news", key="search_financial_news"):
+        load_financial_news.clear()
+    if news_query.strip():
+        try:
+            with st.spinner("Fetching recent headlines…"):
+                news_payload = load_financial_news(news_query.strip())
+            articles = news_payload.get("items", [])
+            if not articles:
+                st.info("No recent headlines were returned for this search.")
+            for article in articles:
+                title = str(article.get("title", "Untitled"))
+                url = str(article.get("url", ""))
+                publisher = str(article.get("publisher", "Publisher not identified"))
+                published = str(article.get("published", ""))
+                if url.startswith("https://"):
+                    st.markdown(f"**[{title}]({url})**")
+                else:
+                    st.markdown(f"**{title}**")
+                st.caption(" · ".join(part for part in [publisher, published] if part))
+                st.divider()
+            st.caption(f"Source: {news_payload.get('source', 'RSS feed')} · Retrieved: {news_payload.get('retrieved_at', 'timestamp unavailable')}")
+        except requests.RequestException as exc:
+            st.warning(f"News feed is temporarily unavailable: {exc}")
+
 
 
 with about_tab:
