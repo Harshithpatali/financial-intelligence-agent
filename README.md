@@ -1,68 +1,82 @@
 # TCS Financial Intelligence Agent
 
-A source-grounded financial research assistant for TCS annual reports, quarterly disclosures, financial statements, earnings-call transcripts and company news.
+<p align="center">
+  <img src="assets/dashboard.png" alt="TCS financial intelligence dashboard" width="100%">
+</p>
+
+**A financial research assistant for TCS disclosures**, combining document ingestion, dense retrieval, BM25, a provenance-backed entity graph and grounded LLM responses.
+
+[![Live Demo](https://img.shields.io/badge/Live-Streamlit%20Demo-brightgreen)](https://financial-intelligence-agent-g.streamlit.app/)
+[![API](https://img.shields.io/badge/API-FastAPI-009688)](https://financial-intelligence-agent-pmgy.onrender.com/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-blue)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/Tests-pytest-informational)](.github/workflows/tests.yml)
+
+## What it does
+
+Users can ask questions about TCS revenue, profitability, cash flow, business segments, AI strategy, risks and management commentary. The system searches annual reports, quarterly disclosures, financial statements, earnings-call transcripts and company news, then generates an answer with supporting source references.
 
 ## Architecture
 
-- **Ingestion:** PDF-to-Markdown conversion with page-boundary markers; CSV/news knowledge documents.
-- **Chunking:** deterministic overlapping chunks with source, document type and page metadata.
-- **Dense retrieval:** BAAI BGE Small embeddings stored in persistent ChromaDB.
-- **Lexical retrieval:** BM25 keyword ranking.
-- **Knowledge graph:** local NetworkX entity graph; nodes represent financial concepts/reporting periods and edges represent co-mentions within evidence chunks.
-- **Fusion:** reciprocal-rank fusion combines dense, BM25 and graph retrieval.
-- **Generation:** Groq-hosted Llama model answers only from retrieved evidence and is instructed to cite source IDs.
-- **Serving:** FastAPI backend and Streamlit financial dashboard.
+1. **Ingestion:** PDF, CSV and news inputs are transformed into a version-controlled Markdown knowledge repository.
+2. **Page-aware chunking:** documents are split into overlapping chunks while retaining source and page metadata when available.
+3. **Dense retrieval:** BAAI BGE Small embeddings are stored in ChromaDB.
+4. **Lexical retrieval:** BM25 retrieves exact financial terms and figures.
+5. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. `MENTIONS` edges connect entities to source evidence; `CO_MENTIONED_WITHIN_CHUNK` edges record provenance-backed co-occurrence.
+6. **Hybrid ranking:** reciprocal-rank fusion combines dense, BM25 and graph results.
+7. **Generation:** Groq-hosted Llama answers from retrieved context and is instructed to cite source IDs.
+8. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
 
-> The graph index is a local NetworkX graph, not a managed Neo4j deployment. Its co-mention edges are evidence links, not causal relationships.
+> Graph edges describe evidence co-mentions, not causality or directional business relationships. This project uses a local NetworkX graph; it does not require a Neo4j server.
 
-## Run locally
+## Data coverage
 
-Install backend dependencies:
+The repository contains TCS annual reports, quarterly financial reports and earnings-call transcripts, financial statement/ratio data, company profile information and a collection of company news documents. Source files are retained in the `knowledge/` directory for auditability.
+
+## Local setup
 
 ```bash
 pip install -r backend/requirements.txt
 ```
 
-Set environment variables (at minimum `GROQ_API_KEY`; optionally `HF_TOKEN` and `GROQ_MODEL`).
+Configure `GROQ_API_KEY` in the environment. Optionally set `HF_TOKEN`, `EMBEDDING_MODEL` and `GROQ_MODEL`.
 
-Build/rebuild the vector and graph indexes after changing source documents:
+Rebuild vector and graph indexes after changing source documents:
 
 ```bash
 python -m backend.rag.build_vector_db
 ```
 
-To rebuild only the graph from an existing Chroma collection:
+To build only the graph from an existing Chroma collection:
 
 ```bash
 python -m backend.rag.build_graph_from_collection
 ```
 
-Start the API:
+Run the API:
 
 ```bash
 uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
 ```
 
-Start the Streamlit UI from the repository root using your configured Streamlit entry point.
-
 ## API
 
-- `GET /` service status
+- `GET /` service metadata
 - `GET /health` health check
 - `GET /ask?question=...` question answering
-- `POST /ask` JSON body: `{"question":"..." }`
+- `POST /ask` JSON request: `{"question":"What was TCS revenue in FY2024?"}`
 
-Answers include source filename, page where available, chunk ID, and retrieval score. Existing Markdown documents created before page markers are indexed with page unavailable; rerun PDF ingestion to enable page-level citations.
+Responses include the answer, source filename, page where available, chunk ID, score and retrieval methods. Older Markdown files without page markers need to be regenerated from their original PDFs to support page-level citations.
 
-## Evaluation and quality
+## Evaluation
 
-Automated tests cover page metadata, graph construction/entity extraction, safe no-evidence behavior, source metadata and API validation. GitHub Actions runs the test suite on pushes and pull requests.
+A lightweight offline evaluation module provides Recall@K, MRR@K and citation-coverage calculations. Add manually reviewed question-to-chunk relevance labels before reporting retrieval scores. Also manually inspect citation correctness, faithfulness, answer relevance and abstention on questions with no supporting evidence. Compare dense-only, dense+BM25 and dense+BM25+graph on the same frozen benchmark.
 
-Before describing retrieval quality as improved, evaluate a fixed, reviewed question set and report Recall@k, MRR, citation correctness, faithfulness and answer relevance. The repository does not claim benchmark scores until that evaluation has been run.
+GitHub Actions runs the automated test suite on pushes and pull requests.
 
-## Limitations
+## Limitations and next steps
 
-- The initial entity extractor is rule-based and focused on common TCS/financial concepts; it is not a general-purpose financial NER model.
-- Graph relationships indicate co-mention in a source chunk, not causal or directional business relationships.
-- Exact page citations require PDF documents to be re-ingested with page markers.
-- Financial outputs are research assistance, not investment advice.
+- The initial entity extractor is deterministic and focused on common TCS/financial concepts; it is not a general-purpose financial NER model.
+- Graph edges are evidence co-mentions, not causal or semantic predicates.
+- Existing source documents without page markers cannot provide page-accurate citations until re-ingested.
+- Benchmark scores should only be reported after relevance labels and answer audits are reviewed.
+- Outputs are research assistance, not investment advice.
