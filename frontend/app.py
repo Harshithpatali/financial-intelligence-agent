@@ -532,7 +532,21 @@ st.write("")
 # -------------------------------------------------------------------
 # Main navigation
 # -------------------------------------------------------------------
-selected_section = st.session_state.active_dashboard_section
+navigation_options = [
+    "Overview", "AI Research", "Financial performance",
+    "Balance sheet", "Cash flow", "Markets & News", "Market Sentiment", "How it works",
+]
+st.markdown("### Dashboard")
+st.caption("Choose a section to explore")
+selected_section = st.selectbox(
+    "Dashboard section",
+    navigation_options,
+    index=navigation_options.index(st.session_state.active_dashboard_section)
+    if st.session_state.active_dashboard_section in navigation_options else 0,
+    key="main_dashboard_section_picker",
+    label_visibility="collapsed",
+)
+st.session_state.active_dashboard_section = selected_section
 
 if selected_section == "Overview":
     section_heading("01 / Company dashboard", "TCS at a glance", f"Latest available annual financial data · {latest_fy}")
