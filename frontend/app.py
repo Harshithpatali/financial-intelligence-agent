@@ -249,8 +249,13 @@ def backend_health() -> tuple[bool, str]:
                 time.sleep(0.6)
 
     if isinstance(last_error, requests.Timeout):
-        return False, "Health check delayed"
-    return False, "Backend unreachable"
+        return False, "Health check timed out twice (15s each). Render may be waking up or the request is not reaching the service."
+    if isinstance(last_error, requests.HTTPError):
+        status = last_error.response.status_code if last_error.response is not None else "unknown"
+        return False, f"Health endpoint returned HTTP {status}."
+    if isinstance(last_error, requests.ConnectionError):
+        return False, "Could not connect to the Render host from Streamlit Cloud."
+    return False, f"Health check failed ({type(last_error).__name__})."
 
 
 def ask_question(question: str) -> dict[str, Any]:
@@ -318,7 +323,11 @@ with st.sidebar:
     if api_ok:
         st.markdown('<span class="status-pill"><span class="status-dot"></span> BACKEND REACHABLE</span>', unsafe_allow_html=True)
     else:
-        st.markdown('<span class="status-pill" style="border-color:rgba(241,200,121,.35);color:#f1c879"><span class="status-dot" style="background:#f1c879"></span> BACKEND CHECK DELAYED / UNAVAILABLE</span>', unsafe_allow_html=True)
+        st.markdown('<span class="status-pill" style="border-color:rgba(241,200,121,.35);color:#f1c879"><span class="status-dot" style="background:#f1c879"></span> BACKEND NOT REACHABLE</span>', unsafe_allow_html=True)
+        st.caption(api_message)
+        if st.button("Retry backend connection", key="retry_backend_health", use_container_width=True):
+            backend_health.clear()
+            st.rerun()
     st.caption("Financial data period: " + latest_fy)
     st.divider()
     st.markdown("**Company snapshot**")
