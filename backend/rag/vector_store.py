@@ -1,47 +1,29 @@
 from pathlib import Path
 import chromadb
 
-print("vector_store.py imported")
+_COLLECTION = None
+_COLLECTION_NAME = "tcs_knowledge_base"
 
-_collection = None
+def get_db_path():
+    return Path(__file__).resolve().parents[2] / "backend" / "chroma_db"
 
+def get_client():
+    path = get_db_path()
+    path.mkdir(parents=True, exist_ok=True)
+    return chromadb.PersistentClient(path=str(path))
 
 def get_collection():
+    global _COLLECTION
+    if _COLLECTION is None:
+        _COLLECTION = get_client().get_or_create_collection(
+            name=_COLLECTION_NAME, metadata={"hnsw:space": "cosine"})
+    return _COLLECTION
 
-    global _collection
-
-    if _collection is None:
-
-        PROJECT_ROOT = (
-            Path(__file__).resolve().parents[2]
-        )
-
-        CHROMA_PATH = (
-            PROJECT_ROOT
-            / "backend"
-            / "chroma_db"
-        )
-
-        print(
-            f"Loading ChromaDB from: {CHROMA_PATH}"
-        )
-
-        if not CHROMA_PATH.exists():
-
-            raise FileNotFoundError(
-                f"ChromaDB folder not found: {CHROMA_PATH}"
-            )
-
-        client = chromadb.PersistentClient(
-            path=str(CHROMA_PATH)
-        )
-        print("Collection names:", client.list_collections())
-        _collection = client.get_collection(
-            name="tcs_knowledge_base"
-        )
-
-        print(
-            f"Collection Count: {_collection.count()}"
-        )
-
-    return _collection
+def reset_collection():
+    global _COLLECTION
+    client = get_client()
+    try: client.delete_collection(_COLLECTION_NAME)
+    except Exception: pass
+    _COLLECTION = client.get_or_create_collection(
+        name=_COLLECTION_NAME, metadata={"hnsw:space": "cosine"})
+    return _COLLECTION
