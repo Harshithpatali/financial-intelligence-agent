@@ -1,6 +1,7 @@
-"""Local NetworkX evidence graph. Entity links are explicitly provenance-backed co-mentions."""
+"""Local NetworkX evidence graph. Entity links are provenance-backed co-mentions."""
 import json,re
 from collections import defaultdict
+from functools import lru_cache
 from pathlib import Path
 import networkx as nx
 INDEX_PATH=Path(__file__).resolve().parents[1]/"indexes"/"tcs_knowledge_graph.json"
@@ -23,18 +24,23 @@ def build_graph(chunks,output_path=INDEX_PATH):
   graph.add_node(evidence_node,node_type="evidence_chunk",chunk_id=chunk_id,source=chunk["source"],page=chunk.get("page"),text=chunk["text"][:1200])
   for entity in entities:
    if not graph.has_node(entity):graph.add_node(entity,node_type="entity",entity_type="financial_concept" if entity in ENTITY_ALIASES else "reporting_period",chunks=[])
-   graph.nodes[entity]["chunks"].append(ref)
-   graph.add_edge(entity,evidence_node,relation="MENTIONS",weight=1)
+   graph.nodes[entity]["chunks"].append(ref);graph.add_edge(entity,evidence_node,relation="MENTIONS",weight=1)
   for i,left in enumerate(entities):
    for right in entities[i+1:]:
     if graph.has_edge(left,right):graph[left][right]["weight"]+=1
     else:graph.add_edge(left,right,relation="CO_MENTIONED_WITHIN_CHUNK",weight=1)
  output_path=Path(output_path);output_path.parent.mkdir(parents=True,exist_ok=True)
  output_path.write_text(json.dumps(nx.node_link_data(graph),ensure_ascii=False,indent=2),encoding="utf-8")
+ _load_graph_cached.cache_clear()
  return graph
+@lru_cache(maxsize=4)
+def _load_graph_cached(path_string,modified_ns):
+ path=Path(path_string)
+ return nx.node_link_graph(json.loads(path.read_text(encoding="utf-8"))) if path.exists() else nx.Graph()
 def load_graph(path=INDEX_PATH):
  path=Path(path)
- return nx.node_link_graph(json.loads(path.read_text(encoding="utf-8"))) if path.exists() else nx.Graph()
+ if not path.exists():return nx.Graph()
+ return _load_graph_cached(str(path.resolve()),path.stat().st_mtime_ns)
 def graph_retrieve(query,top_k=5,path=INDEX_PATH):
  graph=load_graph(path);candidates=defaultdict(float)
  for entity in extract_entities(query):
@@ -45,4 +51,4 @@ def graph_retrieve(query,top_k=5,path=INDEX_PATH):
    if node.get("node_type")=="evidence_chunk":candidates[node["chunk_id"]]+=1.5
    elif node.get("node_type")=="entity":
     for ref in node.get("chunks",[]):candidates[ref["chunk_id"]]+=0.35
- return [{"id":key,"score":score,"method":"graph"} for key,score in sorted(candidates.items(),key=lambda x:(-x[1],x[0]))[:top_k]]
+ return [{"id":key,"score":score,"method":"graph"} for key,score in sorted(candidates.items(),key=lambda item:(-item[1],item[0]))[:top_k]]
