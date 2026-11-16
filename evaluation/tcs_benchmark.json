@@ -172,7 +172,7 @@
   },
   {
     "id": "q20",
-    "question": "What was the estimated impact on FY2026 profit before tax from a 10% foreign currency movement?",
+    "question": "What was the estimated impact on the Group's FY2026 profit before taxes from a 10% foreign currency movement?",
     "expected_value": "713",
     "unit": "crore",
     "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
