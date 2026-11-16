@@ -73,12 +73,12 @@ def readiness():
     """Readiness: checks the local index and required generation configuration."""
     checks = {}
     try:
-        from backend.rag.document_store import get_index
-        count = get_index().count()
-        checks["sqlite_fts5"] = {"ready": count > 0, "document_chunks": count}
+        from backend.rag.vector_store import get_collection
+        count = get_collection().count()
+        checks["chroma"] = {"ready": count > 0, "document_chunks": count}
     except Exception as exc:
-        logger.exception("Readiness check failed for SQLite FTS5")
-        checks["sqlite_fts5"] = {"ready": False, "error": type(exc).__name__}
+        logger.exception("Readiness check failed for Chroma")
+        checks["chroma"] = {"ready": False, "error": type(exc).__name__}
     try:
         from backend.rag.graph_index import INDEX_PATH, load_graph
         graph = load_graph()
@@ -92,7 +92,7 @@ def readiness():
         checks["knowledge_graph"] = {"ready": False, "error": type(exc).__name__}
     checks["groq_configured"] = bool(os.getenv("GROQ_API_KEY"))
     ready = all([
-        checks["sqlite_fts5"]["ready"],
+        checks["chroma"]["ready"],
         checks["knowledge_graph"]["ready"],
         checks["groq_configured"],
     ])
@@ -174,26 +174,6 @@ def market_history(
         logger.exception("market_history_failed ticker=%s error_type=%s", ticker, type(exc).__name__)
         raise HTTPException(status_code=502, detail="Historical market data provider is temporarily unavailable.") from exc
 
-
-@app.get("/sentiment/daily")
-def daily_market_sentiment(
-    q: str = Query(min_length=1, max_length=160),
-    limit: int = Query(default=12, ge=1, le=12),
-):
-    """Daily headline sentiment scored with ProsusAI FinBERT."""
-    from backend import market_data
-    try:
-        return market_data.get_daily_sentiment(q, limit)
-    except ValueError as exc:
-        raise HTTPException(status_code=422, detail=str(exc)) from exc
-    except LookupError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
-    except RuntimeError as exc:
-        logger.warning("sentiment_not_configured_or_unavailable error=%s", str(exc))
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
-    except Exception as exc:
-        logger.exception("daily_sentiment_failed query=%s error_type=%s", q, type(exc).__name__)
-        raise HTTPException(status_code=502, detail="Daily sentiment analysis is temporarily unavailable.") from exc
 
 
 @app.get("/news")
