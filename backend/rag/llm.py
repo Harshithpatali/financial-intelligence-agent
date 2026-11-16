@@ -11,6 +11,27 @@ class LLMRateLimitError(RuntimeError):
         super().__init__("Groq rate limit reached")
 
 
+def extract_answer(response):
+    """Return non-empty assistant text or raise a diagnostic provider error."""
+    choices = getattr(response, "choices", None) or []
+    if not choices:
+        response_id = getattr(response, "id", "unknown")
+        raise RuntimeError(f"Groq returned no completion choices (response_id={response_id})")
+
+    choice = choices[0]
+    message = getattr(choice, "message", None)
+    content = getattr(message, "content", None) if message is not None else None
+    answer = content.strip() if isinstance(content, str) else ""
+    if not answer:
+        response_id = getattr(response, "id", "unknown")
+        finish_reason = getattr(choice, "finish_reason", "unknown")
+        raise RuntimeError(
+            "Groq returned an empty answer "
+            f"(response_id={response_id}, finish_reason={finish_reason})"
+        )
+    return answer
+
+
 def generate_answer(prompt):
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
@@ -28,7 +49,7 @@ def generate_answer(prompt):
             model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
             messages=[{"role": "user", "content": prompt}],
             temperature=0.1,
-            max_tokens=700,
+            max_tokens=int(os.getenv("GROQ_MAX_TOKENS", "900")),
         )
     except RateLimitError as exc:
         headers = getattr(getattr(exc, "response", None), "headers", {}) or {}
@@ -40,7 +61,4 @@ def generate_answer(prompt):
         logger.warning("Groq rate limit reached; retry_after_seconds=%s", retry_after)
         raise LLMRateLimitError(retry_after) from exc
 
-    answer = response.choices[0].message.content
-    if not answer:
-        raise RuntimeError("Groq returned an empty answer")
-    return answer
+    return extract_answer(response)
