@@ -4,7 +4,7 @@
   <img src="assets/dashboard.png" alt="TCS financial intelligence dashboard" width="100%">
 </p>
 
-**A financial research assistant for TCS disclosures**, combining document ingestion, dense retrieval, BM25, a provenance-backed entity graph and grounded LLM responses.
+**A financial research assistant for TCS disclosures**, combining document ingestion, dense retrieval, bounded lexical retrieval, a provenance-backed entity graph and grounded LLM responses.
 
 [![Live Demo](https://img.shields.io/badge/Live-Streamlit%20Demo-brightgreen)](https://financial-intelligence-agent-g.streamlit.app/)
 [![API](https://img.shields.io/badge/API-FastAPI-009688)](https://financial-intelligence-agent-pmgy.onrender.com/)
@@ -21,9 +21,9 @@ Users can ask questions about TCS revenue, profitability, cash flow, business se
 2. **Page-aware chunking:** documents are split into overlapping chunks while retaining source and page metadata when available.
 3. **Offline document indexing:** GitHub Actions runs BAAI BGE Small once when knowledge sources or indexing code change, then publishes the ChromaDB vectors and NetworkX graph as a versioned GitHub Release asset.
 4. **Query embedding:** Streamlit loads the same BAAI BGE Small model on demand and embeds each user question; the 384-dimensional query vector is sent to FastAPI.
-5. **Lexical retrieval:** BM25 retrieves exact financial terms and figures.
+5. **Lexical retrieval:** the live API uses bounded Chroma document-term candidates to stay within its memory budget. A full-corpus BM25 implementation is used as an offline evaluation baseline.
 6. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. Typed edges distinguish `MENTIONS`, `HAS_EVIDENCE_IN_PERIOD`, `PRECEDES`, qualitative trend evidence and `CO_MENTIONED_WITHIN_CHUNK`. Co-mentions are not causal relationships; trend nodes are unverified qualitative observations.
-7. **Hybrid ranking:** reciprocal-rank fusion combines dense, BM25 and graph results.
+7. **Hybrid ranking:** reciprocal-rank fusion combines dense, bounded lexical and graph candidates in the live API.
 8. **Generation:** Groq-hosted GPT OSS answers from retrieved context and is instructed to cite source IDs.
 9. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
 
@@ -79,7 +79,18 @@ The Markets & News dashboard uses Yahoo Finance through `yfinance` for quotes/hi
 
 ## Evaluation
 
-A lightweight offline evaluation module provides Recall@K, MRR@K and citation-coverage calculations. Add manually reviewed question-to-chunk relevance labels before reporting retrieval scores. Also manually inspect citation correctness, faithfulness, answer relevance and abstention on questions with no supporting evidence. Compare dense-only, dense+BM25 and dense+BM25+graph on the same frozen benchmark.
+A 50-question TCS source-anchored benchmark compares dense-only, full-corpus BM25, dense+BM25 reciprocal-rank fusion, and dense+BM25+graph retrieval. The initial measured run used top-5 retrieval over 10,106 indexed chunks:
+
+| Method | Recall@5 | MRR@5 |
+|---|---:|---:|
+| Dense only | 0.0460 | 0.0440 |
+| BM25 only (offline baseline) | **0.2782** | 0.1830 |
+| Dense + BM25 (RRF) | 0.1354 | 0.1490 |
+| Dense + BM25 + graph (RRF) | 0.2474 | **0.2440** |
+
+BM25-only produced the highest Recall@5; graph-assisted fusion had the highest MRR@5. Equal-weight dense+BM25 fusion underperformed BM25 alone. These results measure retrieval against source-anchored relevance labels, not answer accuracy, and the offline BM25 baseline is not the live API lexical implementation.
+
+A 13-question answer audit with top-5 context found 3 correct answers, 2 materially incorrect answers and 8 false abstentions. Citation coverage was 48.7%; citation presence is not proof of source support. The review identified period/accounting-basis confusion and missing relevant evidence. See the [full benchmark and answer-audit report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) and [evaluation methodology](evaluation/README.md).
 
 GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include normalized finite 384-dimensional embedding validation, a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
 
@@ -87,14 +98,16 @@ GitHub Actions runs the automated test suite on pushes and pull requests. API sa
 
 - The initial entity extractor is deterministic and focused on common TCS/financial concepts; it is not a general-purpose financial NER model.
 - Graph edges are evidence co-mentions, not causal or semantic predicates.
+- The benchmark is source-anchored; alternate valid source chunks are not all labelled yet.
+- The graph index is being rebuilt with additional financial-statement aliases; the reported comparison uses the previous published index version.
+- Answer faithfulness and numerical accuracy need further improvement before making high-accuracy claims.
 - Existing source documents without page markers cannot provide page-accurate citations until re-ingested.
-- Benchmark scores should only be reported after relevance labels and answer audits are reviewed.
 - Outputs are research assistance, not investment advice.
 
 
-### Reproducible retrieval benchmark
+### Retrieval evaluation benchmark
 
-A benchmark runner is available at `evaluation/benchmark.py`. It calculates mean Recall@K and mean MRR@K plus per-question results from a JSONL file containing manually reviewed relevant chunk IDs and ordered retrieved chunk IDs. Example usage and the required input schema are documented in [evaluation/README.md](evaluation/README.md). No benchmark score is claimed until relevance labels are reviewed against the source documents; citation coverage is reported separately from citation correctness and answer faithfulness.
+The repository includes a 50-question TCS benchmark, a full-corpus BM25 offline baseline and a 13-question generated-answer audit packet. See [the benchmark report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) for measured results and limitations. The workflow publishes JSON reports as a GitHub Actions artifact. Automated numeric and citation checks are screening signals; human review of faithfulness, accounting period, units and source support remains required before claiming answer-quality scores.
 
 ---
 
@@ -232,8 +245,3 @@ Recommended next evaluation steps:
 5. Compare model scores with a second reviewer or model before using them in research decisions.
 
 No accuracy, F1, calibration or predictive-return metric is claimed yet because a human-labelled evaluation benchmark has not been completed.
-
-
-### Retrieval evaluation benchmark
-
-The repository now includes a 50-question, source-anchored TCS benchmark and a reproducible comparison of dense-only, dense+BM25, and dense+BM25+knowledge-graph retrieval. See [the benchmark methodology and run instructions](evaluation/README.md). The workflow publishes retrieval metrics and a 13-question generated-answer audit packet when Groq credentials are configured. Automated numeric and citation checks are screening signals; human review of faithfulness, accounting period, units and source support remains required before claiming answer-quality scores.
