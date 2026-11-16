@@ -7,6 +7,10 @@ on:
     paths:
       - "evaluation/tcs_benchmark.json"
       - "evaluation/run_tcs_benchmark.py"
+      - "evaluation/traceability.py"
+      - "evaluation/README.md"
+      - "evaluation/reports/**"
+      - "tests/test_tcs_audit_traceability.py"
       - "evaluation/benchmark.py"
       - ".github/workflows/tcs-retrieval-benchmark.yml"
 

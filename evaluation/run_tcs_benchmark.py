@@ -18,6 +18,7 @@ from backend.rag.graph_index import graph_retrieve
 from backend.rag.rag_pipeline import answer_question
 from evaluation.benchmark import evaluate_records
 from evaluation.metrics import citation_coverage
+from evaluation.traceability import page_for_excerpt, page_for_anchor
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_PATH = ROOT / "evaluation" / "tcs_benchmark.json"
@@ -25,8 +26,6 @@ OUTPUT_DIR = ROOT / "evaluation" / "results"
 TOP_K = 5
 CANDIDATE_K = 40
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
-AUDIT_IDS = {"q01", "q05", "q07", "q09", "q12", "q16", "q20",
-             "q23", "q28", "q35", "q40", "q47", "q49"}
 TOKEN_RE = re.compile(r"[a-z0-9]+(?:\.[0-9]+)?", re.I)
 NUMBER_RE = re.compile(r"(?<![A-Za-z0-9])[-+]?\d[\d,]*(?:\.\d+)?")
 CITATION_RE = re.compile(r"(?:\[S(\d+)\]|【S(\d+)】)")
@@ -224,7 +223,8 @@ def main() -> None:
 
     answer_audits = []
     if os.getenv("GROQ_API_KEY"):
-        audit_rows = [row for row in rows if row["id"] in AUDIT_IDS]
+        # Generate an answer for every benchmark question, not only a hand-picked subset.
+        audit_rows = rows
         for audit_number, row in enumerate(audit_rows, start=1):
             # The configured Groq free/on-demand TPM budget is shared across requests.
             # Two answer generations per minute leave room for both prompt and completion tokens.
@@ -240,9 +240,15 @@ def main() -> None:
             for source in cited_sources:
                 found = collection.get(ids=[source["chunk_id"]], include=["documents"])
                 docs = found.get("documents") or []
+                excerpt = (docs[0] or "")[:1600] if docs else ""
+                source_path = ROOT / source.get("source", "")
+                source_text = source_path.read_text(encoding="utf-8") if source_path.is_file() else ""
+                resolved_page = source.get("page") or page_for_excerpt(source_text, excerpt)
                 evidence.append({
                     **source,
-                    "excerpt": (docs[0] or "")[:1600] if docs else "",
+                    "page": resolved_page,
+                    "excerpt": excerpt,
+                    "page_traceable": resolved_page is not None,
                 })
             answer_audits.append({
                 "id": row["id"],
@@ -251,6 +257,9 @@ def main() -> None:
                 "expected_unit": row["unit"],
                 "expected_source": row["source"],
                 "expected_anchor": row["anchor"],
+                "expected_page": page_for_anchor(
+                    (ROOT / row["source"]).read_text(encoding="utf-8"), row["anchor"]
+                ),
                 "answer": answer,
                 "sources": sources,
                 "cited_evidence": evidence,
@@ -265,8 +274,11 @@ def main() -> None:
                     source_contains_expected(item["excerpt"], row["expected_value"])
                     for item in evidence
                 ),
+                "human_answer_relevance_review": "pending",
                 "human_faithfulness_review": "pending",
                 "human_numerical_review": "pending",
+                "human_citation_correctness_review": "pending",
+                "human_page_traceability_review": "pending",
             })
     else:
         print("GROQ_API_KEY not configured; answer-generation audit skipped.")
@@ -274,8 +286,17 @@ def main() -> None:
     audit_packet = {
         "status": "machine_checks_complete_human_review_pending",
         "answer_count": len(answer_audits),
+        "benchmark_question_count": len(rows),
         "answer_context_top_k": 5,
-        "checks": "Citation parsing supports [S#], 【S#】 and zero-width formatting artifacts. Numeric checks are screening checks; source excerpts are included for human faithfulness, period, unit, sign and accounting-basis review.",
+        "review_rubric": {
+            "answer_relevance": "pass / partial / fail: directly answers the asked metric, entity, period and comparison.",
+            "faithfulness": "pass / partial / fail: every material claim is entailed by the cited excerpt; no unsupported inference.",
+            "numerical_accuracy": "pass / partial / fail: value, currency, unit, sign, period and accounting basis all match.",
+            "citation_correctness": "pass / partial / fail: each citation points to evidence that supports its adjacent claim.",
+            "page_traceability": "pass / partial / fail: source file and page are resolvable to the original disclosure.",
+            "reviewer_notes": "Record the exact source page/line and explain every partial or failed check."
+        },
+        "checks": "Machine checks include citation marker coverage, expected-value token presence and source excerpt traceability. They are screening checks, not a substitute for reviewer sign-off. Review all five dimensions for every answer before reporting answer-quality rates.",
         "answers": answer_audits,
     }
     (OUTPUT_DIR / "answer_audit_packet.json").write_text(
