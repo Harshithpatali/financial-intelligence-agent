@@ -46,7 +46,7 @@ Automated citation coverage across the 13 generated answers was 48.7%. Citation 
 
 - All 50 questions have a unique ID, a checked-in source file and a text anchor.
 - CI validates that the expected value appears near the anchor, with explicit handling for comma-formatted values, accounting negatives, abbreviated headcount and spelled-out counts.
-- q39 was corrected from 2.8% to 2.4% CBG QoQ constant-currency growth after checking the Q4FY26 press release.
+- q39 is validated as CBG growth of 2.8% QoQ in constant currency; the prior 2.4% label was incorrect and referred to UK growth. q41 is explicitly anchored to the UK figure of 2.4%.
 - After this run, q20 was revised to explicitly ask for the **Group** foreign-currency sensitivity, distinguishing the consolidated ₹713 crore figure from the standalone ₹1,037 crore figure. The reported run predates that wording correction and must be repeated.
 - The answer audit remains a 13-question sample, not a complete answer-quality evaluation over all 50 questions.
 

@@ -158,7 +158,7 @@
     "expected_value": "57630",
     "unit": "crore",
     "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
-    "anchor": "Trade receivables",
+    "anchor": "Billed 8(b) 57,630",
     "category": "financial_statements"
   },
   {
@@ -344,10 +344,10 @@
   {
     "id": "q39",
     "question": "What was CBG growth in TCS Q4FY26?",
-    "expected_value": "2.4",
+    "expected_value": "2.8",
     "unit": "percent QoQ in constant currency",
     "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
-    "anchor": "(+2.4%)",
+    "anchor": "CBG (+2.8%) QoQ in CC",
     "category": "operating_performance"
   },
   {
@@ -365,7 +365,7 @@
     "expected_value": "2.4",
     "unit": "percent QoQ in constant currency",
     "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
-    "anchor": "(+2.4%)",
+    "anchor": "UK (+2.4%)",
     "category": "operating_performance"
   },
   {

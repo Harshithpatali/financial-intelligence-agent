@@ -17,5 +17,10 @@ def test_page_for_excerpt_resolves_page_from_source_excerpt():
     assert page_for_excerpt(text, excerpt) == 2
 
 
+def test_page_for_anchor_reads_standalone_statement_page_number():
+    text = "1\n\nASSETS\nTotal assets 100 crore\n\n2\n\n( crore)\nRevenue 200 crore"
+    assert page_for_anchor(text, "Revenue") == 2
+
+
 def test_page_traceability_is_unknown_when_no_page_marker_exists():
     assert page_for_anchor("Revenue from operations was 100 crore.", "Revenue") is None
