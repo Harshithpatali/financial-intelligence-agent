@@ -7,6 +7,7 @@ on:
     paths:
       - "knowledge/**"
       - "backend/rag/build_vector_db.py"
+      - "backend/rag/embeddings.py"
       - "backend/rag/chunker.py"
       - "backend/rag/graph_index.py"
       - "backend/rag/vector_store.py"
@@ -38,9 +39,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
-          pip install "sentence-transformers>=3.0,<6.0"
 
       - name: Build document embeddings and graph
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_EMBEDDING_MODEL: nomic-embed-text-v1_5
         run: python -m backend.rag.build_vector_db
 
       - name: Verify generated index
@@ -72,4 +75,4 @@ jobs:
           gh release create "$TAG" backend/rag-index.zip#tcs-rag-index.zip \
             --repo "$GITHUB_REPOSITORY" \
             --title "RAG index ${GITHUB_RUN_NUMBER}" \
-            --notes "Precomputed BAAI/bge-small-en-v1.5 document embeddings and NetworkX evidence graph from commit ${GITHUB_SHA}."
+            --notes "Precomputed Groq nomic-embed-text-v1_5 document embeddings and NetworkX evidence graph from commit ${GITHUB_SHA}."
