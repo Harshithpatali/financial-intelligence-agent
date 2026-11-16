@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[2]
 def stable_chunk_id(item):
     return hashlib.sha1(f'{item["source"]}|{item.get("page")}|{item["chunk_id"]}|{item["text"]}'.encode("utf-8")).hexdigest()
 def main():
-    chunks=chunk_documents(load_documents(ROOT/"knowledge"))
+    chunks=chunk_documents(load_documents())
     if not chunks: raise RuntimeError("No Markdown chunks found under ./knowledge")
     graph_chunks=[{"id":stable_chunk_id(x),**x} for x in chunks]
     count=reset_index().replace(graph_chunks); graph=build_graph(graph_chunks)
