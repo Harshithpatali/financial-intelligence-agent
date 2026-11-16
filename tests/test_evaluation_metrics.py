@@ -13,9 +13,10 @@ def test_mrr_at_k():
     assert reciprocal_rank_at_k(["x"], {"a"}, 5) == 0
 
 
-def test_citation_coverage_supports_square_and_unicode_brackets():
+def test_citation_coverage_supports_square_unicode_and_zero_width_markers():
     assert citation_coverage("Revenue rose [S1]. Margin fell 【S3】.", 1) == 0.5
     assert citation_coverage("Revenue rose 【S1】. Margin grew [S2].", 2) == 1.0
+    assert citation_coverage("Revenue rose [\u200bS1\u200b].", 1) == 1.0
 
 
 def test_benchmark_aggregates_recall_and_mrr():
