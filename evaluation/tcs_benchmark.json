@@ -1,0 +1,452 @@
+[
+  {
+    "id": "q01",
+    "question": "What was TCS consolidated revenue from operations for FY2026?",
+    "expected_value": "267021",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Revenue from operations",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q02",
+    "question": "What was TCS consolidated revenue from operations for FY2025?",
+    "expected_value": "255324",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Revenue from operations",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q03",
+    "question": "What was TCS total income in FY2026?",
+    "expected_value": "271423",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "TOTAL INCOME",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q04",
+    "question": "What were TCS total expenses in FY2026?",
+    "expected_value": "201410",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "TOTAL EXPENSES",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q05",
+    "question": "What was TCS profit before tax in FY2026?",
+    "expected_value": "65487",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "PROFIT BEFORE TAX",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q06",
+    "question": "What was TCS total tax expense in FY2026?",
+    "expected_value": "16033",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "TOTAL TAX EXPENSE",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q07",
+    "question": "What was TCS profit for the year in FY2026?",
+    "expected_value": "49454",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "PROFIT FOR THE YEAR",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q08",
+    "question": "What was FY2026 profit attributable to shareholders of TCS?",
+    "expected_value": "49210",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Profit for the year attributable to:",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q09",
+    "question": "What was TCS basic and diluted EPS for FY2026?",
+    "expected_value": "136.01",
+    "unit": "INR per share",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Basic and diluted earnings per share",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q10",
+    "question": "How much FY2026 revenue came from consultancy services?",
+    "expected_value": "262688",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Consultancy services",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q11",
+    "question": "How much FY2026 revenue came from sale of equipment and software licences?",
+    "expected_value": "4333",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Sale of equipment and software licences",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q12",
+    "question": "What were net cash flows generated from operating activities in FY2026?",
+    "expected_value": "52094",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Net cash flows generated from operating activities",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q13",
+    "question": "What were net cash flows used in investing activities in FY2026?",
+    "expected_value": "-12845",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Net cash flows used in investing activities",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q14",
+    "question": "How much cash was paid for purchase of property, plant and equipment in FY2026?",
+    "expected_value": "3670",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Payment for purchase of property, plant and equipment",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q15",
+    "question": "What was TCS cash and cash equivalents at March 31, 2026?",
+    "expected_value": "6417",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Cash and cash equivalents",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q16",
+    "question": "What were TCS total assets at March 31, 2026?",
+    "expected_value": "182372",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "TOTAL ASSETS",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q17",
+    "question": "What was TCS total equity at March 31, 2026?",
+    "expected_value": "108478",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Total equity",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q18",
+    "question": "What were TCS billed trade receivables at March 31, 2026?",
+    "expected_value": "57630",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Trade receivables",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q19",
+    "question": "What were TCS total current liabilities at March 31, 2026?",
+    "expected_value": "60914",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "Total current liabilities",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q20",
+    "question": "What was the estimated impact on FY2026 profit before tax from a 10% foreign currency movement?",
+    "expected_value": "713",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_consolidated.md",
+    "anchor": "increase / decrease in the Group’s profit before taxes by approximately 713 crore",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q21",
+    "question": "What was TCS FY2026 revenue growth year over year in constant currency?",
+    "expected_value": "-2.4",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "FY 26 Revenue ₹267,021 crore, Growth +4.6% YoY, -2.4% in CC",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q22",
+    "question": "What was TCS FY2026 reported revenue growth year over year?",
+    "expected_value": "4.6",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "FY 26 Revenue ₹267,021 crore, Growth +4.6% YoY",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q23",
+    "question": "What was TCS Q4FY26 revenue?",
+    "expected_value": "70698",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Revenue at ₹70,698 crore",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q24",
+    "question": "What was TCS Q4FY26 operating margin?",
+    "expected_value": "25.3",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Operating Margin: 25.3%",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q25",
+    "question": "What was TCS Q4FY26 net margin?",
+    "expected_value": "19.4",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Net Margin: 19.4%",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q26",
+    "question": "What was TCS FY2026 operating margin excluding one-offs?",
+    "expected_value": "25",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "FY26 Operating Margin* at 25%",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q27",
+    "question": "What was TCS FY2026 net margin excluding one-offs?",
+    "expected_value": "19.8",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "FY26 Net Margin* at 19.8%",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q28",
+    "question": "What was TCS annualized AI revenue in Q4FY26?",
+    "expected_value": "2.3",
+    "unit": "USD billion (more than)",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Annualized AI Revenue crosses US$ 2.3 billion in Q4FY26",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q29",
+    "question": "What was TCS total contract value for FY2026?",
+    "expected_value": "40.7",
+    "unit": "USD billion",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Strong TCV performance at $40.7 billion for FY26",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q30",
+    "question": "What was TCS Q4FY26 total contract value?",
+    "expected_value": "12",
+    "unit": "USD billion",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "at $12 billion for Q4",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q31",
+    "question": "What was TCS employee headcount at FY2026 year end?",
+    "expected_value": "584519",
+    "unit": "employees",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Employee Headcount: 584,519",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q32",
+    "question": "How many learning hours did TCS report for FY2026?",
+    "expected_value": "69",
+    "unit": "million hours",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "69 million Learning Hours",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q33",
+    "question": "How many competencies were acquired by TCS employees in FY2026?",
+    "expected_value": "5.2",
+    "unit": "million",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "5.2 million Competencies Acquired",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q34",
+    "question": "How many employees had higher proficiency in AI/ML?",
+    "expected_value": "270000",
+    "unit": "employees (270k+)",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "270k+ with higher proficiency in AI/ML",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q35",
+    "question": "What final dividend per share did the TCS board propose for FY2026?",
+    "expected_value": "31",
+    "unit": "INR per share",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Final Dividend (proposed): ₹ 31 per share",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q36",
+    "question": "What was TCS FY2026 shareholder payout in dividends?",
+    "expected_value": "39571",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "FY26 Shareholder payout of ₹39,571 crore",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q37",
+    "question": "What was TCS Q4FY26 revenue growth quarter over quarter?",
+    "expected_value": "5.4",
+    "unit": "percent",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Revenue at ₹70,698 crore, +5.4% QoQ",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q38",
+    "question": "Which industry group led TCS Q4FY26 sequential constant-currency growth, and by how much?",
+    "expected_value": "ERU +6.1",
+    "unit": "percent QoQ in constant currency",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "Growth led by ERU (+6.1%)",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q39",
+    "question": "What was CBG growth in TCS Q4FY26?",
+    "expected_value": "2.8",
+    "unit": "percent QoQ in constant currency",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "CBG (+2.8%) QoQ in CC",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q40",
+    "question": "What was North America growth in TCS Q4FY26?",
+    "expected_value": "1.4",
+    "unit": "percent QoQ in constant currency",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "North America (+1.4%) QoQ in CC",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q41",
+    "question": "What was UK growth in TCS Q4FY26?",
+    "expected_value": "2.4",
+    "unit": "percent QoQ in constant currency",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "UK (+2.4%)",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q42",
+    "question": "How many TCS clients had revenue above USD 100 million?",
+    "expected_value": "66",
+    "unit": "clients",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "number of clients increased to 66",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q43",
+    "question": "How many TCS clients had revenue above USD 50 million?",
+    "expected_value": "139",
+    "unit": "clients",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "number of clients increased to 139",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q44",
+    "question": "How many TCS clients had revenue above USD 1 million?",
+    "expected_value": "1397",
+    "unit": "clients",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "number of clients increased to 1,397",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q45",
+    "question": "How many mega deals did TCS report for FY2026?",
+    "expected_value": "5",
+    "unit": "mega deals",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "5 mega deals for the year",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q46",
+    "question": "How many consecutive quarters of sequential growth did TCS report by Q4FY26?",
+    "expected_value": "3",
+    "unit": "quarters",
+    "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
+    "anchor": "third consecutive quarter of sequential growth",
+    "category": "operating_performance"
+  },
+  {
+    "id": "q47",
+    "question": "What was TCS revenue from operations in the first nine months of FY2026?",
+    "expected_value": "196323",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q3_consolidated.md",
+    "anchor": "1,96,323",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q48",
+    "question": "What was TCS profit for the nine-month period ended December 31, 2025?",
+    "expected_value": "35670",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q3_consolidated.md",
+    "anchor": "PROFIT FOR THE PERIOD",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q49",
+    "question": "What was TCS basic and diluted EPS for the nine months ended December 31, 2025?",
+    "expected_value": "98.09",
+    "unit": "INR per share",
+    "source": "knowledge/quarterly_reports/FY25_Q3_consolidated.md",
+    "anchor": "Basic and diluted earnings per share",
+    "category": "financial_statements"
+  },
+  {
+    "id": "q50",
+    "question": "What was TCS net cash generated from operating activities for the nine months ended December 31, 2025?",
+    "expected_value": "38206",
+    "unit": "crore",
+    "source": "knowledge/quarterly_reports/FY25_Q3_consolidated.md",
+    "anchor": "Net cash flows generated from operating activities",
+    "category": "financial_statements"
+  }
+]
