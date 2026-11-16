@@ -23,7 +23,7 @@ def test_benchmark_aggregates_recall_and_mrr():
         {"question": "Q2", "relevant_chunk_ids": ["z"], "retrieved_chunk_ids": ["x", "z"]},
     ], k=2)
     assert result["question_count"] == 2
-    assert result["mean_recall_at_k"] == 0.5
+    assert result["mean_recall_at_k"] == 0.75
     assert result["mean_mrr_at_k"] == 0.75
 
 
