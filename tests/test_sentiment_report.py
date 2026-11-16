@@ -1,8 +1,12 @@
-from scripts.generate_sentiment_report import COMPANIES, MODEL, classify_headlines
+from scripts.generate_sentiment_report import COMPANIES, MAX_HEADLINES, MODEL, classify_headlines
 
 
 def test_expected_universe_is_configured():
     assert set(COMPANIES) == {"tcs", "infosys", "reliance", "hdfc_bank", "icici_bank", "nifty50", "sensex"}
+
+
+def test_headline_limit_is_twenty_per_company():
+    assert MAX_HEADLINES == 20
 
 
 def test_groq_model_is_configured():
