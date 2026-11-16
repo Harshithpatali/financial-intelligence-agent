@@ -72,7 +72,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="rag-index-${GITHUB_RUN_NUMBER}"
-          gh release create "$TAG" backend/rag-index.zip#tcs-rag-index.zip \
+          gh release create "$TAG" backend/rag-index.zip#rag-index.zip \
             --repo "$GITHUB_REPOSITORY" \
             --title "RAG index ${GITHUB_RUN_NUMBER}" \
             --notes "Precomputed Groq nomic-embed-text-v1_5 document embeddings and NetworkX evidence graph from commit ${GITHUB_SHA}."
