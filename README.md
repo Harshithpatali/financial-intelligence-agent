@@ -4,7 +4,7 @@
   <img src="assets/dashboard.png" alt="TCS financial intelligence dashboard" width="100%">
 </p>
 
-**A financial research assistant for TCS disclosures**, combining document ingestion, dense retrieval, bounded lexical retrieval, a provenance-backed entity graph and grounded LLM responses.
+**A financial research assistant for TCS disclosures**, combining document ingestion, SQLite FTS5 BM25 retrieval, a provenance-backed entity graph and grounded Groq LLM responses.
 
 [![Live Demo](https://img.shields.io/badge/Live-Streamlit%20Demo-brightgreen)](https://financial-intelligence-agent-g.streamlit.app/)
 [![API](https://img.shields.io/badge/API-FastAPI-009688)](https://financial-intelligence-agent-pmgy.onrender.com/)
@@ -39,7 +39,7 @@ The repository contains TCS annual reports, quarterly financial reports and earn
 pip install -r backend/requirements.txt
 ```
 
-Configure `GROQ_API_KEY` in the Render environment and in GitHub Actions repository secrets. The frontend does not need the key; it sends only the question text. Groq handles both query/document embeddings and answer generation.
+Configure `GROQ_API_KEY` in the Render environment and in GitHub Actions repository secrets. The frontend does not need the key; it sends only the question text. Groq is used only for answer generation; indexing and retrieval run locally without embeddings.
 
 Document vectors are built by the GitHub Actions workflow **Build and publish RAG index**. It runs automatically when files under `knowledge/` or indexing code change, and can also be started manually from the Actions tab. The workflow publishes `tcs-rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; the index is not committed into the source tree.
 
@@ -66,7 +66,7 @@ uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
 ## API
 
 - `GET /` service metadata
-- `GET /health` liveness check\n- `GET /ready` readiness check for Chroma, graph index and Groq configuration
+- `GET /health` liveness check\n- `GET /ready` readiness check for SQLite FTS5, graph index and Groq configuration
 - `GET /ask?question=...` question answering
 - `POST /ask` JSON request: `{"question":"What was TCS revenue in FY2024?"}`
 
