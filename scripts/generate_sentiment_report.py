@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any
 
 MODEL = "openai/gpt-oss-20b"
-MAX_HEADLINES = 8
+MAX_HEADLINES = 20
 COMPANIES = {
     "tcs": ("TCS · Tata Consultancy Services", "Tata Consultancy Services TCS"),
     "infosys": ("Infosys", "Infosys India"),
