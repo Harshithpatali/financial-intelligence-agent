@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from backend.api.rate_limit import limiter
 
@@ -53,6 +53,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 
 class AskRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     question: str = Field(min_length=3, max_length=2000)
 
 
