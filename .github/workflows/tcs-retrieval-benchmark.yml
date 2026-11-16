@@ -6,24 +6,23 @@ on:
     branches: [main]
     paths:
       - "evaluation/tcs_benchmark.json"
-      - "evaluation/run_tcs_benchmark.py"
-      - "backend/rag/embeddings.py"
       - "evaluation/traceability.py"
-      - "evaluation/README.md"
-      - "evaluation/reports/**"
-      - "tests/test_tcs_audit_traceability.py"
       - "evaluation/benchmark.py"
-      - ".github/workflows/tcs-retrieval-benchmark.yml"
+      - "tests/test_tcs_audit_traceability.py"
+  workflow_run:
+    workflows: ["Build and publish RAG index"]
+    types: [completed]
 
 permissions:
   contents: read
 
 concurrency:
-  group: tcs-retrieval-benchmark-cpu
+  group: tcs-retrieval-benchmark-groq
   cancel-in-progress: true
 
 jobs:
   evaluate:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -40,7 +39,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Download latest published RAG index
+      - name: Download latest published Groq RAG index
         run: python -m backend.rag.download_index
 
       - name: Run retrieval comparison and answer audit
