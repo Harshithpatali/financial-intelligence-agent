@@ -20,8 +20,6 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 
-from groq import Groq
-
 MODEL = "openai/gpt-oss-20b"
 MAX_HEADLINES = 8
 COMPANIES = {
@@ -70,7 +68,7 @@ def fetch_headlines(query: str, limit: int = MAX_HEADLINES) -> list[dict[str, st
     seen: set[str] = set()
     for item in root.findall("./channel/item"):
         title = html.unescape((item.findtext("title") or "").strip())
-        key = re.sub(r"\\W+", "", title.lower())
+        key = re.sub(r"\W+", "", title.lower())
         if not title or key in seen:
             continue
         seen.add(key)
@@ -86,7 +84,7 @@ def fetch_headlines(query: str, limit: int = MAX_HEADLINES) -> list[dict[str, st
     return rows
 
 
-def classify_headlines(headlines: list[dict[str, str]], client: Groq) -> list[dict[str, Any]]:
+def classify_headlines(headlines: list[dict[str, str]], client: Any) -> list[dict[str, Any]]:
     """Classify a complete company batch and validate model output against input indices."""
     indexed = [
         {"index": i, "headline": row["title"], "summary": row["summary"]}
@@ -169,7 +167,7 @@ def classify_headlines(headlines: list[dict[str, str]], client: Groq) -> list[di
 
 
 def classify_company(
-    slug: str, label: str, query: str, client: Groq
+    slug: str, label: str, query: str, client: Any
 ) -> dict[str, Any]:
     headlines = fetch_headlines(query)
     if not headlines:
@@ -224,6 +222,7 @@ def classify_company(
 def build_report(api_key: str) -> dict[str, Any]:
     if not api_key:
         raise RuntimeError("GROQ_API_KEY is missing. Add it as a GitHub Actions repository secret.")
+    from groq import Groq
     client = Groq(api_key=api_key, timeout=45, max_retries=0)
     generated_at = datetime.now(timezone.utc).isoformat()
     reports: dict[str, Any] = {}
