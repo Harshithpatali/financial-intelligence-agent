@@ -73,12 +73,12 @@ def readiness():
     """Readiness: checks the local index and required generation configuration."""
     checks = {}
     try:
-        from backend.rag.vector_store import get_collection
-        count = get_collection().count()
-        checks["chroma"] = {"ready": count > 0, "document_chunks": count}
+        from backend.rag.document_store import get_index
+        count = get_index().count()
+        checks["sqlite_fts5"] = {"ready": count > 0, "document_chunks": count}
     except Exception as exc:
-        logger.exception("Readiness check failed for Chroma")
-        checks["chroma"] = {"ready": False, "error": type(exc).__name__}
+        logger.exception("Readiness check failed for SQLite FTS5")
+        checks["sqlite_fts5"] = {"ready": False, "error": type(exc).__name__}
     try:
         from backend.rag.graph_index import INDEX_PATH, load_graph
         graph = load_graph()
@@ -92,7 +92,7 @@ def readiness():
         checks["knowledge_graph"] = {"ready": False, "error": type(exc).__name__}
     checks["groq_configured"] = bool(os.getenv("GROQ_API_KEY"))
     ready = all([
-        checks["chroma"]["ready"],
+        checks["sqlite_fts5"]["ready"],
         checks["knowledge_graph"]["ready"],
         checks["groq_configured"],
     ])
