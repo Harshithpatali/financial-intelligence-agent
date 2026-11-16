@@ -232,3 +232,8 @@ Recommended next evaluation steps:
 5. Compare model scores with a second reviewer or model before using them in research decisions.
 
 No accuracy, F1, calibration or predictive-return metric is claimed yet because a human-labelled evaluation benchmark has not been completed.
+
+
+### Retrieval evaluation benchmark
+
+The repository now includes a 50-question, source-anchored TCS benchmark and a reproducible comparison of dense-only, dense+BM25, and dense+BM25+knowledge-graph retrieval. See [the benchmark methodology and run instructions](evaluation/README.md). The workflow publishes retrieval metrics and a 13-question generated-answer audit packet when Groq credentials are configured. Automated numeric and citation checks are screening signals; human review of faithfulness, accounting period, units and source support remains required before claiming answer-quality scores.
