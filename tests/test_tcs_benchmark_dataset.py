@@ -1,8 +1,13 @@
 import json
+import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _number_tokens(text):
+    return {value.replace(",", "").lstrip("+") for value in re.findall(r"[-+]?\d[\d,]*(?:\.\d+)?", text)}
 
 
 def test_tcs_benchmark_has_50_unique_source_anchored_questions():
@@ -24,3 +29,22 @@ def test_tcs_benchmark_covers_financial_and_operating_disclosures():
     assert "knowledge/quarterly_reports/FY25_Q4_consolidated.md" in sources
     assert "knowledge/quarterly_reports/FY25_Q4_press_release.md" in sources
     assert "knowledge/quarterly_reports/FY25_Q3_consolidated.md" in sources
+
+
+def test_each_benchmark_anchor_and_expected_value_are_present_nearby():
+    rows = json.loads((ROOT / "evaluation/tcs_benchmark.json").read_text(encoding="utf-8"))
+    for row in rows:
+        source = (ROOT / row["source"]).read_text(encoding="utf-8")
+        anchor_pos = source.casefold().find(row["anchor"].casefold())
+        assert anchor_pos >= 0, f'{row["id"]}: anchor missing from {row["source"]}'
+        evidence_window = source[max(0, anchor_pos - 700):anchor_pos + 1100]
+        expected_numbers = _number_tokens(row["expected_value"])
+        source_numbers = _number_tokens(evidence_window)
+        # The source reports headcount as 270k+, while the normalized expected value is 270000.
+        if row["id"] == "q34":
+            assert "270k" in evidence_window.casefold()
+        else:
+            assert expected_numbers & source_numbers, (
+                f'{row["id"]}: expected value {row["expected_value"]!r} not found near anchor '
+                f'{row["anchor"]!r}'
+            )
