@@ -2,4 +2,3 @@ streamlit
 requests
 pandas
 plotly
-sentence-transformers>=3.0,<6.0
