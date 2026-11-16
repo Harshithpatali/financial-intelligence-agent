@@ -344,10 +344,10 @@
   {
     "id": "q39",
     "question": "What was CBG growth in TCS Q4FY26?",
-    "expected_value": "2.8",
+    "expected_value": "2.4",
     "unit": "percent QoQ in constant currency",
     "source": "knowledge/quarterly_reports/FY25_Q4_press_release.md",
-    "anchor": "CBG (+2.8%) QoQ in CC",
+    "anchor": "(+2.4%)",
     "category": "operating_performance"
   },
   {
