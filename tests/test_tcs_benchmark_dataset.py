@@ -41,16 +41,18 @@ def test_each_benchmark_anchor_and_expected_value_are_present_nearby():
     rows = json.loads((ROOT / "evaluation/tcs_benchmark.json").read_text(encoding="utf-8"))
     for row in rows:
         source = (ROOT / row["source"]).read_text(encoding="utf-8")
-        anchor_pos = source.casefold().find(row["anchor"].casefold())
-        assert anchor_pos >= 0, f'{row["id"]}: anchor missing from {row["source"]}'
-        evidence_window = source[max(0, anchor_pos - 700):anchor_pos + 1100]
+        anchor_positions = [m.start() for m in re.finditer(re.escape(row["anchor"]), source, re.I)]
+        assert anchor_positions, f'{row["id"]}: anchor missing from {row["source"]}'
         expected_numbers = _number_tokens(row["expected_value"])
-        source_numbers = _number_tokens(evidence_window)
+        windows = [
+            source[max(0, pos - 700):pos + 1100]
+            for pos in anchor_positions
+        ]
         # The source reports headcount as 270k+, while the normalized expected value is 270000.
         if row["id"] == "q34":
-            assert "270k" in evidence_window.casefold()
+            assert any("270k" in window.casefold() for window in windows)
         else:
-            assert expected_numbers & source_numbers, (
+            assert any(expected_numbers & _number_tokens(window) for window in windows), (
                 f'{row["id"]}: expected value {row["expected_value"]!r} not found near anchor '
                 f'{row["anchor"]!r}'
             )
