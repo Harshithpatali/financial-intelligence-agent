@@ -1,49 +1,45 @@
 # RAG evaluation
 
-The evaluation harness computes retrieval metrics over a **manually reviewed** JSONL benchmark. It deliberately does not ship fabricated relevance labels or publish scores before the benchmark has been reviewed.
+The benchmark separates retrieval quality from answer quality. The 50-question TCS set stores expected values, units, source paths and evidence-text anchors. At runtime, every anchor must resolve to one or more stable chunk IDs generated from the exact indexed Markdown chunking process; the run fails closed if an anchor is not found.
 
-## Benchmark format
+## Production-aligned retrieval comparison
 
-Each record contains a question, relevant chunk IDs confirmed by a reviewer against the source documents, and the ordered chunk IDs returned by the retrieval method under test:
+The active system uses SQLite FTS5's BM25 ranking and a NetworkX evidence graph. Groq is used only for answer generation. There is no dense-vector baseline because the Groq embeddings endpoint returned `model_not_found`; no Hugging Face model or alternate embedding provider is used.
 
-```json
-{"question":"What was TCS revenue in FY2024?","relevant_chunk_ids":["reviewed-chunk-id-1","reviewed-chunk-id-2"],"retrieved_chunk_ids":["reviewed-chunk-id-1","candidate-id-2","reviewed-chunk-id-2"]}
-```
-
-Use the same frozen questions and relevance labels when comparing dense-only, dense+BM25, and dense+BM25+graph retrieval. Store a separate benchmark result for each retrieval configuration. Do not use the example IDs above as real labels.
-
-## Run
+Run locally after building or downloading the index:
 
 ```bash
-python -m evaluation.benchmark path/to/retrieval-results.jsonl --k 5 --output evaluation/results/hybrid.json
-```
-
-The JSON output includes mean Recall@K, mean MRR@K and per-question metrics. The input must include ordered retrieved IDs as well as reviewed relevant IDs. The harness rejects empty or duplicate relevance labels.
-
-## Answer-level audit (separate from retrieval)
-
-For each evaluated answer, manually inspect citation correctness, faithfulness, answer relevance, numerical accuracy (especially units and reporting periods), and abstention on no-evidence questions.
-
-Citation coverage in `evaluation/metrics.py` measures citation presence only. It does not measure whether a citation supports a claim. Report retrieval metrics and answer-level audit results separately.
-
-## Reporting rule
-
-Do not claim benchmark performance until questions cover financial statements, reporting periods, segment performance, risks, management commentary and no-evidence cases; a reviewer has checked every relevant chunk ID against the original source; the benchmark is frozen before comparing retrieval configurations; and results include benchmark size, K value, retrieval configuration and date.
-
-A small transparent benchmark is more useful than an impressive but unverified score.
-
-
-## TCS benchmark implementation
-
-`evaluation/tcs_benchmark.json` contains 50 question records sourced from the checked-in TCS FY2026 and FY2025 nine-month disclosures. Each record stores an expected answer, unit, source path and text anchor. The runner resolves each anchor to the stable SHA-1 chunk IDs used by the Chroma index and fails if an anchor cannot be found in a single chunk.
-
-Run the comparison with:
-
-```bash
-python -m backend.rag.download_index
+python -m backend.rag.build_vector_db
 python -m evaluation.run_tcs_benchmark
 ```
 
-The runner uses Groq `nomic-embed-text-v1_5` embeddings for dense-only retrieval, full-corpus BM25, dense+BM25 reciprocal-rank fusion, and dense+BM25+NetworkX graph-assisted reciprocal-rank fusion. The Groq index must be rebuilt before running the benchmark; the installer rejects legacy BGE indexes. Full-corpus BM25 is an offline evaluation baseline; it is intentionally not substituted into the memory-bounded live API path. The workflow `.github/workflows/tcs-retrieval-benchmark.yml` runs on benchmark changes or manual dispatch. It publishes `retrieval_comparison.json` and `answer_audit_packet.json` as an Actions artifact. Citation parsing accepts both `[S1]` and `【S1】` markers, and the answer packet includes cited source excerpts to support manual review. If `GROQ_API_KEY` is configured, it generates answers for all 50 questions (with rate limiting) and emits an answer-review packet with five explicit human-review dimensions: relevance, faithfulness, numerical accuracy, citation correctness and page traceability.
+The benchmark compares:
+- `fts5_only`: SQLite FTS5 BM25 lexical retrieval.
+- `graph_only`: entity/period/evidence graph retrieval.
+- `fts5_graph_rrf`: reciprocal-rank fusion of lexical and graph rankings.
 
-**Interpretation warning:** source anchors are carefully selected evidence locations, not a substitute for independent double annotation. Numeric-token checks are screening checks, not proof that an answer uses the right period, unit, sign or accounting basis. The answer packet marks human faithfulness and numerical review as pending. Do not describe those as completed until the packet has been inspected against the source documents.
+The same frozen 50 questions and resolved anchor labels are used for all methods. Results include Recall@5, MRR@5 and per-question metrics. The FTS5 method is the same lexical index used by the live API, rather than a separate full-corpus in-memory approximation.
+
+The workflow `.github/workflows/tcs-retrieval-benchmark.yml` runs manually, on benchmark-code changes, or after the index-publishing workflow succeeds. It publishes `retrieval_comparison.json` and `answer_audit_packet.json` as an Actions artifact.
+
+## Answer-level audit
+
+When `GROQ_API_KEY` is configured, the runner generates an answer for each of the 50 questions with rate limiting. The audit packet records cited source excerpts, citation coverage, whether a cited excerpt contains the expected numeric value, and whether cited evidence overlaps a gold anchor. It also includes five human-review fields:
+1. Answer relevance: entity, metric, period and comparison match the question.
+2. Faithfulness: every material factual claim is supported by its cited excerpt.
+3. Numerical accuracy: value, currency, unit, sign, period and accounting basis match.
+4. Citation correctness: each citation supports the adjacent claim.
+5. Page traceability: source file and page resolve to the original disclosure.
+
+Automated numeric-token checks and citation presence are screening signals only. They do not establish faithfulness, correct accounting basis or citation entailment. Human review remains pending until a reviewer inspects each answer against the original source documents. If Groq is not configured, the retrieval comparison still runs and the audit packet clearly records that answer generation was skipped.
+
+## Interpretation and reporting rules
+
+- Do not report retrieval metrics without naming the benchmark size, K, method and run date.
+- Do not compare FTS5/graph metrics directly with historical BGE or dense metrics as if they were the same experiment.
+- Source anchors are carefully selected evidence locations, not a substitute for independent double annotation.
+- Overlapping chunks containing the same anchor are labelled relevant; alternate valid evidence is not counted unless included in the reviewed labels.
+- Report retrieval metrics and answer-level audit results separately.
+- Do not claim answer faithfulness or numerical accuracy rates until human review is complete.
+
+A transparent benchmark with explicit limitations is more useful than an impressive but unverified score.
