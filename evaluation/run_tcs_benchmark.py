@@ -113,7 +113,8 @@ def aggregate(method_rows: list[dict]) -> dict:
 
 def cited_source_indices(answer: str, source_count: int) -> list[int]:
     values = []
-    for match in CITATION_RE.finditer(answer):
+    clean_answer = ZERO_WIDTH_RE.sub("", answer)
+    for match in CITATION_RE.finditer(clean_answer):
         value = int(match.group(1) or match.group(2))
         if 1 <= value <= source_count and value not in values:
             values.append(value)
@@ -225,7 +226,7 @@ def main() -> None:
             if row["id"] not in AUDIT_IDS:
                 continue
             embedding = model.encode(row["question"], normalize_embeddings=True).tolist()
-            result = answer_question(row["question"], query_embedding=embedding)
+            result = answer_question(row["question"], query_embedding=embedding, top_k=5)
             answer = result["answer"]
             sources = result["sources"]
             cited_indices = cited_source_indices(answer, len(sources))
@@ -268,7 +269,8 @@ def main() -> None:
     audit_packet = {
         "status": "machine_checks_complete_human_review_pending",
         "answer_count": len(answer_audits),
-        "checks": "Citation parsing supports [S#] and 【S#】. Numeric checks are screening checks; source excerpts are included for human faithfulness, period, unit, sign and accounting-basis review.",
+        "answer_context_top_k": 5,
+        "checks": "Citation parsing supports [S#], 【S#】 and zero-width formatting artifacts. Numeric checks are screening checks; source excerpts are included for human faithfulness, period, unit, sign and accounting-basis review.",
         "answers": answer_audits,
     }
     (OUTPUT_DIR / "answer_audit_packet.json").write_text(
