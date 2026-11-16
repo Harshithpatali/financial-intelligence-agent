@@ -54,7 +54,7 @@ def cited_indices(answer,n):
     return result
 def main():
     rows=json.loads(DATA.read_text(encoding="utf-8"))
-    chunks=chunk_documents(load_documents(ROOT/"knowledge"))
+    chunks=chunk_documents(load_documents())
     rows=resolve_rows(rows,chunks)
     index=get_index(); total=index.count()
     if total<=0: raise RuntimeError("Downloaded SQLite FTS5 index is empty.")
