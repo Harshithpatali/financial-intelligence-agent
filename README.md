@@ -91,6 +91,11 @@ GitHub Actions runs the automated test suite on pushes and pull requests. API sa
 - Benchmark scores should only be reported after relevance labels and answer audits are reviewed.
 - Outputs are research assistance, not investment advice.
 
+
+### Reproducible retrieval benchmark
+
+A benchmark runner is available at `evaluation/benchmark.py`. It calculates mean Recall@K and mean MRR@K plus per-question results from a JSONL file containing manually reviewed relevant chunk IDs and ordered retrieved chunk IDs. Example usage and the required input schema are documented in [evaluation/README.md](evaluation/README.md). No benchmark score is claimed until relevance labels are reviewed against the source documents; citation coverage is reported separately from citation correctness and answer faithfulness.
+
 ---
 
 ## Daily Market Sentiment Intelligence
