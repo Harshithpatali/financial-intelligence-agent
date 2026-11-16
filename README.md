@@ -90,7 +90,7 @@ A 50-question TCS source-anchored benchmark compares dense-only, full-corpus BM2
 
 BM25-only produced the highest Recall@5; graph-assisted fusion had the highest MRR@5. Equal-weight dense+BM25 fusion underperformed BM25 alone. These results measure retrieval against source-anchored relevance labels, not answer accuracy, and the offline BM25 baseline is not the live API lexical implementation.
 
-A 13-question answer audit with top-5 context found 3 correct answers, 2 materially incorrect answers and 8 false abstentions. Citation coverage was 48.7%; citation presence is not proof of source support. The review identified period/accounting-basis confusion and missing relevant evidence. See the [full benchmark and answer-audit report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) and [evaluation methodology](evaluation/README.md).
+A 13-question answer audit with top-5 context found 3 correct answers, 1 materially incorrect answer, 1 accounting-basis ambiguity and 8 false abstentions. Citation coverage was 48.7%; citation presence is not proof of source support. The FX-sensitivity question was clarified to ask specifically for the Group figure after the audited run, so that item needs re-evaluation. The review identified period/accounting-basis confusion and missing relevant evidence. See the [full benchmark and answer-audit report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) and [evaluation methodology](evaluation/README.md).
 
 GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include normalized finite 384-dimensional embedding validation, a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
 
