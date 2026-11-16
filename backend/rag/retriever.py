@@ -71,8 +71,9 @@ def retrieve(query, top_k=3, query_embedding=None):
 
     dense_scores = {}
     if query_embedding is not None:
-        if not isinstance(query_embedding, list) or len(query_embedding) != 384:
-            raise ValueError("query_embedding must contain exactly 384 values for BAAI/bge-small-en-v1.5")
+        from backend.rag.embeddings import EMBEDDING_DIMENSION
+        if not isinstance(query_embedding, list) or len(query_embedding) != EMBEDDING_DIMENSION:
+            raise ValueError(f"query_embedding must contain exactly {EMBEDDING_DIMENSION} values for the configured Groq embedding model")
         if not all(math.isfinite(float(value)) for value in query_embedding):
             raise ValueError("query_embedding values must all be finite")
         norm = math.sqrt(sum(float(value) ** 2 for value in query_embedding))
