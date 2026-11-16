@@ -231,7 +231,37 @@ def main() -> None:
             if audit_number > 1 and (audit_number - 1) % 2 == 0:
                 time.sleep(65)
             embedding = model.encode(row["question"], normalize_embeddings=True).tolist()
-            result = answer_question(row["question"], query_embedding=embedding, top_k=5)
+            try:
+                result = answer_question(row["question"], query_embedding=embedding, top_k=5)
+            except Exception as exc:
+                # Preserve one failed generation as an auditable record and continue.
+                # A transient provider failure must not discard the completed retrieval report.
+                logger.exception("Answer generation failed for %s", row["id"])
+                answer_audits.append({
+                    "id": row["id"],
+                    "question": row["question"],
+                    "expected_answer": row["expected_value"],
+                    "expected_unit": row["unit"],
+                    "expected_source": row["source"],
+                    "expected_anchor": row["anchor"],
+                    "expected_page": page_for_anchor(
+                        (ROOT / row["source"]).read_text(encoding="utf-8"), row["anchor"]
+                    ),
+                    "answer": None,
+                    "generation_error": f"{type(exc).__name__}: {exc}",
+                    "sources": [],
+                    "cited_evidence": [],
+                    "citation_coverage": 0.0,
+                    "cited_gold_evidence_present": False,
+                    "expected_numeric_value_present": False,
+                    "expected_value_present_in_cited_evidence": False,
+                    "human_answer_relevance_review": "not_reviewable_generation_failed",
+                    "human_faithfulness_review": "not_reviewable_generation_failed",
+                    "human_numerical_review": "not_reviewable_generation_failed",
+                    "human_citation_correctness_review": "not_reviewable_generation_failed",
+                    "human_page_traceability_review": "not_reviewable_generation_failed",
+                })
+                continue
             answer = result["answer"]
             sources = result["sources"]
             cited_indices = cited_source_indices(answer, len(sources))
@@ -284,8 +314,10 @@ def main() -> None:
         print("GROQ_API_KEY not configured; answer-generation audit skipped.")
 
     audit_packet = {
-        "status": "machine_checks_complete_human_review_pending",
+        "status": ("machine_checks_complete_human_review_pending" if all("generation_error" not in item for item in answer_audits) else "generation_completed_with_errors_human_review_pending"),
         "answer_count": len(answer_audits),
+        "successful_answer_count": sum("generation_error" not in item for item in answer_audits),
+        "generation_error_count": sum("generation_error" in item for item in answer_audits),
         "benchmark_question_count": len(rows),
         "answer_context_top_k": 5,
         "review_rubric": {
