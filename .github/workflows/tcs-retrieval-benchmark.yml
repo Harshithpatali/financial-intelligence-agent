@@ -1,54 +1,45 @@
 name: TCS retrieval benchmark
-
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - "evaluation/tcs_benchmark.json"
+      - "evaluation/run_tcs_benchmark.py"
       - "evaluation/traceability.py"
       - "evaluation/benchmark.py"
       - "tests/test_tcs_audit_traceability.py"
   workflow_run:
     workflows: ["Build and publish RAG index"]
     types: [completed]
-
 permissions:
   contents: read
-
 concurrency:
-  group: tcs-retrieval-benchmark-groq
+  group: tcs-retrieval-benchmark-lexical-graph
   cancel-in-progress: true
-
 jobs:
   evaluate:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
           cache-dependency-path: backend/requirements.txt
-
       - name: Install evaluation dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
-
-      - name: Download latest published Groq RAG index
+      - name: Download latest SQLite FTS5 RAG index
         run: python -m backend.rag.download_index
-
-      - name: Run retrieval comparison and answer audit
+      - name: Run lexical/graph comparison and answer audit
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: openai/gpt-oss-120b
-          GROQ_EMBEDDING_MODEL: nomic-embed-text-v1_5
         run: python -m evaluation.run_tcs_benchmark
-
       - name: Upload benchmark reports
         uses: actions/upload-artifact@v4
         with:
