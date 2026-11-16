@@ -19,8 +19,8 @@ Users can ask questions about TCS revenue, profitability, cash flow, business se
 
 1. **Ingestion:** PDF, CSV and news inputs are transformed into a version-controlled Markdown knowledge repository.
 2. **Page-aware chunking:** documents are split into overlapping chunks while retaining source and page metadata when available.
-3. **Offline document indexing:** GitHub Actions runs BAAI BGE Small once when knowledge sources or indexing code change, then publishes the ChromaDB vectors and NetworkX graph as a versioned GitHub Release asset.
-4. **Query embedding:** Streamlit loads the same BAAI BGE Small model on demand and embeds each user question; the 384-dimensional query vector is sent to FastAPI.
+3. **Offline document indexing:** GitHub Actions uses Groq's `nomic-embed-text-v1_5` embedding endpoint to build normalized 768-dimensional document vectors, then publishes the ChromaDB vectors and NetworkX graph as a versioned GitHub Release asset.
+4. **Query embedding:** FastAPI generates each normalized query vector through the same Groq embedding model. The Streamlit client sends only the question text; no local embedding model or Hugging Face download is used.
 5. **Lexical retrieval:** the live API uses bounded Chroma document-term candidates to stay within its memory budget. A full-corpus BM25 implementation is used as an offline evaluation baseline.
 6. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. Typed edges distinguish `MENTIONS`, `HAS_EVIDENCE_IN_PERIOD`, `PRECEDES`, qualitative trend evidence and `CO_MENTIONED_WITHIN_CHUNK`. Co-mentions are not causal relationships; trend nodes are unverified qualitative observations.
 7. **Hybrid ranking:** reciprocal-rank fusion combines dense, bounded lexical and graph candidates in the live API.
@@ -39,18 +39,17 @@ The repository contains TCS annual reports, quarterly financial reports and earn
 pip install -r backend/requirements.txt
 ```
 
-Configure `GROQ_API_KEY` in the Render environment. The frontend does not need the Groq key; it only sends the question and its query embedding to the API.
+Configure `GROQ_API_KEY` in the Render environment and in GitHub Actions repository secrets. The frontend does not need the key; it sends only the question text. Groq handles both query/document embeddings and answer generation.
 
 Document vectors are built by the GitHub Actions workflow **Build and publish RAG index**. It runs automatically when files under `knowledge/` or indexing code change, and can also be started manually from the Actions tab. The workflow publishes `tcs-rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; the index is not committed into the source tree.
 
-For a local rebuild, install the indexing dependency and run:
+For a local rebuild, configure `GROQ_API_KEY` and run:
 
 ```bash
-pip install "sentence-transformers>=3.0,<6.0"
 python -m backend.rag.build_vector_db
 ```
 
-The Streamlit frontend also installs `sentence-transformers` and lazily loads `BAAI/bge-small-en-v1.5` to embed each query. The same model and normalized 384-dimensional vectors are used on both sides. Render does not install or load PyTorch/SentenceTransformers.
+The index builder, FastAPI query path and benchmark all use the same Groq-hosted `nomic-embed-text-v1_5` model. No Hugging Face account, token, local model download, PyTorch or SentenceTransformers installation is required.
 
 To build only the graph from an existing Chroma collection:
 
@@ -79,7 +78,7 @@ The Markets & News dashboard uses Yahoo Finance through `yfinance` for quotes/hi
 
 ## Evaluation
 
-A 50-question TCS source-anchored benchmark compares dense-only, full-corpus BM25, dense+BM25 reciprocal-rank fusion, and dense+BM25+graph retrieval. The initial measured run used top-5 retrieval over 10,106 indexed chunks:
+A 50-question TCS source-anchored benchmark compares Groq dense-only, full-corpus BM25, dense+BM25 reciprocal-rank fusion, and dense+BM25+graph retrieval. The published table below is the historical BGE run and must not be treated as Groq performance; rerun the benchmark after the Groq index has been rebuilt:
 
 | Method | Recall@5 | MRR@5 |
 |---|---:|---:|
@@ -92,7 +91,7 @@ BM25-only produced the highest Recall@5; graph-assisted fusion had the highest M
 
 A 13-question answer audit with top-5 context found 3 correct answers, 1 materially incorrect answer, 1 accounting-basis ambiguity and 8 false abstentions. Citation coverage was 48.7%; citation presence is not proof of source support. The FX-sensitivity question was clarified to ask specifically for the Group figure after the audited run, so that item needs re-evaluation. The review identified period/accounting-basis confusion and missing relevant evidence. See the [full benchmark and answer-audit report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) and [evaluation methodology](evaluation/README.md).
 
-GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include normalized finite 384-dimensional embedding validation, a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
+GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include normalized finite 768-dimensional Groq embedding validation, a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
 
 ## Limitations and next steps
 
@@ -107,7 +106,7 @@ GitHub Actions runs the automated test suite on pushes and pull requests. API sa
 
 ### Retrieval evaluation benchmark
 
-The repository includes a 50-question TCS benchmark, a full-corpus BM25 offline baseline and a 13-question generated-answer audit packet. See [the benchmark report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) for measured results and limitations. The workflow publishes JSON reports as a GitHub Actions artifact. Automated numeric and citation checks are screening signals; human review of faithfulness, accounting period, units and source support remains required before claiming answer-quality scores.
+The repository includes a 50-question TCS benchmark, a full-corpus BM25 offline baseline and a 13-question generated-answer audit packet. See [the benchmark report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) for measured results and limitations. The workflow publishes JSON reports as a GitHub Actions artifact. Automated numeric and citation checks are screening signals; human review of faithfulness, accounting period, units and source support remains required before claiming answer-quality scores. The current BGE retrieval metrics are retained only as a historical baseline; the Groq results will replace them after the new index and benchmark workflow complete.
 
 ---
 
