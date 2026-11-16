@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import re
+import time
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
@@ -223,9 +224,12 @@ def main() -> None:
 
     answer_audits = []
     if os.getenv("GROQ_API_KEY"):
-        for row in rows:
-            if row["id"] not in AUDIT_IDS:
-                continue
+        audit_rows = [row for row in rows if row["id"] in AUDIT_IDS]
+        for audit_number, row in enumerate(audit_rows, start=1):
+            # The configured Groq free/on-demand TPM budget is shared across requests.
+            # Two answer generations per minute leave room for both prompt and completion tokens.
+            if audit_number > 1 and (audit_number - 1) % 2 == 0:
+                time.sleep(65)
             embedding = model.encode(row["question"], normalize_embeddings=True).tolist()
             result = answer_question(row["question"], query_embedding=embedding, top_k=5)
             answer = result["answer"]
