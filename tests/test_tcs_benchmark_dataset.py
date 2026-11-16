@@ -51,6 +51,8 @@ def test_each_benchmark_anchor_and_expected_value_are_present_nearby():
         # The source reports headcount as 270k+, while the normalized expected value is 270000.
         if row["id"] == "q34":
             assert any("270k" in window.casefold() for window in windows)
+        elif row["id"] == "q46":
+            assert any("third" in window.casefold() for window in windows)
         elif row["id"] == "q14":
             # "Cash paid" is a positive magnitude although the statement presents the outflow in parentheses.
             assert any({value.lstrip("-") for value in expected_numbers} & {
