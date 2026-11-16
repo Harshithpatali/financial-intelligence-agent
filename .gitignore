@@ -11,8 +11,9 @@ venv/
 # Streamlit
 .streamlit/secrets.toml
 
-# Chroma and generated retrieval indexes
+# Generated retrieval indexes
 backend/chroma_db/
+backend/indexes/*.sqlite3
 backend/indexes/tcs_knowledge_graph.json
 backend/rag/rag-index.zip
 
