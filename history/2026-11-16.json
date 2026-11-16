@@ -1,0 +1,1036 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-16T09:29:03.846581+00:00",
+  "report_date_utc": "2026-11-16",
+  "timezone_note": "Generated daily at approximately 06:00 Asia/Kolkata (00:30 UTC).",
+  "model": "openai/gpt-oss-20b",
+  "source": "Google News RSS",
+  "companies": {
+    "tcs": {
+      "slug": "tcs",
+      "company": "TCS · Tata Consultancy Services",
+      "query": "Tata Consultancy Services TCS",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": 0.85,
+      "sentiment_label": "positive",
+      "counts": {
+        "positive": 8,
+        "negative": 0,
+        "neutral": 0
+      },
+      "trend": [
+        {
+          "date": "2026-06-11",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-06-16",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-07-13",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-08-24",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-09-05",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-09-09",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-10-01",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-11",
+          "sentiment_score": 0.85,
+          "article_count": 1
+        }
+      ],
+      "articles": [
+        {
+          "title": "TCS Becomes the Official AI and Technology Partner of the Rio Marathon - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNMnZ4ZUpfU0JQcXRDaURJVENkM1QxTEF0WGlNSEVoN1ZSZzVLczNRd2YteU0wUTJ6dnVmR0lhYVdRSUxwVzZQeUVRcTdnckRaUmNrZ3R3ZUZzUkQzUlRubVZqWVFkNkRKcjlTRUhBZjZvQWJKZ01sUGZMUFlXb3ZTNXhYVzJFUmR2dDBlM21uT003WElvSGFULU9pM2lKTHA3WDB1MWp1TEgyc0FqOUE?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Wed, 11 Nov 2026 06:42:10 GMT",
+          "published_date": "2026-11-11",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "TCS launches India’s first lights-out factory lab to advance AI-first manufacturing - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQNXZ2UTdjb1d0QTVvWmMwZGVFX3ptZWR2UnBXOWtOckVCTU80R2c3Tm0xX0JDc2lCaWRaZlhSQWZIMXJES29uZ0h4OTI0NXRwMHFZeFU2OEZKWkJacTJLTlZWMnhaSVNwWTB0RTdmWnNlem91M3VOSlJPRC0wclN6bloxQnFpSlhMRmlROHpuMFk3bkRpWFY3eWJGcmV1NzJIV2djTW9hakkyOVBoSW1lZzA2eUlOQThfUWNOVF9tLXdLcG9UaFZnQjV3VW1LZw?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Wed, 09 Sep 2026 08:15:20 GMT",
+          "published_date": "2026-09-09",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "Tottenham Hotspur announces TCS as Digital Transformation Partner - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNTFh0TGJRNWRwU2tmWmtPSk1CMUJ4cGtQVWlfc0RIUHVrNnZ0azFxWmduWS0zeU9QNVVtS3h5UVluVjZvdnhYUExCOU9iYk42SFdNRk1WamtIRlp3WWl5UUtfbG1XMWt3VHZLd3V2NWhoY3gxODNFZkt3YzZFS2tPbXhDV0R5c05tNTk3ZVNpNW5lamctSksyalVzV1hQRkp4Y2I4OWRFMHdlaTZuZTA0elFTX1Jpb1k?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Tue, 16 Jun 2026 07:00:00 GMT",
+          "published_date": "2026-06-16",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "TCS and Anthropic launch Global Premier Partnership to drive Enterprise AI scaling - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOOHNkYWdNVUtBc3lEOHFLd2RwQ1FoeE0xZXRIWTFYTzd5bFdjQ3kycXVWQ3Q4ZExGSE5zT2t5MUFFMmJ3enBJVnQ3VlhpX3NrNlM3Sldyb1V4SVVVcWhhaVU1aUNwSmVjdnI0Wi1YQ2ZWRFJJQkR4WG1LNUJYVGg4RkdhZkktZ3hQeS1EYTdDdHZjZGtnVTNnWGxtZ052V2FNajFuQlNQMXlwc0lTaFc2TTJpNTJIaEx5RnNvQ3FNLXFkUkFLREpDRA?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Thu, 11 Jun 2026 07:00:00 GMT",
+          "published_date": "2026-06-11",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "Best Buy’s Global Capability Center in India to transition to TCS - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQUDFheXBmM2NpaXpIY1lsemtlNGlZbVAxSVRzRV9Ic0ZmanJYTzlRSHNmSlRCMkxrTUhZTk5sU2NoejFuUVljTVdwVGhrM0ExRWlZbFN5clhPUTVMX25FRUNiczB1NHg3ZVUtZHRSRnd1ckNxMFJmdTMyUE1IVkhTRk5DM2daLUdEc1hmVlMzM0JEXzQyZlZxT1gtblVPeU5Gb1ZvMXgyd1lQdUJpQlE?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Thu, 01 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-01",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "TCS’ HyperVault to establish large-scale AI data center campus in Telangana - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOdDI1czBnVzJ4dmNyLWl6RnZBWTBQS21mT3JIWGdvbVVmS3VHNjFkckRLd2R4OEVBU2VMWEZxRFZlaklpLW1rT1RoN0dyeWRnUGhLZzZGcmJFaWNZN1FmdFc2YXFEUW16QlZWRWNfeEhRWll6WUI3b1M0ZG1GMWUxb0RmVGdwWnRqMEpRazAwWG1kbjk4T0NEN29QTFNZVDJCTWl0d2ZmMjFUNnlNRVZKRV9PN1RNSFNuUnlEa3dQdw?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Sat, 05 Sep 2026 07:00:00 GMT",
+          "published_date": "2026-09-05",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "TCS and Porsche AG Partner to Accelerate the Future of AI-Powered Mobility - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNTHNfb0V1MnUxOER3aVZVWEhUVHdHazRpdjFrZGktY3IxWC1wbzBCZ3Bjd1pMQk1FNk1kWUwzOWJMM05NVURRUHFjUURNMENHLXdfWlZFRmc3bms5US03cFBrRzk0U3pMR2hSempVckJMakJSU0Q4N3Y0emlWVWFHcjlwMUlxeGFGR3dLdFluTzhXSGp3UlhJRVZmWjNTVGlWMl9FX0dVZUJpTzRZcExacjBScV9BU3Jx?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Mon, 24 Aug 2026 07:00:00 GMT",
+          "published_date": "2026-08-24",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        },
+        {
+          "title": "TCS and ABB sign multi-million, multi-year deal to transform global network operations with AI - Tata Consultancy Services",
+          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPeThfQmFyeEZvNFJ3NjBrYlVaQmh1Y05FX1VGUVo3dmhvenRKTjhReGtrdjJGZ3BTQTZKY0I2R1JFWUdYQm5ISzEyM1RiQlUxTWhERm83eF9udGFEMDZiUVUtWVJQbzVvUmZTWHFTTWVzN0pacFVLMjI5b2t6SzA0czZWak9tQmE0UXRhcEZ6VUI2VGdWNFphdzFySC11elhOc29qaHY1NTE1QVNjb3ZpTXBXMkdtb29qV0diMGxQOHZiQzA2VG0zaWgtZmU2dlpzOExhWWhzYXB3TXVWTDN3Uw?oc=5",
+          "publisher": "Tata Consultancy Services",
+          "published": "Mon, 13 Jul 2026 07:00:00 GMT",
+          "published_date": "2026-07-13",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.85,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.85
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    },
+    "infosys": {
+      "slug": "infosys",
+      "company": "Infosys",
+      "query": "Infosys India",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": 0.7,
+      "sentiment_label": "positive",
+      "counts": {
+        "positive": 7,
+        "negative": 0,
+        "neutral": 1
+      },
+      "trend": [
+        {
+          "date": "2026-11-12",
+          "sentiment_score": 0.7667,
+          "article_count": 3
+        },
+        {
+          "date": "2026-11-13",
+          "sentiment_score": 0.85,
+          "article_count": 2
+        },
+        {
+          "date": "2026-11-14",
+          "sentiment_score": 0.8,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-16",
+          "sentiment_score": 0.4,
+          "article_count": 2
+        }
+      ],
+      "articles": [
+        {
+          "title": "Six, including quantum and climate change researchers, win Infosys Prize - The Indian Express",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQTm5pTEFJdGN3Y2Y2ZW5tWFk2QmhONDlHNDRjZnVkeXdHVXZYTm8wZGRxM3JyR2NPbjVIZFFwTkc4LW83Qm1ZWEExUTlvZ0IxakFiZWZXMzg1Yk5HYnJjX3M1YW15YXI0dE1IWF9VTl9vZWhSWnhKbmdXUXhWcjlJMlhyVkFIU2ZNNFMzdUtKSVRMWk80WUNWMzBZSFNjc1huaFp0N2dIUWlKNzNNZWhZTHdHZUVvZ3FsNTVhUtIBwwFBVV95cUxOVExfTTd5Ry1xMTBMUEl5WU9tX0h1Wk9LWXN6U1UyaU9RV0NEeDJyYnE1d0hWZmVnUV9ub042aU9vekVLRFVzVlMxRk5TMWpRT3NYc1FQbVE0aUpUeXR2QTVQMEZtaDJzYldrT0FxYm1UZUVuV0d3SGRPd2w4Qkkxc0VTS3RIcFhEcV80UmZXN19jUnZQcTBPSnFoaFBWZWhpNmI1TjdGeWZkLVFTMFM2bDdhakk4R3QzV2x2blY0YlNHaWM?oc=5",
+          "publisher": "The Indian Express",
+          "published": "Thu, 12 Nov 2026 22:37:58 GMT",
+          "published_date": "2026-11-12",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "Acquisitions key to drive innovations: Infosys Cofounder Gopalakrishnan - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxObU00UlRJOXhFTU1vcUpua2JIbDE5WTFxX0lneW9ZcTd6eU5VSG5xcFV4Z0dLT1Q1dkVkYTRON3A3MVpCZ1JQSWZDQWtDcFQ5MnoxSnlSMV84M1VUSHFOVnlFTldxM1VTdWFaYlVLRlR6UGFCellucmh0Y00yQlJ3b2RIb3Njc0tXRWg3bGJzWWpTUm0xNUhFcURwVklWWHMxaGZHYXdfN2tVVGJ5bFNFWjEtWUF4N3Z5X1hMR0ZuQU5IRnNjeWdpQm1ZMEREQzFEeFZoMEF5a0o1d9IB3wFBVV95cUxPbDU0WGZ4bUg2SUNhNGhHSk4tejZjaU9LUmdzeUdyWWlCUUZSMm5YZzlEU0Z5VGF6N0JsNjhLbktVdWNVMi1FQlVMX3pDWXRRMnNDZi1OVW9PS2RiOWhpSkFmaHV4bFBnVGZjb19vazhiQk1vclQwX2dGUG4yVGdrenBkbDVnMXN1NUpvc2Jrd0E1SkNpOHNRU09rNkhGY19hd0s4Yk44QTRoRjhXeXV3LWhkYTdkdl81aEJjUV9BdHZob1pGV1hSTWkwV1c0cklZMGJYLThfWjNzbFJfUm9B?oc=5",
+          "publisher": "Business Standard",
+          "published": "Thu, 12 Nov 2026 11:50:47 GMT",
+          "published_date": "2026-11-12",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "6 researchers win Infosys Prize 2026. From climate change economist to quantum physicist - ThePrint",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNeHRsVXBmcUtLN0thUFdLTG1nR3BXVDU2Vm03M2ZqeW9qemg4bGxJY2xjbGFJT1h3ak13aFZ2cy1VMEMyd2trNjZ3VUlXc2JCYUFzbjdZaFlQSGJhSHduMlB3QUg3WElQYkMwLXVMc3FRRFpuc0VuTnYwYU9JcHQ2eWFIZU14VGdFTjRRb0ZQaG0xRFZqUHFqMEdYbHR6ZmZTeUMzOWFSdTdZQm1NZ01jZ2gzc21OdUnSAbwBQVVfeXFMT2hhcmZ5Uk1SZGFxVU5BZXBULVNxX1ZlemlYLWJ3ZEIwckdLN1dZZTJFRDYwUGJ5d293UkV0WkpXYWxqZVZJaGMxVFNsUW1OUzdkem5GOGNnNG5MYVFNakVTNWF3bWhvd0c3Zzg1SXNKS2s3V2s3aC02bzV4bmExeDVibjBVNFFfeWZPcVBjVXJQUVViM0tJZ3Q5dXhwQ2YtMlZPZ3lhTUdodndvYmhKYTJnODZNY3Vzc0ZnT0Y?oc=5",
+          "publisher": "ThePrint",
+          "published": "Thu, 12 Nov 2026 11:06:41 GMT",
+          "published_date": "2026-11-12",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "He went from NLS to Oxford to Yale. Now, Gautam Bhatia has won the Infosys Prize - India Today",
+          "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPcUFXYjdRZENsc2V4amRuQjlWLVdOUzVmZTcxNG44X0ZldnFNRlBiWEN3NTIyMVFBdWxpcGZMZ3RWd0FSQi1UZlA3eGVXOWktZWN3WkZnWlB6TDJqMS04T0ZhQ3RSMnVaWEJsOVRsUVlpS29ndUltTWFkbTFBdnlYQUZWUjhtOGNUZ1ZPSUtWYzRiVVBUcUpOUWRyOUZSSUZmZkdYc3o5VHFYazVVQlZnZzQ5b2hhbk1NQXJRa0MxOUd6TmFjYV94TmExNUpkMjd4S0xzaVNGNnBadTJiRC1rcWo0VElPVnk0c3p2YtIB8gFBVV95cUxPNmw3NDd6ZXRKZ2htTVBBZUVqOWdQNGppR25RQUYxbHJFR1djVDFzaGltSjItdjNCS3JZaTJMNTJNTmI2czRkcGVkUEpDSDc1aXdtOXZ0NHVINXZBc3NqSGlfSWNoVVRHdHllVUp0U1NjNGFOU2xXSmxfaktoVFdabFI1YkptMWkwb19QdlBNYmVLcV9VMzBEeVFwczc0S1lkRlY4UV9DUjNMcktYU05NMUx1QVJRVjJiRnZhZVJHeG91M2pfSXNSUXN6N01FQ29uMlU2S2VIeW5yR2J4TXVZV3RwYm1DT1l2YU9URkFzWWdzQQ?oc=5",
+          "publisher": "India Today",
+          "published": "Sat, 14 Nov 2026 10:10:00 GMT",
+          "published_date": "2026-11-14",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "Eternal, Infosys & Wipro: Three Stocks, Three Different Trading Opportunities - Investing.com India",
+          "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQSjBZQldiam1nQk9pRkJXSmRwSFB3bnJESG5xZmZIeUhSYmx1WV8tbHhoQ3ZWUzZYVW1YZjg4b0ZZOFI0b2lQN1RDNl9hQXgxRlJkSE1tZE1qc0VfT3AzVWxoVzlFbUxzbmQxZ000UDZhRDlhVzdob0N6WF9ZTEZVYmVteHUwbzJiYXZRVnNXbmFaMmwzQWlYYWZTcFNyVVRicnQ2VjFZSjdGaVN1SlJ3czZZX0p3aVRI?oc=5",
+          "publisher": "Investing.com India",
+          "published": "Mon, 16 Nov 2026 03:25:44 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.2,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "UP CM Yogi Adityanath distributes 50,000 tablets under Swami Vivekananda Yuva Yojana, offers 18,000 free Infosys courses to students in Lucknow - Education Times",
+          "url": "https://news.google.com/rss/articles/CBMiqgJBVV95cUxQTUF0WHEweS1Eb0lZU21hSkxfRWRxVTdXdXF1OUVaVFpZMC1aQnQ3ckU5TVFkb3lsakRTSzA0d0c3eWhpdlI0MkJKUE1maTFTYkhwWVhoUVFidGpLODV1dm1oeUpyQTkzbkotTGhLSDNHQXcxMHpabFlBaUoydXJZSzJIbzdtQTI5eTlSNmNXR3RFM2VoU0hidU96dW9sUkpIXzVrNVZfanJBRVNOQ0xwLVNHamc0YmhraWhFd3VEaGFfLVlWVExvdU5rQU9XWjcyYTdrME40MDBjQlI4RlAxWnI5WjVlbnQzaG1aQjdnM1FHaFJfWjJLbWE1dml2VGIxLUxWd1B0N1FRM0hfcXplc3pJT2FTcTFHY3RiR2NVVTdFZWIwMVVUVzlR?oc=5",
+          "publisher": "Education Times",
+          "published": "Mon, 16 Nov 2026 02:00:00 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "Prof. Isha Jain wins Infosys Prize 2026 for pioneering discoveries in oxygen biology - BioSpectrum India",
+          "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOcU1zWFBHSTY0V0RiM2Y2bkx5N1hOMThFbkNyRGt5emdLaC1BdWtWRW5KYjJ1clltV3F2VkFlNDBycUhCTk0yMXdxbWNEQXpDNEtmbVlSd29wZlBYTHFXQXdLUm1LZ09ZaHQzREFPWThicXczT2RrNW5nWFVpWkwtUWtDemVJN2tmRXNWUURVaU91eUtVM2xGTWNIal84OW9rekNDS0xJV29BdUtqMDdXaElwQ2JPcG9GT1NoTS1tWGV3aC1SdGRyX2tWbmk2RUFf?oc=5",
+          "publisher": "BioSpectrum India",
+          "published": "Fri, 13 Nov 2026 18:14:48 GMT",
+          "published_date": "2026-11-13",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.9,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.9
+        },
+        {
+          "title": "Bengaluru researcher among six winners of Infosys Prize 2026 - Deccan Herald",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQa1VvNkh5a3dFeTR2OHJvdHZxR2xDOEM4bHJoenBJVlJsel9wQkZOeXRMRkwzb1h6Q1lBWDl5TDc3THVELXhoYXU1VjltQ3NXSzdhcmdRRFhFZDE4NmhiTjdKb2FSazJMSkFOYnc3XzRIeEtjczBYQ3VNUVVGZE5fOEpHSG80bW44WUVrWjR0UThhVlpUVU9MQndmZmY3V096UDJGZTR2eHFoM2ZCb2U1SVNJYVdOZWFodG1nbDFYNHU?oc=5",
+          "publisher": "Deccan Herald",
+          "published": "Fri, 13 Nov 2026 02:31:20 GMT",
+          "published_date": "2026-11-13",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    },
+    "reliance": {
+      "slug": "reliance",
+      "company": "Reliance Industries",
+      "query": "Reliance Industries",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": 0.65,
+      "sentiment_label": "positive",
+      "counts": {
+        "positive": 7,
+        "negative": 0,
+        "neutral": 1
+      },
+      "trend": [
+        {
+          "date": "2026-10-20",
+          "sentiment_score": 0.0,
+          "article_count": 1
+        },
+        {
+          "date": "2026-10-30",
+          "sentiment_score": 0.85,
+          "article_count": 2
+        },
+        {
+          "date": "2026-11-02",
+          "sentiment_score": 0.6,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-13",
+          "sentiment_score": 0.7333,
+          "article_count": 3
+        },
+        {
+          "date": "2026-11-16",
+          "sentiment_score": 0.7,
+          "article_count": 1
+        }
+      ],
+      "articles": [
+        {
+          "title": "Why Rubio is visiting Reliance’s oil refinery in India, the world’s largest - Al Jazeera",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNY3o3LVJjQV8xVkxMVGg0Q1FnaHhqa1hwZjR3R2djZ09kZ1QtOFZ2M3JtUDQtTm5yMUJUc2tseVNJbXNjOGFvVlBXT1EwTmgyTnJDVGxleFRqdDNhUG40WmxTS1VVTDhBWjBhLTR5U1haRUVncFhJVGs3U2psaWxTSk9IM3VwQWhQeHlRNTFaS1Rzb29ELXlwOTNFQmJHbTJnRjR0M2d4WUVtam5Cb04yNFNWRmXSAboBQVVfeXFMT1pxZVRhX0RrRi0tRlNtNHV2MG83OVV5TDE2Y2lrZ3NlNlFZZTJnc2Q3Rzd3dC1xRlFMY3M3eXEzR0RnS1hhU1hDc2NhVjlxcUs3OFZTOGRGN0NJdmFjQjNyVlhwcGJPbzUtdlFLUjJlRWN5SVdaTE4zVkRDTnJxSHduRXVQQUR5ZmgyakZVR1lsMUxZck1GYjVkb3l2WTRYMGFXOVk0YjVjajBHb1NNbHdwN1JQRF9wQUVn?oc=5",
+          "publisher": "Al Jazeera",
+          "published": "Tue, 20 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-20",
+          "label": "neutral",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.2,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Reliance Industries to Invest Rs. 430 bn in Andhra Coal Project - Construction World",
+          "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdTExeUl1RWZjY3V1WE9KLW9za210MnlxQWFuQ1NTckQ0eGIxNHQ3Tzk3QnlHdnFWUmthakRfX2RETDZMUlB2LTZkcHV5Y0xfZFJiakVHTGFQRV94T01oQUNrUmJCZ0pQODRGTHM0OVpCaXI3RHFOaGJwbHhsYmN2RVpFZkhNNVpFZ2ZOanpMUXVtNGtJTE5Kd2pva3YzdHFJQnl5WFpldUtTUUc4ZFp0ZFd6UF9MdnVsa3RhNFRLUUZJLVBPN0ZOQVlIc3hhNk1tOUdabGY5R3A?oc=5",
+          "publisher": "Construction World",
+          "published": "Mon, 16 Nov 2026 06:52:44 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "Recovery in retail growth, margins key triggers for Reliance Industries - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNbWNnUTI1SGg3VXFPRkVUcG80ZGZBaWNwUlY2R1hxQWJVYmtJSXhJZ1U0ZEloOEQtMHVnelBxUTd1aDVMY1laYUxqX1U0MFpNOUxxcmNSRmQ1eENBMHB6TkNVRkNIaDJ2Mm1USjVWay10Wmg2WkxCQ0MxQUpTMzMtQ0hZQU5OU2NocUtERzlWYWw4LTZiSjVSdGhkMmhpYjRxMHFLWEFxemZwend0a2pxalZReFVRX3BUSjI5RnFZdTI4MDlsc0d4TUFtRGh5TDZr0gHWAUFVX3lxTE11eUpvclpGTmlOR1dXWklyUHJxd3k5aTBxSzczNmNBMm1Rd2hrTUoyQjg3UUVxeE1iZGRNRDgtdGhwLXh1RkJFUnIyV2RqYzVLVHE4NHBFM0lMUmg0Uk4yM0tkTGcxVlNNZWlRLUdOY2h2QU5iM3gxQjRoN1duVHA0WWt5TGNqdGVJb25LcElKcDVwaTZraDBrTXd4YWJBVVl2ZkRzS3ZzbWY5VFQ0clp3MUpVNzZ4UEtsVkdaZXh3LU51eXQ4elpCTnY4RE1NeE5oTDNndlE?oc=5",
+          "publisher": "Business Standard",
+          "published": "Mon, 02 Nov 2026 08:00:00 GMT",
+          "published_date": "2026-11-02",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.6,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.6
+        },
+        {
+          "title": "Reliance Industries reports highest-ever revenue, quarterly profit at new high in Q2; here are 10 key... - Moneycontrol.com",
+          "url": "https://news.google.com/rss/articles/CBMihwJBVV95cUxQdkxmQzdJUXhSTGZmTkFtbm41QW5rWWJqQlhQWjFFZjA0V1dGWUNvRVJIdzVucTdhM1R6c05mdDd2NVdfejJCVUI2dEVpZkY5VlRHSVR1RVEtRDB1VERoa1loY3VXZFF3YnNUQ2ZIU29ucmIzTnhMbTBVYklFYnRQR2sxbWhmcXljX0hkMUpwbERWejBpMDlScTJrVTI5cTNzZWpPbjN4dHdUYV9yUmVxQ0tNQkhfUlBKZFhoVENMZGhuVF82M2psRDYwMkc0Y1Bkdi1WU0xZMmk0NWVpeGhjVHNNTWdDRFctVjgwc05Vd0xXdXhER0lrVGdvLTViTUxvMm9heURjVdIBjAJBVV95cUxNNnFaR25oOWdUNmNYQnU1TTdmSlZ0WmV2ejhlc0p1YTFqTUxYU0w5NG5KNWRHNF9pd1NRaC1qdlBaejRscVprT2VIWDJzOGFXeWFka1hJanRHa2ZYQXlrYzVUS19tX2VrdUJ5Q3FIdEZZSFp1VlJTWVFHeHAzeGNwNjZZVk9wYjhiWTkyMU12bUxaMUEzcE5mVUZoQm5TX1FmeXpWaUgyeFhNN042Unp1bVJlZ2xuTG1ydFFPYXdDM1NGSWhlenY2OHItWW8zOHNEOGZCX25uVFhYbE41bGNKczBxY08tX19iVVRwOG4tdVJqTVFVZi1LdWFjX0ZyOGp6YWFHZUJEN3lNSWRw?oc=5",
+          "publisher": "Moneycontrol.com",
+          "published": "Fri, 30 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-30",
+          "label": "positive",
+          "confidence": 0.95,
+          "positive_score": 0.9,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.9
+        },
+        {
+          "title": "Ambani-owned Reliance's profit jumps 41% on refining, Jio strength - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOQ3F1YnFaLTBTLUs5bS1sUk1jVE9lYlFqS2ZQZDJibUpxbC1fSW5udUpITDFnUVhsWU5BekF4UUtjNm0za1VkeTZFSGstZGd1bnZ3cXZIdTZmeG5Ob0l3WFdWZm1zYy14Zy1PdkdSM29MZ29Qa0d6MUNBXzh3ME5fRG1ZNldhbGJxcjNfZDc5bzhOUFJQV2dHLW00X0pNUkw5UUlwZ3BhNjJ3THdYZllWbTB6SlM?oc=5",
+          "publisher": "Reuters",
+          "published": "Fri, 30 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-30",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "Reliance Industries shares rebound 15% in November, add Rs.2.38 lakh crore in market value; what's changed? - TradingView",
+          "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPdUVhZUxhc3A2MktHY09YZDVJbHlCTjJOcnh3ZEQ3QVRDMnZHTG5vMDFIVklGS3hld0NHbzlWSkptU05VbTVtZFJURjhLTkQyTWNFYVNPQkN1V2hmS3RYWFFFUDQwc3Y5cnVVb1cxMkF3WXdIVGJqcmpOX0NWNHdqSEdxdDk0OTk0QnJJREJuY2ItdXVlVGVocXVzcnVxZGRrb1NUeDg2NWRfQ1I5R1ZPQm1iTU5RSHBZTERWS3ZfNnVNamdWbFRLd2UyRmZOSXBaLXpJaWh0TWg1SVB5RzlIdUQ1bVFhcV81RTdVaUdwS1cwUQ?oc=5",
+          "publisher": "TradingView",
+          "published": "Fri, 13 Nov 2026 18:50:47 GMT",
+          "published_date": "2026-11-13",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "Reliance Industries to Invest INR 43,000 Crore in Andhra Pradesh Coal Gasification Project - Energetica India Magazine",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPd3RjVG9XYmFqWU9WR3hrQVc0bzg1bk84YVpIM0lnOWtkRW5vVzBpYWFWTU5oemltQzhTUkFzV1dJN2UwS2w2RGpOa3A2dnhUMzFVWE5jN2V4WmZMdmpHUkVGNnNRX3ZjNmJlZUlCWDQyUlZzN29ISzlmWmlCNy1fbTkyTm8xZHVocDBqaDhteW9mVnlXZmxfYW1reFB3RkVnWUFXaHhwWDBCMzBEbFlmeHlpcTNRYjBhUjBaenBJRW83ZHRJaXc?oc=5",
+          "publisher": "Energetica India Magazine",
+          "published": "Fri, 13 Nov 2026 17:29:59 GMT",
+          "published_date": "2026-11-13",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "Reliance Industries Plans INR430 Billion Coal-to-Gas Project in Andhra Pradesh, India - marketscreener.com",
+          "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPcEtFcUJUbFJmRmkwS21tNTFWZEJmWDZIUGF1RzNDbTgtazA4dW9zaUFkdy04V3JqUDB0OV9zOFNyZU9udF9heFRqejlkV2hidFRUNzZkQ201cV9wRHZuYW9veVdidmFDS3V6RHhyUDdNZzlsV1Q0YW1OTUtVd3Q5X1FwRjNaYjU1TURqQ2ZuU1BybmNZUjdKRUdrZ2xTcTY4dGxDYnhseHB2OHJEZ204RHFQVWRuYy1ja21tb3NUY2NybDM5U1hrdDV4cm5QQUdXY1FF?oc=5",
+          "publisher": "marketscreener.com",
+          "published": "Fri, 13 Nov 2026 01:43:27 GMT",
+          "published_date": "2026-11-13",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    },
+    "hdfc_bank": {
+      "slug": "hdfc_bank",
+      "company": "HDFC Bank",
+      "query": "HDFC Bank",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": -0.1625,
+      "sentiment_label": "negative",
+      "counts": {
+        "positive": 0,
+        "negative": 2,
+        "neutral": 6
+      },
+      "trend": [
+        {
+          "date": "2026-11-13",
+          "sentiment_score": 0.0,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-14",
+          "sentiment_score": -0.4333,
+          "article_count": 3
+        },
+        {
+          "date": "2026-11-15",
+          "sentiment_score": 0.0,
+          "article_count": 4
+        }
+      ],
+      "articles": [
+        {
+          "title": "HDFC Bank Share: Key Financial Metrics Investors Should Track - Analytics Insight",
+          "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQY1dYSXBUZDdkNHhPdng5U0JBMjFqRll0eVF6RnptaTFYRU1zRTNSRWdNNTN4VktCRG0yZHNpYnB1MTNMaWdrWHhmaTc4c2VRUkRBS1RUV1c2akVxRXFPbm1hMFdJUnpVOUZGRnRPUzNPcWdkSk03RF9KN3U4OVcwckUxTmtLclZzRGZWVUVFY0FZMjVyZ0NMWTdZWi1FeG1aQlpPaW9xanF4TFplRm5J0gG8AUFVX3lxTE81ZnFMMmFkdnBxdVREMTdwR1FBeHFGQTNXVmJjd2hCM2M1QkVGeC01U095M3I4b2VNVDdzQ0YyS1RQeEhUVjg3WThoY1lnTEtmdXlZUGhLS1N0YmVESFc4NUYxNEltRHZyV2hBS0FMRXJrcWY5T05MUTFtUWItdVc2WExpVUdZT2wxbnF2U2JLengzcUh4aURFaGM5MlNVaWVESjh0c29LZldLUHg1YTQ5WTN6TGRULWVnRU9D?oc=5",
+          "publisher": "Analytics Insight",
+          "published": "Sun, 15 Nov 2026 21:30:00 GMT",
+          "published_date": "2026-11-15",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "House of Abhinandan Lodha prepays ₹1,100 crore loan to HDFC Capital - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNTFl5Z2lFOUhCMEFMdUM3Y3dYYndYMVlLWmlDa2U0eGxQUXVQbTNJTnN6dnI5SUcyWjRXNkpaZEJVbXZGUVNBbzU1d19Xc3pKRVJLT1VJYlpWM2trNXlySUcwOExLNUFWbWlkVUNKRzhmTFhTWjE0dlh2VDFyRWRNdlRqZThnMHdScnUyOHNkRzBJY3Q0SWxRVE5rZ2E0MUxRRXpMOHRwclI4cllhNkhSRFV5djBDRm1FUmpINDN5aTBzaTdMRXhhU0dJNDJoektx0gHWAUFVX3lxTE5hbndveVNfb2pGdjFnUWhydEZrNDk4eEVXWnBta0tzNXN0VUYtVWZubFlhVENnMndHUjY4VURnY1VwenVNOUdTZVpyM0NXd3RjV25Ra1k1alcxZU1CVkp2LVUwVkxid2dpV0dia0djaEFITFVLZWNfNmppVUJqVF9WV1c5UVFncmNHUmNLZ2M0STc2RGNCRDNtOGdnRDJsWEx6UzBocEpoOHF5U3YzWVcwc194azdZYTFRTjVmZnItS3BId0w2MXhaNm9iSkNraHBQLTZ5S2c?oc=5",
+          "publisher": "Business Standard",
+          "published": "Sun, 15 Nov 2026 12:03:00 GMT",
+          "published_date": "2026-11-15",
+          "label": "neutral",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.2,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Bank holidays this week (November 16–21): When will SBI, HDFC, ICICI, PNB and other banks be closed? - CNBC TV18",
+          "url": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxOV0tDSkFEWkp0R3pyMFQzR1FjZFRpZlNfVDZwS1dodE05SWhiM3Jhb2x3cVJVbXdKMWhVSUJER1F4LXJJOExoRjBXeklSNmpLT0JlMlQ1Nl9mb1ZPVUhJU3QzR29JTXlvc0hqRXdPbldQNkNMUVRtU2xLR295Ql9qTjRaMVB0RFNSUE5FS1hreEN2TXdGMllWMTFvaDVoU2M3UTFUZ1dfNVBIVy1tT0RsQjlrUWVjZVVSVFZ2clR2eUNYdDdQMWlMN2lveXJUTFFwWmtXMGVRc0JWRHlqR2tZam5pZm1ucVFXVTVYdWFTYktDdUxpRkVB0gH8AUFVX3lxTE0tMElfdHBsZEt2SDVPeVNmbjJJdzYzUGV1bzY0QnNxR1owREtUN2FZNG1WQXdJRGRRaGhkZ2xNS3ZaMjU5ejN1MHJpdmZMdnRaWV8zRzUxSnUxLTMyQ2piU3ByY1JaM0hDYVFhQlN3S2hUZ3ctQThvVWtUN1J5Q202WU93ODVuRjh2SzhKMmFvYl9oX1FPck12aXlKaExRdGV1UEdoV3RKaHMzVVFkN1hIQ1d6TmRGMGNvWllISjZoNWN2Z3k0amp1cU50dXR5d3hvalh6OV9tZ29LbVpVcnVuQ0o5N0M0bVlvS0lWQ2JwTEJ2NUtKTTZtMGsweA?oc=5",
+          "publisher": "CNBC TV18",
+          "published": "Sun, 15 Nov 2026 06:58:18 GMT",
+          "published_date": "2026-11-15",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Bank holidays next week: SBI, HDFC, ICICI branches to closed on three days from 16-22 November? Check RBI calendar - Livemint",
+          "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPYkxDdjk2MGVXZGpjR2FDRG5aWHdObU1rSnZmYW1jVW5ib0VQUVlJazQwMUh6TmZoYzlhOEJPdHQ1ems3MkdndUNuVzM4aDRNTnB5QlBKWjVwdlNDRkM0bFEyRG1yZlVld0l5YzBtU3JhWldiYUxsT3M4dm5ZZUw4dkdNelVvbFNSU3lqdnR0cG5uR2o4NlB4RTdadVNLMDQ2SE16SkRxRi1hQ2swd2l4eFpTTHROY0l1dF9hc1h5OTNlcW9EMEwwVVFySG1uSkQxekxXdGFtU29xaFZWNmNISHpiOExORjBReFJCUnNIRVVJTElxd1NoSmF2Snd1bkpP0gGGAkFVX3lxTE5saWFpak56Z0ljTW1WWW5Oa2szaDZtVGs5dl9BU3lZU0Q2VGJtQTR3ckprSEFiX2hpQ0U0NmFqZWE5eVpxS0doTWVoOGdDd01JSWgtUkdHTUlrc0ZQZWQyQjZzQXNodG5NOE9XZVVQY2xOQXdWMGxQVXVXWF9DdXNIMmZaV290YmxYVkxnOWNNRDE2MTNaMEpkLVNBQ05OVmtlQ2V5OWJfeFU4M1hsZXRQUW1jVEZwZEpIVl9XcXlnZ3NyRUpqMmd5dk14alZva0ozUmg5cFBoVEUzVW1NS215WWZmYThjOTNRYlFMcS1KM0YtSV9xV0tYOHFHaUhzUEJxWVVpMlE?oc=5",
+          "publisher": "Livemint",
+          "published": "Sun, 15 Nov 2026 02:08:08 GMT",
+          "published_date": "2026-11-15",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "S Naren’s art of contra investing: HDFC Bank, Natco Pharma, other 7 top picks down up to 39% from 52-week - The Economic Times",
+          "url": "https://news.google.com/rss/articles/CBMiogJBVV95cUxQdXdKRXcyTWNTQnNSLWt2a0dVUW9jTHZvd2J5TTdCM3pRM1V3Q0UwdjhoTTRyUExXTnJWTHZEQU9jRFdwR0FJWVc3MDE0NmZWbm4zb3dhazRBNUdjRVVRcVpncXZFbWduNTJoeXFQVVFONzdfNW0wazE2MHZ5dEJRV0ZFX0ZFT0JiNjVRV0puMkhReFlxNU5vYVJjY0xQZl9PYzlkYTlkcm9xVXNiSk1BSjhKTGh1QVR0U3V3bFdTaUx4TzZZak5LUFhGMHNQQjk2MlNhd1JWOXFGTk1WVGVuUUh6bXJITXF5MmJEdGNZV3Vwb014Q1NDVGRsQzhpX3pkTVk1bGZyZGlhU3lONERTWkJiZXNrdjdlNzlyZVQzM3o3UdIBpwJBVV95cUxQMEdfZHNaZ1BUWExPM1I0UGZUV0I4U0pHRjNCdldfbDlGSHNTVmZFeXg3M01fSHhQeFhjOHZVa05PaEk3RU10RlJza1NodnRBZ1RQNWo1TUJVS0lMaW9XQ3B2MVM3U0VMd0E4MlgtYVRhaGtvaEtGUXM2cnRXVkN4YWNDWUNHN3BXWERXRUdzc0hKOW1fV1NIcktVQWlZV2hyaTNaSHVDZm1rMWJTLW5FVHV1SW9vQXJqT2R4c2ZPUXN6QlBQTGozS01NRmhDa3BkS21EX01jN215ejJ2MTRoQjI4SFB5ODF0aDhrcUx5UFJTTUZJZDBQaUxfcFhsNlJ1dWtHMUh0QTM3VVZRUjQ0aXc0Q2ZJUk1qZUczOVZqY1JCTmRfc0kw?oc=5",
+          "publisher": "The Economic Times",
+          "published": "Sat, 14 Nov 2026 08:46:28 GMT",
+          "published_date": "2026-11-14",
+          "label": "negative",
+          "confidence": 0.85,
+          "positive_score": 0.0,
+          "negative_score": 0.7,
+          "neutral_score": 0.0,
+          "sentiment_score": -0.7
+        },
+        {
+          "title": "JioBlackRock Flexi Cap Fund exits ITC, BSE, MCX, TCS and 17 more, trim exposure in HDFC Bank, Adani Energy - The Economic Times",
+          "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxNdGhQMGs5SHVGenJSUlRKYU5ZLXNqdExjTERmVWJmcWUzRVh4T2stUXh4a0hfUnlWZWhSZFdtcG10Q0lVUXRESXdteThCUEpIWmMtUXgxS2RWcWZqX25iRF9YQ3NIZkh1MENPaHl1cklRNzJqdTZuTWZaTzF1RHVzWFdEZmR5aTgxV2VaQzR3YUlwODJfcjhSRF8yeDcyMGthc0NZNEoxN0RHVWdDRzZzX1hGckViVFdQWnZ1WGNUZnVSdlNsanZ2SktpbUtJRy1JNlJoTWdoZy1iUS1rSzh5d3V6YndFdmYwUU5NLXZhOXJ4YnFTTHNTa3FOMVo4RHEwdUh3SkpzRXgtTjJjT2fSAZMCQVVfeXFMT25zNWtuZ1Rfd1VNdXhwTzdjWDFqUjVvc0pIM0RHRzFvWkxKMGo0MW1DSkF1Wm5ST0g5b3gzUXcteW81R0VqRWc4XzAxV3dVUThta1hRSlNqOGp3Z1BZMzhOTkctWW9kVFVFdVFYdjhVMUYtYXpDOWdaMWFiX2hzTmFTaUxxVHV5ZDRONlhCMmFXSU5XTFF3NVRjX09hNGRPSHgwTzQ3MHduRHBhalV6QWctQnRmTi1BQnppb1dfT0xFV0M0dkNQVHMwcmN3WldnWkxaOHNEdno5MUtvSG9KUE5xZjJTTU5reDNTSmV5RGFwWjJGVnpVUjBaWEpnNkxWMV9ZR3pUOUFFQ3VyUFNGTVlkWVU?oc=5",
+          "publisher": "The Economic Times",
+          "published": "Sat, 14 Nov 2026 04:49:18 GMT",
+          "published_date": "2026-11-14",
+          "label": "negative",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.6,
+          "neutral_score": 0.0,
+          "sentiment_score": -0.6
+        },
+        {
+          "title": "Latest FD interest rates in November 2026: HDFC Bank, ICICI Bank, PNB, Canara Bank and 8 other banks offer - The Economic Times",
+          "url": "https://news.google.com/rss/articles/CBMingJBVV95cUxNVDBlOC0zV1lkWHZvMjQxQ1dKeDcxRHlFV1ZOa2M4WC1FNnl3MEt3TUs0bmtNdmx6al9CdThwUTZUVERLaWVmc2lzQ2xib0lnYzM0SGliVzNwNVFSdVRVZzFueUNtM2YwMVhXd2NnTnJDQlhwTTVtWlUzZG9VYmpPZ1VBX0tlZi11ZUR0RnNiSTVXcjNyaGRoR3ZmVldNX1hIUGNHSWpQdmJuZlowY3NrU1VmOGQ2RndBOWZTWlQ3a2IxWFNMdWxEVkx3YXZ6Q2NmOWE4RFNhWUIwNGNnQUYtQkFvOFZlb1ZfaDItSE1iaXhGbnZKd21QQVZQbm5QbC1xc3NCa0RocUNrb1lrcU1pZVhHNnQ0WGNpdHdsMU9n0gGjAkFVX3lxTE9xaUZ0OUtTclhwNlFaNm13SHRZOHk3X0pBNGFpT0t5c2lLdGNBdzEtR2RUcm05Wmt6WEhmMnYwVHpLUmhMUE5CS0Y3cXhTUTZ0b2ExWXNrODFGUmlCYy15akVJOFRfNWFJLTBEMjNXR3Noa1NpclpRcFZuWmE2c2MwWDFXcEZ1STFPLTlSekU3QzFvcU1YVVA3MHJoZGZhSElnUFMxb3pDUWkzcXRBVl9LSjVTT2NyNTlYQmphUHFPejFBTVN0LUd3MjZycUQ3TXN3TnB0UVJaWWtoR214bXVidUdxNlFFQnl0clJmOUtyeG1ULTd2S3JrNG5EeVQtYU9qalBTZXNFZ1ZfSGx6Z2RUQVNCVVhITzhIa2tRRFExdEdTUQ?oc=5",
+          "publisher": "The Economic Times",
+          "published": "Sat, 14 Nov 2026 04:30:41 GMT",
+          "published_date": "2026-11-14",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "HDFC Bank’s Board okays Rangan’s re-appointment as a Whole-time Director for 1 year - BusinessLine",
+          "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPVFpyenQ3TXNlQVJzbjBNZXlvZzhoSk9JRDk0UHdidTBadWpDd3B1ZnRxUmVXQmRFbVdGbkl0Mk9sN3JGeHJOZ2tEUFNpMFhXOEw0T3hyaEhLeEdpSUlPem9TX2Y1OGEzMkJndmtIc0dGN3pvdHlSVVVUc0JMcGNMN0thR0pMWFB2UmRVLVZwMVp5dTZDbjlGbXVKS0ZBd05kWlE3eUp6VzZ3T1dhNWRlWUhKbzlkQWM4REVDVmIzUF9BaWlpeFE5ODZQMWJXblcwbHItUzJiUzZSbm5McVlnUzZ0ellLbnFvaEpJ0gHyAUFVX3lxTE8zQTBBR3ZkckY4YzNPajhyM1NEWlE2SVhoM0NSTXpSOV9WMXhrTHJ5QkNZNnJTbXlUOXpCd25oZXV3R1p0UmJmREc1UGdBOWdTdzNvTDA1dzNuM29qVUNQaGxiVEE2dGI2MmtDckNfQnVnYndQOG9vOUtWazFZMFN6N2k0WDhjb2xGOWpSZlA4Ui0tNC0tZk9HRTNXN2E5VW5TOFFUUlNhdVk2anpWU29odFpiX0NVNHo2akRVWnFQQ0lwNlBJNDBVSDAxNW5hTzJCYngzVnE3N2tJb2xBc2h4TkRhbS1WOFhZQ0JOVXNEWTZ3?oc=5",
+          "publisher": "BusinessLine",
+          "published": "Fri, 13 Nov 2026 12:28:46 GMT",
+          "published_date": "2026-11-13",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    },
+    "icici_bank": {
+      "slug": "icici_bank",
+      "company": "ICICI Bank",
+      "query": "ICICI Bank",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": -0.0625,
+      "sentiment_label": "neutral",
+      "counts": {
+        "positive": 0,
+        "negative": 1,
+        "neutral": 7
+      },
+      "trend": [
+        {
+          "date": "2026-11-13",
+          "sentiment_score": -0.5,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-14",
+          "sentiment_score": 0.0,
+          "article_count": 2
+        },
+        {
+          "date": "2026-11-15",
+          "sentiment_score": 0.0,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-16",
+          "sentiment_score": 0.0,
+          "article_count": 4
+        }
+      ],
+      "articles": [
+        {
+          "title": "Bank holidays next week: SBI, HDFC, ICICI branches to closed on three days from 16-22 November? Check RBI calendar - Livemint",
+          "url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxPYkxDdjk2MGVXZGpjR2FDRG5aWHdObU1rSnZmYW1jVW5ib0VQUVlJazQwMUh6TmZoYzlhOEJPdHQ1ems3MkdndUNuVzM4aDRNTnB5QlBKWjVwdlNDRkM0bFEyRG1yZlVld0l5YzBtU3JhWldiYUxsT3M4dm5ZZUw4dkdNelVvbFNSU3lqdnR0cG5uR2o4NlB4RTdadVNLMDQ2SE16SkRxRi1hQ2swd2l4eFpTTHROY0l1dF9hc1h5OTNlcW9EMEwwVVFySG1uSkQxekxXdGFtU29xaFZWNmNISHpiOExORjBReFJCUnNIRVVJTElxd1NoSmF2Snd1bkpP0gGGAkFVX3lxTE5saWFpak56Z0ljTW1WWW5Oa2szaDZtVGs5dl9BU3lZU0Q2VGJtQTR3ckprSEFiX2hpQ0U0NmFqZWE5eVpxS0doTWVoOGdDd01JSWgtUkdHTUlrc0ZQZWQyQjZzQXNodG5NOE9XZVVQY2xOQXdWMGxQVXVXWF9DdXNIMmZaV290YmxYVkxnOWNNRDE2MTNaMEpkLVNBQ05OVmtlQ2V5OWJfeFU4M1hsZXRQUW1jVEZwZEpIVl9XcXlnZ3NyRUpqMmd5dk14alZva0ozUmg5cFBoVEUzVW1NS215WWZmYThjOTNRYlFMcS1KM0YtSV9xV0tYOHFHaUhzUEJxWVVpMlE?oc=5",
+          "publisher": "Livemint",
+          "published": "Sun, 15 Nov 2026 02:08:08 GMT",
+          "published_date": "2026-11-15",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "ICICI Bank credit card alert: 6 important changes to be introduced starting from 25 November; check affected cards - Livemint",
+          "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxNcENPb1ptX1o4ZElwUC1lbGY4Tm9xd1ljNkJCOXgxT1Jndi1kY2xQZlZxVGJJa1E0UFpWLUx2NTgzck80M0V0cmZlOFJnY3VIaUhkSk9EVnk4WUFhak42UHEzV2VPRjJzNGs4WmU1blJLd2xjeS1LWGVmbWlUeGRrR3FFLTRMaHhkNzl1MVE5MnNRQWRBazVkeWh5SlNsM0hwd00waVZXNW9lenRkbTZseFhTYTBFSzJkdlVfbk5DYmVBZHlkZngxel84eDhwc3RKR0tjUnFHd1VmeThJQ0N2eV9kSUZWdHZnY2x1REVPSTRuM1B5OHpkNHRmZjltbGVMQzdhREJyWkZWNEZy0gGSAkFVX3lxTE9iQ2xOOTFLWHR3YzFVRUp5U29CT0hfY1ZYa3I0emRscnNNWkZvdlNRNkJZc2Q0N2NaSkxQbHVrWlZqM2RYRmRxUUVxM3REeC0yVENzX3pMVHNNb280WUQwMzBiV0laUm9zODlVeHFkMXFyODBjdHVNWjA3MFhYMUNXYXhwNzZSbDViWEhWU3B3N2c0Rnc1OHJCdU5YU2VrbGJ3VVNNWC1sM1lyeFdDaC1heDVzaS00ZVdzeHRBSW43S01UUGxKZmNzZC1UaXJzR1A4MG9HQ3lEWlZwdUl6M044Ui1iUEYybWVSRW4yS05GdGN1cjdkal8xaGlnSmlGVnV1SDZ5QWNWN0R2WTRwcTMzN1E?oc=5",
+          "publisher": "Livemint",
+          "published": "Sat, 14 Nov 2026 03:54:30 GMT",
+          "published_date": "2026-11-14",
+          "label": "neutral",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.2,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Bank holiday this week: Are SBI, HDFC, ICICI branches closed for three days from 14-16 November? Check RBI calendar - Livemint",
+          "url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxPaFg2UThOX0VIdDVvOFlTMmVfQmgyMXBqaDJMWm1vSlhYem1TSklVWVhuczBDYl94VTVlSGlZMUlZNjI0NmRpQTBCZTJXMEdWX3ZqQU9zaEVBV1BPbldDcHFZYVFPNFY2cldoTHlMMEFGZWdGdUo3OWlYN3dOUjZkZXV0bFhMWFZhXzVYM2o2R182TDlBel9fZmVkNFRyVkdieF9UWjNsa1VDOWt2Wm9HdjNFWnpXNjl5M0FEZDlONnBPZ1RjSS1ZdnIwTW1QSVNCMGhEaVRVdjVGUGxSdkhyd0c2V3JrNkREdlBRY2FYMlAzcHhUZk1xcloxWW1vcGfSAYQCQVVfeXFMUEVBMks3ak1BRUtCeDU2TVR0TDg1Q3FFZVhRcFlXUlp4dFY3aTdHTnhYai1XWTllYmhoMjk2UzFjTGlycW1pQWNlTXdnaUxZTVZqWjVCOWZRc21Uei1RZC1xVUNnUnhXQ25YbmlHY2ZON1lCeDFhZjFmNFhORW5EQWd5Q0pXZmg4XzJvYXh2N2hDYUd5SjdEekVHeVZiT19xNmpCYzZTOXMwZlE5dU92NDQ2aTJHM1ZwcEstOUh2VVFkYk1lVGN1NzBsU2c2ZGhEWnpSNE1KN2xLRTdDNDBsN3VUWk51SE9ERTVqM0dZZTlucU9VeXhfWlo0c1dCS0M4NEF6dVg?oc=5",
+          "publisher": "Livemint",
+          "published": "Sat, 14 Nov 2026 01:57:25 GMT",
+          "published_date": "2026-11-14",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "ICICI Bank Share Price Live Updates: ICICI Bank Stock Details - The Economic Times",
+          "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQWENNQlp6a2JDVTd4cEpmdFNaaUJBZ0JSZG1VMUdDSzFlSFpFSzJubUl2WVZhRjRWZXppRjRjSzk4WmFjTHVLRHY0a1JwSUhhQmRvVHY0R2V2czFSbXBHeWRFRk80dEtQOENMTDNfSy1sSTlRcng1amxrem5aOUsySHl0S0tzN0hXRWhadE80djBCd25Pb0pYNWNyTC05a3RXN01QTFNlcldEcGhCWm5BVERhczNBLS1NYVNFbUM2LTZZN0dQdGhn0gHMAUFVX3lxTE5OTGRBZ25jc1lzZzJYMmxLSjRtSVF3eFVfZVY1MGp6aUFZUzF5SHRxMFlNQ1VJMERhckJSaERXdG9YZWFjcE9MRVpjTHRNaERQLTFEY3RnOElLUkNqdDZsX0tyU0FOTUhUdmFEdjNxWHMtaF9xbmxIN2N5Ukg0aDlPS0dvZEJQM0hzejJ2YTJvcWtQQ0puTlRXUktsVTZKUUp3bWVFSVZocnZwNEFOMXd2c1pGanFIVXcxOXBjeXZiOEdSMXJSMHRFYU1Seg?oc=5",
+          "publisher": "The Economic Times",
+          "published": "Mon, 16 Nov 2026 04:40:23 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Bharti Airtel, ICICI Bank, Meesho: Motilal Oswal Backs These 25 Stocks, But Flags An Earnings Slowdown - NDTV Profit",
+          "url": "https://news.google.com/rss/articles/CBMigwJBVV95cUxOd3pUeDJ3eHpkNnV0VkI1TS1nbU5KLU1RRS1kY2hmZFQ1RHFtekUxQ0Vpc3VyR2daS1lYNzlrQ1dyVXZkbWI1ZlZOcFFkc1Q4WVIwdEU2Ry1BcEVYc1lNTkM2b3l5d2VKM1dzdjNmYlprUWUtaU4zTWlrWGpDVU5fYXUzVmRQOERoU3E0RkFQTWdEUVdIRWFCZnFwUkRqVnVBVlZGTlNrVDZ6blltRkVmS2hZTkJLQVdMZUF5ZVk2NlRuYnlUUXZuaVRhNnhNcmhoZElUODJHZUxCQV9aN25UZllCYlBoejdmbHNjQkZyUXUyUS1DdEZ0NHBISExwZGRYS29J0gGLAkFVX3lxTE9OOVRjdnJiaWFLa0l3aTJmaHB2WDJBMWJDc3p1c2tWel9GRHk3YW93cUdqR2E0Y2JiWEJLckdsSmE5ZzhhMVJjTVBDOXQzX1E1NUFPSlVOb2xhN0MyYTZMS2sxbEwxQnUzTDd3RnlTQkRwdUdyRGQ4bURMcVk0ZFBlRU5BRk5UYTVHNUVIaU9qcUZLdV9BcjVZcXlQVkxmSGNuWFhYNTBSOUNRakxWdmRENVM5cWQ5RVRFSGVrYkpGbjNsbGh6V2ZYUUN2Y196eUNRU3RJNkUxNGdGYVJNbl9ZZTN5TW5fZFkzYWpJUjJNY2xQV1F6c3VoLVBud1ZZbWV1dzl1a1VVeHRqcw?oc=5",
+          "publisher": "NDTV Profit",
+          "published": "Mon, 16 Nov 2026 02:00:26 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.2,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Chhath Puja bank holiday today: Are SBI, HDFC Bank, ICICI Bank, PNB and other banks closed for Chhath Puja - The Economic Times",
+          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxNZm5BbGtHLVRxMjR1Yno2ZE5aZHVwRzc5cVVzcjZmZlVJdng4eWRZMGkzXzF4SmxMYmFZUUxWeTRXWU9IbkZYYkRFalhRLW5Vbkxqd0xSZ3RPZXdHdm5LaUt1cWMwb2hPZDZZRi1vbXkwdm9fUVFRMG5rZHJsSlNHZDd1YV95TFphanl6dGt2aTF4VWlHTmY3ZVg3VURoZElVTWN5XzFJSWNZZ0VLdlZmaTFZZmV4Vmt3c21ISHdLTGlfMUZtZUFHNTlhWUVTSjE1LTJFd2l1RGpRa3ZDSmFxa9IB5gFBVV95cUxNT19MbS16cW9TcndRZXBlU3ZTMlF1RnBlcldBN0NVV2dzTmVPUU40V3JyemltdGFWREhaTjFvYmxVU0EtSGR2bUY2NTdMQ2RZY3BWVmdwTzdnc04yRnNRbU5nRmg5VGc3ZlIwVVU5dllmbFJxOUZtOUZydTkxWjhldW9rY3VRNmRZNGxIUWpzWFM2d2pBNHpHa1puMTFibzZvQ0NJRXRGV29qR3Z2UjBBUlNCZjlnaVJ4elNxbjJCdlNjR2pOR1kwel9LWkdxX0lnUWtkUjlTVVpudWNnWGp2LTBiWXdudw?oc=5",
+          "publisher": "The Economic Times",
+          "published": "Mon, 16 Nov 2026 01:30:00 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "ITC top mutual fund buy in October, ICICI Bank most sold, data shows - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPc2ZmZThiVW5KR2kwNE1La2QxUkZvRC0yNTZlX0FTM242NDZqeUtYQ0dYSXlhWmtqV1A1VEtWck1zM0tlWEFkTzNiWkRoWVJHLU9CaDZaVUlXRlBVMzlHa1lTcmFWUlM0UkRZSWppbXVZelc4NS1HME9MT3VpUkl3YnJ2dk9RRm95dDFkNGRXMzdLcnVSbVZRUGRZVWt4Mlk5TGE3ZldBWkFhZmV3MDFTMWp4dGZRVGEzeHBwU0ZSQlhlbzVqbEVJcVZFODhpQdIB0wFBVV95cUxPdDhwU2lBb2NGNGcyejVrVlJhMUx1MzNNT0c2X1otdWN0QU1oYlNLVE03RUVVeXhUZFdPZGhld3U4X3VuNFN0WTlvUVh5WjB5N1ZRMW9PQXdZb0NYSWVWR3pVN3U5VXIxYWJOUXN1ZjJwLWFDcmVPbkVZVzVNTVM0SGVUN3IxS1BZdHVIdmJZdmZIbXY2dXJad04xdmJRQ1VMMlY3cFhLYWpVbG10VmRsT01rdWJCLXczbEVGZm9ud1VpNW9ZLUVhcHVsOUd6bUNmdzY4?oc=5",
+          "publisher": "Business Standard",
+          "published": "Mon, 16 Nov 2026 01:26:00 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.9,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.1,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "ICICI Bank credit card changes: Higher fees, insurance & movie perks to go - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQT2xGQV9hTlRxTUF3YjhNSno3M2JWWGEzWDVoeEt4elB0VlVhRUNXM1V0cE5od1gtTjM1OXBjQ2FCQlZoNHVTMk5oaG83WU9ETFJzSmZXemo3RjRNcnFjaGdTbHdUR3NBeFFialpwQXJkdHFEZFpma21mWFdxaDVKcHBmRC1RWWdiX205R1NXT2htUDl1RmJ5VkJMZ2E1eDFTMUF4WjI1VS1Na1QtVTFWRXNsNk80ajF2UDZfSW5JOFdDYkRDNXJmMWtsUXpZVk1OWFpzN3ZfUzFlUlFLZjlQam04QdIB6AFBVV95cUxPcko0V3dNSENkOHNVT0k4RWFuTmNDa1dxdW15NmNvX0kyYmJjQ0JadFNlbEl2alhmLU1zTXFWZzB5NWlYbUt6QmEtdjZEV3pueE4xZUlCWnlZeG1DRzZOWHdyR0RvcTljV09NVUh2WVRrRWp3MU5mdVFRNVlKQ1BzNHJ6TGZYRTZCLU8yNWJTWUxZMnFBdGN4UDM3OEM3VTN1WmpIWldEamhBZDROVHBVejUwalpEZG02bnFOZzVTZVVMSktEVHk4Rjl5eWo5bFE2TjFnY2pfTERfanZuM3JWMWFkQmp1aDRZ?oc=5",
+          "publisher": "Business Standard",
+          "published": "Fri, 13 Nov 2026 08:26:06 GMT",
+          "published_date": "2026-11-13",
+          "label": "negative",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.5,
+          "neutral_score": 0.0,
+          "sentiment_score": -0.5
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    },
+    "nifty50": {
+      "slug": "nifty50",
+      "company": "NIFTY 50",
+      "query": "NIFTY 50 Indian stock market",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": 0.4125,
+      "sentiment_label": "positive",
+      "counts": {
+        "positive": 5,
+        "negative": 0,
+        "neutral": 3
+      },
+      "trend": [
+        {
+          "date": "2026-11-15",
+          "sentiment_score": 0.7,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-16",
+          "sentiment_score": 0.3714,
+          "article_count": 7
+        }
+      ],
+      "articles": [
+        {
+          "title": "Short covering and foreign inflows are fuelling Indian stock market rebound - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxNcmRxYWVtaHZ1MERfR0ZzVUVVbzczLXQtM0Ficl9jN05pNnhKTFdvMlA1WlpySkI1aV9WU3Y1OVpOb1BVZWpxbGlCZVRhX1pLQTMyVVVPTHZEYnlPUndMU3NrejhJWU9TSW1kSk1xY1VqaGs1TGFETnU4YVI2QlpSY0I4VnhZcHZxYml2M3JMOVFBWEtKQktsYTNtNUt4Yl9xMlhsUTR0cjRUSklLaFRXQVdKNndDdDd6NGRhU2h2LVo3aVZiNjdIbEowenpfX25JN2kxWkpLM2dlZmRVanfSAeMBQVVfeXFMTzBENlhIdW1MNEtuN3U4bnVxU1AyNzR0bC1LcHhLUmx2UmcxQndjdjJOOWp3R2RfR3JYMXcyaFdrc2FwaXd5dnBlSVg2SWl2YU5oSE1qaS1UNGwxZlNhZ1kyYWh0YXNDTTFYbEJ3MzdSeXdXVWZYdXB1WGg0akZMMDRnS1lnUHRLa09fWkduMjFxYk5mb2JzSU1IWDdVVjJXM2hGclpSLXZLa2lNNEZNamRObmxRTDBSa3o1NHJSbGF6Tm9xbGxFSzB4UjJSUk5icnNXWjdJWXN0blIwRDVGX0pDMDQ?oc=5",
+          "publisher": "Business Standard",
+          "published": "Sun, 15 Nov 2026 17:13:31 GMT",
+          "published_date": "2026-11-15",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "Stock Markets Today: Sensex, Nifty Gain on FII Inflows, Lower Crude - Rediff",
+          "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQRE5YaTNRNkZpM0czZTF2NGVxV19ibV9JTDFRUnNHUjc1WjJIc1VTXzVOaHlEYVM3UDhES3RmSElRbkc0c2ZEa0RWQXdULXFnb3NYRlJiVTFub085amoyeVB4SkdOa2djaWZYbE5mYjlGOEpRcTlydTN4RURldmZvM1JTa2d2ZTVuSG5PNEJ1TGFHSmdXX2RfRThpNWZDVjdmalF6UlRjWVdBd2RjdUl1NmRKbHBpeUZPc1F4U1RvUFU4bi1BclJSSEdJQXBKYnRpRVHSAdQBQVVfeXFMUGdUaTRTTFkwdzIxNkt6aWdtQ09CQnZkRFNPdTdqNTRQb0xBM3VQUW5tM1dMSVY5dVprOGxVeGFNeFhrU2VDbEctLXlTUzlKUmFoVXZ6TWUzUV9OYkZ6SmxUSlZfS0l3Ml9wOFlvNEJOOFd0NnhHamgzVi1NVFVCNm1kdTB5RC1zOS1kU0ZlQkdHc2VtOEl3VFVzUk90YXBidlJXbVNoOXI2ZFdEb08zT1Byb1lmT19nOU05T3EyT2hhTkhQbG90LU56N1VVall4RTk1VEQ?oc=5",
+          "publisher": "Rediff",
+          "published": "Mon, 16 Nov 2026 05:40:04 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.6,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.6
+        },
+        {
+          "title": "Sensex jumps 420 points, Nifty rises 0.4% on foreign inflows - Awaz The Voice",
+          "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNWHo5MDdSalJpYzE5N0sxUHZCdlQxa2RoTWxTelJ2dzd0V3BpQ3pDdUdoU09BQnFtS3FRUVFnTFBuNVY5bUtoTTE2MVZ5VVNLQllFWWpMa0F4RDkyZmhnVzYtN0oxVUFzeEltdmdyUnFHWmloTkNoZlhOWmV5UVF0andSeVFYWmRHZ0h5WEdtbzM1T2pXSHlNd0lQOHBmUms5V1pjQU53?oc=5",
+          "publisher": "Awaz The Voice",
+          "published": "Mon, 16 Nov 2026 05:24:13 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "Key Factors Behind Today’s Market Rally - Equitypandit",
+          "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9JQ1g2VGZmcnRqWE5VNzZHRTFDTWN0NnFWVnFVOGhYdm4zZS1qUk1kZFc1dmp2OHZSRTBaaUZiQk5FOGk3LVF1Nll1YmVnVmNZbkNtZ2stRTNvLXBqdkNOMGprVDdVNWdmVEdGalZfVlE4YzA2Q1ZDcWs2NA?oc=5",
+          "publisher": "Equitypandit",
+          "published": "Mon, 16 Nov 2026 04:42:00 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.6,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.6
+        },
+        {
+          "title": "Indian markets trade higher in early deals; IT, banking shares rally - Telangana Today",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQTkRJZkwzU0lQM1FHa1RlclpHdnJ1eDBkRjVFMUtBaDRoZVE4MF9yM3IwRXkxNy10d3VDb0tmOWFoY05JTnFJdnJjWE1TaFdSMGR6ZEpfdmdwWVRBaFZWUnRnRTIwQmctM1V6Vi0zZ0JxeFdYQ285ZWx3eTZMYl9qdm5DXzRFMkhzZTJTSjhsZ0pkUlZXdGVRRQ?oc=5",
+          "publisher": "Telangana Today",
+          "published": "Mon, 16 Nov 2026 04:21:59 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.6,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.6
+        },
+        {
+          "title": "Stock market outlook today,16 Nov: Sensex, Nifty prediction-DJIA, S&P, NASDAQ, GIFT Nifty, Kospi, Nikkei, Taiwan cues - TradingView",
+          "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxOVlpORHBoTUk5Z0c4aWdYdmNCS25yTXFTb0M2QWJJdTVjUTE2TWl2YmdEaDBSakN6TVQ2WXJzZHJXemZsOEN5bGs3UFNWZ3JRTnhQY1FIdFVzTFN1YkNZX29Zei10MHhzLTg3MU1TM2JpQ0YwaXdUSnY5ekd5cUxCMk5oaWRzTGQzbF9UOURONjFUdG5UVkV1V1E4RnlKcXRFT29rVjgxa2hMQkNZMVUxNlBpRkU2ZkhINERoSzdaMGdsRS1MeXE0Z082N1MzS0RRTkE4amJrVXlxcEIyUzhSMWdoV3FvZHN2c2dhZUh4ZHhQR0dLQTN1NE9B?oc=5",
+          "publisher": "TradingView",
+          "published": "Mon, 16 Nov 2026 04:19:00 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.7,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.3,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "SENSEX up 400 pts, NIFTY50 hovers around 25,200 in early trade; Eicher Motors, Airtel gain, TMPV skids over 7% - Upstox",
+          "url": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxNN1B2ekZSM3o1UjJtM1BSV29FTGJhcFB1Y0tKNVhLdTM1TktPdmpJN1FuWmsyN1BhRmE2N3FXV0l0Z0NBVHpxM3hfMmZDVGYwQ0w5aXhsbU1iU1cycnBZX0xPd0pTbV9BcXhkUnJwR0FNMUZTVEI1NzEwUzNOTkI3d3l3ajVlYkdaeFNMQ1cxUTJoUDR6Si1XYkZod2hMUmlyU2Z5Y0hMaVV5Z2pMbHpueXdOZHJZMnB5eTJScmRZUFhIZTNkUUhreUJpZ2tKNHU1UWhiVVhrX1FxMU13czN1cnlKWkV2bFNSODRGOUJ1WUxyWElHNWhFWTdB?oc=5",
+          "publisher": "Upstox",
+          "published": "Mon, 16 Nov 2026 04:06:13 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.75,
+          "positive_score": 0.0,
+          "negative_score": 0.0,
+          "neutral_score": 0.25,
+          "sentiment_score": 0.0
+        },
+        {
+          "title": "Indian Stock Market Today: Sensex, Nifty Rise 0.2% - HDFC Sky",
+          "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNVGxLNW1wTmdfaU1jZUhFQzhvR2VVWW9KWW1RSkZ4dDcwYVNMV3V2S3BJR0ttU1RvbV9ISDJIN25DQXFtSllUTW01cnBZNEFJMURyZTJia1dMUFk3RTc1LVZNRl8xdzd4UlROcnhqaXpteEd4N3o5OTR1VU5iMVZIc2V3M201dU01eDBySVIyaTc4NTM2R185S1JTQ1VKdkN0VnYxM1FRSTJfM2JEUHlzVkt3M0lIc2s1dkh1bXphQ3FvcklSZmdrVUw4TVdkRlU?oc=5",
+          "publisher": "HDFC Sky",
+          "published": "Mon, 16 Nov 2026 03:41:24 GMT",
+          "published_date": "2026-11-16",
+          "label": "neutral",
+          "confidence": 0.8,
+          "positive_score": 0.1,
+          "negative_score": 0.0,
+          "neutral_score": 0.2,
+          "sentiment_score": 0.1
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    },
+    "sensex": {
+      "slug": "sensex",
+      "company": "SENSEX",
+      "query": "BSE Sensex Indian stock market",
+      "model": "openai/gpt-oss-20b",
+      "source": "Google News RSS",
+      "article_count": 8,
+      "failed_article_count": 0,
+      "sentiment_score": 0.35,
+      "sentiment_label": "positive",
+      "counts": {
+        "positive": 6,
+        "negative": 2,
+        "neutral": 0
+      },
+      "trend": [
+        {
+          "date": "2026-10-01",
+          "sentiment_score": -0.7,
+          "article_count": 1
+        },
+        {
+          "date": "2026-10-05",
+          "sentiment_score": -0.6,
+          "article_count": 1
+        },
+        {
+          "date": "2026-10-09",
+          "sentiment_score": 0.7,
+          "article_count": 1
+        },
+        {
+          "date": "2026-11-16",
+          "sentiment_score": 0.68,
+          "article_count": 5
+        }
+      ],
+      "articles": [
+        {
+          "title": "Indian benchmark shares post longest weekly losing run in 25 years - Reuters",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOa2lpSGdlN0dhOTM3eUw3MlQtN183dHZydW95WXVWM2MyTEFaeTlvRUllR29aLWJxT3dvdVNmNlpzTGVldkpIMFNScVVhVEJ5TTU5TDhoVTZZWlpXbENCUHlKMWx3MmJ4bWkyU1E1OGF6Sk9YakxYcHRyM0tWdnlrX0NpQktmLU90VkRRVG5FQXdPZ3c3dFV0N0xndUdrTl9lY0xKZUJsNmY4LS1BYndDNENRZC0?oc=5",
+          "publisher": "Reuters",
+          "published": "Thu, 01 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-01",
+          "label": "negative",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.7,
+          "neutral_score": 0.0,
+          "sentiment_score": -0.7
+        },
+        {
+          "title": "NSE stock market-cap crosses ₹5 trillion; scrip up 16% from IPO price - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNQXoxV1M2SldFdEVDcEdabmNmeVh2ZTlkcE5JSWFnYUdpQWNVOHMyNXEyZjNSaTZrRE0tVm1jZFl0c1h1RlNlWFVkSFRWazRQVGE4TlNHMUtybFZoVlNPcGJqTnBMQ2ptRXplcTBndXlMNWNmQml1VGE4WkNnZE5lLUI5Rklfcm9naTBFbDZ6VjRId2RaaTdhdWI2RlZKcTNfUDJjd0ZmSFJHNWhFeXVwOHZtMFRxLW5MS2dPdEh2RXdXUXlNc21VZ0RYczJXUdIB0wFBVV95cUxQWENaZmFYSmZFWTFTMldvWmIzSll2U1g2d25HNmNCMFpyaEtfcHhuRlNTd3lOdmF2eEZEU0VfdnR5QkhUR0tTcnFad3JwODBlU2ZNUEFzeW5Db2JvdG1HMTNfeTlxQV9LaEh1ek11dE9DSGdObDVXREdNZnh6V2ExY21qdWN2RUgzRDU1MEk2Q2xPWXM5OXlVQlBuWWtkb05Ga1VKY3FTX1RfNFZEN0V3b0JFOFJqalJkVjd1RzQtMUJUYUVXQkYxakN4Q3hYdkM0eVdJ?oc=5",
+          "publisher": "Business Standard",
+          "published": "Mon, 16 Nov 2026 06:12:44 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "Stock Markets Today: Sensex, Nifty Gain on FII Inflows, Lower Crude - Rediff",
+          "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQRE5YaTNRNkZpM0czZTF2NGVxV19ibV9JTDFRUnNHUjc1WjJIc1VTXzVOaHlEYVM3UDhES3RmSElRbkc0c2ZEa0RWQXdULXFnb3NYRlJiVTFub085amoyeVB4SkdOa2djaWZYbE5mYjlGOEpRcTlydTN4RURldmZvM1JTa2d2ZTVuSG5PNEJ1TGFHSmdXX2RfRThpNWZDVjdmalF6UlRjWVdBd2RjdUl1NmRKbHBpeUZPc1F4U1RvUFU4bi1BclJSSEdJQXBKYnRpRVHSAdQBQVVfeXFMUGdUaTRTTFkwdzIxNkt6aWdtQ09CQnZkRFNPdTdqNTRQb0xBM3VQUW5tM1dMSVY5dVprOGxVeGFNeFhrU2VDbEctLXlTUzlKUmFoVXZ6TWUzUV9OYkZ6SmxUSlZfS0l3Ml9wOFlvNEJOOFd0NnhHamgzVi1NVFVCNm1kdTB5RC1zOS1kU0ZlQkdHc2VtOEl3VFVzUk90YXBidlJXbVNoOXI2ZFdEb08zT1Byb1lmT19nOU05T3EyT2hhTkhQbG90LU56N1VVall4RTk1VEQ?oc=5",
+          "publisher": "Rediff",
+          "published": "Mon, 16 Nov 2026 05:40:04 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.6,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.6
+        },
+        {
+          "title": "Sensex Today Trades Higher | Nifty Above 25,200 | Asian Paints & Bharti Airtel Top Gainers - Equitymaster",
+          "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPSVo5Y01fc0JhOWhiOHlJNm9KaEhkekFzbHczOHRINkJiaHZUZGkyVVE2TC0xRHpIVzh0NHF6b0xrWXprd0gwSFh4OG5UQ2I3amZBXzd3dldEYk4wbUhSU3piQkV1MUxidXptclIyV095eHNQdVdjNE9MQXFyNFR1aGd5VFNNOEVQb096VUQ5T2c1bEV0bW9yLTdzREJTcFJEMTAxdnpmQ2RBeW1jWjA2RGFaS2J5MmpjT01qYlBCUzQ1dDZaUVZxTTN2TDM3b1hYaENlaTlDRDhUQXQ2eVRRZg?oc=5",
+          "publisher": "Equitymaster",
+          "published": "Mon, 16 Nov 2026 04:53:41 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        },
+        {
+          "title": "Indian Stock Markets Rally on FII Inflows, Lower Crude Oil - Rediff MoneyWiz",
+          "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOTTBqWjJjZEFWVk5vWWpqNzFtMFJBTGZxdjVoazdGYWpvbmdGOTZOVEQxVDcyQVRfYVlKMG1XLWE1Tnl2SXhjUzhCaS01akN0SjJxelc2WU5DdWNPdlpib1BjUWxqaHNTdnE5dU14TUJNbmpxTlJjS3gyTk9ublNzVndXamM1RkpXM1N1Wk1XcThyVHZTeUU2RWt1NFNiRGdwRzNVanIwdF9INHBoR3fSAbMBQVVfeXFMTnBoQ3ZKNTRsMGdDc3llUXFzOW9fRkpFOERIMnFGYm1BLW1mdFdvb1ZseEF4Zm1zTTAzbHVFMWlUR2JfOEtaNzdqakZQZmIzWWNrLVN5RnE3bzBaa2kwSUNxU2REMzlRd3M1ZVBiZEdOeFVlUmF1blBTZEJrTjc1RXlPRUJUZmZseVBEOTdjX2E1MU5hQ3lDdXA3b0FhNUNNSDkxSktjRzZyMEg2MmFFMEhidDQ?oc=5",
+          "publisher": "Rediff MoneyWiz",
+          "published": "Mon, 16 Nov 2026 04:52:19 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.85,
+          "positive_score": 0.6,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.6
+        },
+        {
+          "title": "India deserves re-rating; Sensex may hit 95,000 by Dec 2027: Morgan Stanley - Business Standard",
+          "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxONmxtVS1mLUVpUlNtS3ZEaWRHR0V2QWtRWkJfVHA2MmZPZHdvMFZ4RXlwTHpOdC1JbnhSSHVIV3lQWGstclJYTDFIZE94RFd5VnlMc0F5WURJYXdUck01Z2NpcTVxZmhOWmdsNkkta3RPT0FJb0JaQXJPT3RBUDVYbUF5ajhhSlFBRFk0VFgwTlVWMXpKejNJbEZlYUNuS2UxR21RNVF6d05LMEpUMmtubjh2ak45MTZsdkROcWtXU1F3ajA1bW5VNlZqWkxaWHd4RlBFMEZZa9IB3AFBVV95cUxOVG9sVlJ5Sml6QnFiaVBnTlB5aXhTeWtUU0xDUzVjQjNLT3ExdVhDdUtYUkJvZy03ZVV4YkJXTmtfT3I0cHljbnE3MnJjNHlOMS1fUWtWajRRVzZNdU5YSTNWTWdCVVdMWmtpWFZZZi1Zc0lRQlBpWW5lZFBZTnJaR0ZTdlVTOE1YOUJXbV9QWGp6VHNOVVZmN2Y2TEFoSHNUZDFsNHc0TWplMTlXeVpEa2FrQlpyTW9nS2RpMk5NN0Q4c2NoX1RoMFpOZUZYZXhtdlBKb2dfc2ZhOGVT?oc=5",
+          "publisher": "Business Standard",
+          "published": "Mon, 16 Nov 2026 04:41:26 GMT",
+          "published_date": "2026-11-16",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.8,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.8
+        },
+        {
+          "title": "Nifty: Five reasons India's markets are sinking even when its economy is growing - BBC",
+          "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE13eUZFdTFjQUFKSmQ5OVpacTRkRmhOOFFwSU5WTUkwdG13ZGZiLUk4T3BvYUlXZi05YWRldWFQRzlaZ24xTWhCdnhLWW53bHlJYUh6aGl5UjVHUjg?oc=5",
+          "publisher": "BBC",
+          "published": "Mon, 05 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-05",
+          "label": "negative",
+          "confidence": 0.8,
+          "positive_score": 0.0,
+          "negative_score": 0.6,
+          "neutral_score": 0.0,
+          "sentiment_score": -0.6
+        },
+        {
+          "title": "Why Is the Stock Market Rising Today? Sensex Jumps 745 Points, Nifty Gains 1.13% - India Infoline",
+          "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNU2VwSkRYRUlDUkMxaWZ2aGxWTUFNSmtlRUxQd19CVGpnb2lzV0xnZlBiVW1YZ0RqLUQ1UVV4TmRQblRjWTVFQ0tub3hBWTEzQV8yaGx1a2tuMFVLQ1J5cF9XOTBKUHdBcVZuTmx5UGVlV1ZpdHFhUkpHUnY4TmJ0T1kxVEwzOURoOHdGMzFjdmR1U3hPcjY1OHF1MkhNUWV3LXA4QVNPRjA2TUJkbUR5NG5KOUJDTFQ5THlfcw?oc=5",
+          "publisher": "India Infoline",
+          "published": "Fri, 09 Oct 2026 07:00:00 GMT",
+          "published_date": "2026-10-09",
+          "label": "positive",
+          "confidence": 0.9,
+          "positive_score": 0.7,
+          "negative_score": 0.0,
+          "neutral_score": 0.0,
+          "sentiment_score": 0.7
+        }
+      ],
+      "methodology_note": "Groq openai/gpt-oss-20b classifies the tone of public news headlines and summaries. Scores are model-generated text assessments, not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+    }
+  },
+  "methodology_note": "Groq openai/gpt-oss-20b assesses public headline tone only; scores are not calibrated probabilities, stock-return forecasts, recommendations, or investment advice."
+}
