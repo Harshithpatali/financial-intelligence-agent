@@ -40,21 +40,15 @@ pip install -r backend/requirements.txt
 
 Configure `GROQ_API_KEY` in the Render environment and in GitHub Actions repository secrets. The frontend does not need the key; it sends only the question text. Groq is used only for answer generation; indexing and retrieval run locally without embeddings.
 
-Document vectors are built by the GitHub Actions workflow **Build and publish RAG index**. It runs automatically when files under `knowledge/` or indexing code change, and can also be started manually from the Actions tab. The workflow publishes `tcs-rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; the index is not committed into the source tree.
+The SQLite FTS5 index and graph are built by the **Build and publish RAG index** workflow when knowledge or indexing code changes, or by manual dispatch. It publishes `rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; generated index files are not committed into the source tree.
 
-For a local rebuild, configure `GROQ_API_KEY` and run:
+For a local rebuild, run:
 
 ```bash
 python -m backend.rag.build_vector_db
 ```
 
-The index builder, FastAPI query path and benchmark all use the same Groq-hosted `nomic-embed-text-v1_5` model. No Hugging Face account, token, local model download, PyTorch or SentenceTransformers installation is required.
-
-To build only the graph from an existing Chroma collection:
-
-```bash
-python -m backend.rag.build_graph_from_collection
-```
+The index builder creates `backend/indexes/tcs_knowledge.sqlite3` and `backend/indexes/tcs_knowledge_graph.json`. SQLite FTS5 provides BM25 lexical ranking; NetworkX provides graph candidates. No embedding API, Hugging Face package, local model download or vector database is used.
 
 Run the API:
 
