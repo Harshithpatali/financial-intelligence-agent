@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 import json
 import os
 import re
@@ -19,6 +20,8 @@ from backend.rag.rag_pipeline import answer_question
 from evaluation.benchmark import evaluate_records
 from evaluation.metrics import citation_coverage
 from evaluation.traceability import page_for_excerpt, page_for_anchor
+
+logger = logging.getLogger(__name__)
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK_PATH = ROOT / "evaluation" / "tcs_benchmark.json"
@@ -232,7 +235,19 @@ def main() -> None:
                 time.sleep(65)
             embedding = model.encode(row["question"], normalize_embeddings=True).tolist()
             try:
-                result = answer_question(row["question"], query_embedding=embedding, top_k=5)
+                result = None
+                last_error = None
+                for attempt in range(2):
+                    try:
+                        result = answer_question(row["question"], query_embedding=embedding, top_k=5)
+                        break
+                    except Exception as exc:
+                        last_error = exc
+                        if attempt == 0:
+                            logger.warning("Retrying empty/failed Groq answer for %s: %s", row["id"], exc)
+                            time.sleep(15)
+                if result is None:
+                    raise last_error or RuntimeError("Answer generation returned no result")
             except Exception as exc:
                 # Preserve one failed generation as an auditable record and continue.
                 # A transient provider failure must not discard the completed retrieval report.
