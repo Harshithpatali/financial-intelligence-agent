@@ -5,7 +5,6 @@ on:
     branches: [main]
     paths:
       - "evaluation/tcs_benchmark.json"
-      - "evaluation/run_tcs_benchmark.py"
       - "evaluation/traceability.py"
       - "evaluation/benchmark.py"
       - "tests/test_tcs_audit_traceability.py"
