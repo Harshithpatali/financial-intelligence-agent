@@ -1,4 +1,4 @@
-name: Daily FinBERT sentiment report
+name: Daily Groq sentiment report
 
 on:
   schedule:
@@ -29,9 +29,12 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Generate FinBERT report
+      - name: Install Groq SDK
+        run: python -m pip install --upgrade groq
+
+      - name: Generate Groq sentiment report
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           python scripts/generate_sentiment_report.py --output /tmp/sentiment-report.json
 
@@ -49,10 +52,10 @@ jobs:
           report_date="$(python -c 'import json; print(json.load(open("latest.json"))["report_date_utc"])')"
           cp latest.json "history/${report_date}.json"
           cat > README.md <<'EOF'
-          # Daily FinBERT sentiment data
+          # Daily Groq sentiment data
 
           This branch contains generated, public sentiment reports for the Streamlit dashboard.
-          Reports contain public news headlines, source links, publication metadata and FinBERT scores.
+          Reports contain public news headlines, source links, publication metadata and Groq model assessments.
           No API tokens or secrets are stored here.
           EOF
           git add latest.json "history/${report_date}.json" README.md
