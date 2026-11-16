@@ -30,5 +30,12 @@ def reset_collection():
     try: client.delete_collection(_COLLECTION_NAME)
     except Exception: pass
     _COLLECTION = client.get_or_create_collection(
-        name=_COLLECTION_NAME, metadata={"hnsw:space": "cosine"})
+        name=_COLLECTION_NAME,
+        metadata={
+            "hnsw:space": "cosine",
+            "embedding_provider": "groq",
+            "embedding_model": os.getenv("GROQ_EMBEDDING_MODEL", "nomic-embed-text-v1_5"),
+            "embedding_dimension": int(os.getenv("GROQ_EMBEDDING_DIMENSION", "768")),
+        },
+    )
     return _COLLECTION
