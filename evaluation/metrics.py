@@ -1,7 +1,7 @@
 """Offline retrieval and citation metrics for reviewed benchmarks."""
 import re
 
-ZERO_WIDTH_RE = re.compile("[\\u200b\\u200c\\u200d\\u2060\\ufeff]")
+ZERO_WIDTH_RE = re.compile("[\u200b\u200c\u200d\u2060\ufeff]")
 
 
 def recall_at_k(retrieved_ids, relevant_ids, k):
@@ -22,7 +22,7 @@ def reciprocal_rank_at_k(retrieved_ids, relevant_ids, k):
 def citation_coverage(answer, source_count):
     """Fraction of answer sentences carrying a valid [S#] or 【S#】 citation."""
     clean = ZERO_WIDTH_RE.sub("", answer.strip())
-    sentences = [s for s in re.split(r"(?<=[.!?])\\s+", clean) if s]
+    sentences = [s for s in re.split(r"(?<=[.!?])\s+", clean) if s]
     if not sentences:
         return 0.0
     valid = set(range(1, source_count + 1))
@@ -30,7 +30,7 @@ def citation_coverage(answer, source_count):
     for sentence in sentences:
         refs = {
             int(match.group(1) or match.group(2))
-            for match in re.finditer(r"(?:\\[S(\\d+)\\]|【S(\\d+)】)", sentence)
+            for match in re.finditer(r"(?:\[S(\d+)\]|【S(\d+)】)", sentence)
         }
         if refs & valid:
             cited += 1
