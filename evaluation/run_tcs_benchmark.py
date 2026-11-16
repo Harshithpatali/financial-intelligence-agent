@@ -11,7 +11,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 from rank_bm25 import BM25Okapi
-from sentence_transformers import SentenceTransformer
+from backend.rag.embeddings import EMBEDDING_MODEL, embed_texts
 
 from backend.rag.chunker import load_documents, chunk_documents
 from backend.rag.vector_store import get_collection
@@ -28,7 +28,7 @@ BENCHMARK_PATH = ROOT / "evaluation" / "tcs_benchmark.json"
 OUTPUT_DIR = ROOT / "evaluation" / "results"
 TOP_K = 5
 CANDIDATE_K = 40
-MODEL_NAME = "BAAI/bge-small-en-v1.5"
+MODEL_NAME = EMBEDDING_MODEL
 TOKEN_RE = re.compile(r"[a-z0-9]+(?:\.[0-9]+)?", re.I)
 NUMBER_RE = re.compile(r"(?<![A-Za-z0-9])[-+]?\d[\d,]*(?:\.\d+)?")
 CITATION_RE = re.compile(r"(?:\[S(\d+)\]|【S(\d+)】)")
@@ -176,10 +176,10 @@ def main() -> None:
         raise RuntimeError("The downloaded Chroma collection is empty.")
     indexed_ids, bm25_index = build_bm25(collection)
 
-    model = SentenceTransformer(MODEL_NAME)
+    query_embeddings = embed_texts([row["question"] for row in rows], input_type="search_query")
     methods = {"dense_only": [], "bm25_only": [], "dense_plus_bm25": [], "dense_bm25_graph": []}
     for number, row in enumerate(rows, start=1):
-        embedding = model.encode(row["question"], normalize_embeddings=True).tolist()
+        embedding = query_embeddings[number - 1]
         dense = dense_ranking(collection, embedding, CANDIDATE_K)
         bm25 = bm25_ranking(row["question"], indexed_ids, bm25_index, CANDIDATE_K)
         graph = [item["id"] for item in graph_retrieve(row["question"], top_k=CANDIDATE_K)]
@@ -233,7 +233,7 @@ def main() -> None:
             # Two answer generations per minute leave room for both prompt and completion tokens.
             if audit_number > 1 and (audit_number - 1) % 2 == 0:
                 time.sleep(65)
-            embedding = model.encode(row["question"], normalize_embeddings=True).tolist()
+            embedding = query_embeddings[audit_number - 1]
             try:
                 result = None
                 last_error = None
