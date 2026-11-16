@@ -318,23 +318,11 @@ def backend_health() -> tuple[bool, str]:
     return False, f"Health check failed ({type(last_error).__name__})."
 
 
-@st.cache_resource(show_spinner=False)
-def load_query_embedding_model():
-    """Load the same BGE model used by the offline document-index build."""
-    from sentence_transformers import SentenceTransformer
-    return SentenceTransformer("BAAI/bge-small-en-v1.5", device="cpu")
-
-
 def ask_question(question: str) -> dict[str, Any]:
-    model = load_query_embedding_model()
-    query_embedding = model.encode(
-        "Represent this sentence for searching relevant passages: " + question,
-        normalize_embeddings=True,
-        show_progress_bar=False,
-    ).tolist()
+    """Send plain text; the API generates query embeddings through Groq."""
     response = requests.post(
         API_URL,
-        json={"question": question, "query_embedding": query_embedding},
+        json={"question": question},
         timeout=180,
     )
     response.raise_for_status()
