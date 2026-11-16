@@ -7,7 +7,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _number_tokens(text):
-    return {value.replace(",", "").lstrip("+") for value in re.findall(r"[-+]?\d[\d,]*(?:\.\d+)?", text)}
+    values = set()
+    for raw in re.findall(r"\(?\s*[-+]?\d[\d,]*(?:\.\d+)?\s*\)?", text):
+        token = raw.strip().replace(",", "")
+        negative = token.startswith("-") or (token.startswith("(") and token.endswith(")"))
+        token = token.strip("()").lstrip("+-").strip()
+        values.add(("-" if negative else "") + token)
+    return values
 
 
 def test_tcs_benchmark_has_50_unique_source_anchored_questions():
