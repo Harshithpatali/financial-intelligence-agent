@@ -68,11 +68,24 @@ def _validate_archive(archive: Path, staging: Path) -> tuple[int, int]:
     chroma_path = staging / "backend" / "chroma_db"
     client = chromadb.PersistentClient(path=str(chroma_path))
     try:
-        chunks = client.get_collection("tcs_knowledge_base").count()
+        collection = client.get_collection("tcs_knowledge_base")
+        chunks = collection.count()
+        metadata = collection.metadata or {}
     finally:
         del client
     if chunks <= 0:
         raise RuntimeError("Downloaded Chroma collection contains zero document chunks.")
+    expected_model = os.getenv("GROQ_EMBEDDING_MODEL", "nomic-embed-text-v1_5")
+    expected_dimension = int(os.getenv("GROQ_EMBEDDING_DIMENSION", "768"))
+    if metadata.get("embedding_provider") != "groq":
+        raise RuntimeError("Downloaded Chroma index is not a Groq-embedded index; rebuild it before deployment.")
+    if metadata.get("embedding_model") != expected_model:
+        raise RuntimeError(
+            f"Index embedding model mismatch: expected {expected_model}, "
+            f"found {metadata.get('embedding_model')}."
+        )
+    if int(metadata.get("embedding_dimension", 0)) != expected_dimension:
+        raise RuntimeError("Downloaded Chroma index has an incompatible embedding dimension.")
     return len(nodes), chunks
 
 
