@@ -29,6 +29,7 @@ AUDIT_IDS = {"q01", "q05", "q07", "q09", "q12", "q16", "q20",
 TOKEN_RE = re.compile(r"[a-z0-9]+(?:\.[0-9]+)?", re.I)
 NUMBER_RE = re.compile(r"(?<![A-Za-z0-9])[-+]?\d[\d,]*(?:\.\d+)?")
 CITATION_RE = re.compile(r"(?:\[S(\d+)\]|【S(\d+)】)")
+ZERO_WIDTH_RE = re.compile("[\u200b\u200c\u200d\u2060\ufeff]")
 
 
 def normalize(text: str) -> str:
