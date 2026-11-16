@@ -1,162 +1,57 @@
-"""Install the latest precomputed RAG index without using the GitHub Releases API."""
-from __future__ import annotations
-
-import json
-import os
-import shutil
-import tempfile
-import time
-import urllib.error
-import urllib.request
-import zipfile
+"""Download and install the published SQLite FTS5 + graph index."""
+import json,os,shutil,sqlite3,tempfile,time,urllib.error,urllib.request,zipfile
 from pathlib import Path
-
-REPOSITORY = os.getenv("RAG_INDEX_REPOSITORY", "Harshithpatali/financial-intelligence-agent")
-ASSET_NAME = "rag-index.zip"
-ROOT = Path(__file__).resolve().parents[2]
-DOWNLOAD_URL = f"https://github.com/{REPOSITORY}/releases/latest/download/{ASSET_NAME}"
-GRAPH_MEMBER = "backend/indexes/tcs_knowledge_graph.json"
-CHROMA_MEMBER = "backend/chroma_db/chroma.sqlite3"
-
-
-def _download(url: str, destination: Path, attempts: int = 4) -> None:
-    request = urllib.request.Request(
-        url,
-        headers={
-            "Accept": "application/octet-stream",
-            "User-Agent": "financial-intelligence-agent-index-installer",
-        },
-    )
-    last_error = None
+REPOSITORY=os.getenv("RAG_INDEX_REPOSITORY","Harshithpatali/financial-intelligence-agent")
+ASSET_NAME="rag-index.zip"; ROOT=Path(__file__).resolve().parents[2]
+DOWNLOAD_URL=f"https://github.com/{REPOSITORY}/releases/latest/download/{ASSET_NAME}"
+DB_MEMBER="backend/indexes/tcs_knowledge.sqlite3"; GRAPH_MEMBER="backend/indexes/tcs_knowledge_graph.json"
+def _download(url,destination,attempts=4):
+    request=urllib.request.Request(url,headers={"Accept":"application/octet-stream","User-Agent":"financial-intelligence-agent-index-installer"}); last=None
     for attempt in range(attempts):
         try:
-            with urllib.request.urlopen(request, timeout=120) as response:
-                with destination.open("wb") as output:
-                    shutil.copyfileobj(response, output)
-            if destination.stat().st_size == 0:
-                raise RuntimeError("GitHub returned an empty RAG index archive.")
+            with urllib.request.urlopen(request,timeout=120) as response,destination.open("wb") as output: shutil.copyfileobj(response,output)
+            if destination.stat().st_size==0: raise RuntimeError("GitHub returned an empty RAG index archive.")
             return
-        except (urllib.error.URLError, TimeoutError, OSError) as exc:
-            last_error = exc
-            if attempt == attempts - 1:
-                break
-            time.sleep(2 ** attempt)
-    raise RuntimeError(f"Unable to download the RAG index from {url}: {last_error}") from last_error
-
-
-def _validate_archive(archive: Path, staging: Path) -> tuple[int, int]:
-    import chromadb
-
+        except (urllib.error.URLError,TimeoutError,OSError) as exc:
+            last=exc
+            if attempt==attempts-1: break
+            time.sleep(2**attempt)
+    raise RuntimeError(f"Unable to download RAG index: {last}") from last
+def _validate_archive(archive,staging):
     with zipfile.ZipFile(archive) as bundle:
-        if bundle.testzip() is not None:
-            raise RuntimeError("RAG index ZIP failed its integrity check.")
-        members = set(bundle.namelist())
-        if GRAPH_MEMBER not in members or CHROMA_MEMBER not in members:
-            raise RuntimeError("RAG index archive is missing the Chroma database or knowledge graph.")
+        if bundle.testzip() is not None: raise RuntimeError("RAG index ZIP failed integrity check.")
+        members=set(bundle.namelist())
+        if not {DB_MEMBER,GRAPH_MEMBER}.issubset(members): raise RuntimeError("Archive is missing SQLite FTS5 database or graph.")
         for member in members:
-            target = (staging / member).resolve()
-            if not target.is_relative_to(staging.resolve()):
-                raise RuntimeError(f"Unsafe path in RAG index archive: {member}")
+            if not (staging/member).resolve().is_relative_to(staging.resolve()): raise RuntimeError(f"Unsafe archive path: {member}")
         bundle.extractall(staging)
-
-    graph_path = staging / GRAPH_MEMBER
-    graph_data = json.loads(graph_path.read_text(encoding="utf-8"))
-    nodes = graph_data.get("nodes", [])
-    if not nodes:
-        raise RuntimeError("Downloaded knowledge graph contains zero nodes.")
-
-    chroma_path = staging / "backend" / "chroma_db"
-    client = chromadb.PersistentClient(path=str(chroma_path))
+    with sqlite3.connect(str(staging/DB_MEMBER)) as db:
+        chunks=db.execute("SELECT COUNT(*) FROM chunks").fetchone()[0]; fts=db.execute("SELECT COUNT(*) FROM chunk_fts").fetchone()[0]
+        db.execute("SELECT id FROM chunk_fts WHERE chunk_fts MATCH 'TCS' LIMIT 1").fetchall()
+    graph=json.loads((staging/GRAPH_MEMBER).read_text(encoding="utf-8")); nodes=graph.get("nodes",[])
+    if chunks<=0 or fts!=chunks: raise RuntimeError(f"Invalid index counts: chunks={chunks}, fts={fts}")
+    if not nodes: raise RuntimeError("Downloaded knowledge graph contains zero nodes.")
+    return len(nodes),chunks
+def _install(staging):
+    pairs=[(staging/DB_MEMBER,ROOT/DB_MEMBER),(staging/GRAPH_MEMBER,ROOT/GRAPH_MEMBER)]; backups=[]; installed=[]
     try:
-        collection = client.get_collection("tcs_knowledge_base")
-        chunks = collection.count()
-        metadata = collection.metadata or {}
-    finally:
-        del client
-    if chunks <= 0:
-        raise RuntimeError("Downloaded Chroma collection contains zero document chunks.")
-    expected_model = os.getenv("GROQ_EMBEDDING_MODEL", "nomic-embed-text-v1_5")
-    expected_dimension = int(os.getenv("GROQ_EMBEDDING_DIMENSION", "768"))
-    if metadata.get("embedding_provider") != "groq":
-        raise RuntimeError("Downloaded Chroma index is not a Groq-embedded index; rebuild it before deployment.")
-    if metadata.get("embedding_model") != expected_model:
-        raise RuntimeError(
-            f"Index embedding model mismatch: expected {expected_model}, "
-            f"found {metadata.get('embedding_model')}."
-        )
-    if int(metadata.get("embedding_dimension", 0)) != expected_dimension:
-        raise RuntimeError("Downloaded Chroma index has an incompatible embedding dimension.")
-    return len(nodes), chunks
-
-
-def _copy_directory_contents(source: Path, destination: Path) -> None:
-    """Copy into the mounted Chroma directory; never rename its mount point."""
-    destination.mkdir(parents=True, exist_ok=True)
-    for item in source.iterdir():
-        target = destination / item.name
-        if item.is_dir():
-            shutil.copytree(item, target, dirs_exist_ok=True)
-        else:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(item, target)
-
-
-def _restore_directory(backup: Path, destination: Path) -> None:
-    if destination.exists():
-        for item in destination.iterdir():
-            if item.is_dir():
-                shutil.rmtree(item)
-            else:
-                item.unlink()
-    _copy_directory_contents(backup, destination)
-
-
-def _install(staging: Path) -> None:
-    source_chroma = staging / "backend" / "chroma_db"
-    source_graph = staging / GRAPH_MEMBER
-    target_chroma = ROOT / "backend" / "chroma_db"
-    target_graph = ROOT / GRAPH_MEMBER
-
-    backup_chroma = staging / "backup_chroma"
-    had_chroma = target_chroma.exists()
-    if had_chroma:
-        shutil.copytree(target_chroma, backup_chroma)
-
-    target_graph.parent.mkdir(parents=True, exist_ok=True)
-    backup_graph = staging / "backup_graph.json"
-    had_graph = target_graph.exists()
-    if had_graph:
-        shutil.copy2(target_graph, backup_graph)
-
-    try:
-        # Chroma may be a Render persistent-disk mount. Copy into it rather
-        # than renaming/replacing the mount directory across filesystems.
-        _copy_directory_contents(source_chroma, target_chroma)
-
-        # The graph file is replaced atomically within its own filesystem.
-        graph_temp = target_graph.with_name(target_graph.name + ".new")
-        shutil.copy2(source_graph, graph_temp)
-        os.replace(graph_temp, target_graph)
+        for source,target in pairs:
+            target.parent.mkdir(parents=True,exist_ok=True); backup=target.with_name(target.name+".backup")
+            if target.exists(): shutil.copy2(target,backup); backups.append((backup,target))
+            temp=target.with_name(target.name+".new"); shutil.copy2(source,temp); os.replace(temp,target); installed.append(target)
     except Exception:
-        if had_chroma:
-            _restore_directory(backup_chroma, target_chroma)
-        if had_graph:
-            shutil.copy2(backup_graph, target_graph)
-        elif target_graph.exists():
-            target_graph.unlink()
+        for target in reversed(installed):
+            backup=next((b for b,t in backups if t==target),None)
+            if backup and backup.exists(): os.replace(backup,target)
+            elif target.exists(): target.unlink()
         raise
-
-
-def main() -> None:
-    ROOT.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix=".rag-index-", dir=ROOT) as temporary:
-        staging = Path(temporary)
-        archive = staging / ASSET_NAME
-        _download(DOWNLOAD_URL, archive)
-        nodes, chunks = _validate_archive(archive, staging)
-        _install(staging)
-    print(f"Installed latest RAG index: {chunks} document chunks, {nodes} knowledge-graph nodes.")
-
-
-if __name__ == "__main__":
-    main()
+    finally:
+        for backup,_ in backups:
+            if backup.exists(): backup.unlink()
+def main():
+    ROOT.mkdir(parents=True,exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=".rag-index-",dir=ROOT) as tmp:
+        staging=Path(tmp); archive=staging/ASSET_NAME; _download(DOWNLOAD_URL,archive)
+        nodes,chunks=_validate_archive(archive,staging); _install(staging)
+    print(f"Installed SQLite FTS5 RAG index: {chunks} chunks, {nodes} graph nodes.")
+if __name__=="__main__": main()
