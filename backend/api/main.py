@@ -1,7 +1,6 @@
 """FastAPI endpoints with readiness, request validation and basic abuse controls."""
 import json
 import logging
-import math
 import os
 import time
 import uuid
@@ -10,7 +9,7 @@ from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 from backend.api.rate_limit import limiter
 
@@ -55,21 +54,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 class AskRequest(BaseModel):
     question: str = Field(min_length=3, max_length=2000)
-    query_embedding: list[float] | None = None
-
-    @field_validator("query_embedding")
-    @classmethod
-    def validate_query_embedding(cls, value):
-        if value is None:
-            return value
-        if len(value) != 384:
-            raise ValueError("query_embedding must contain exactly 384 values")
-        if not all(math.isfinite(item) for item in value):
-            raise ValueError("query_embedding values must all be finite")
-        norm = math.sqrt(sum(item * item for item in value))
-        if not 0.90 <= norm <= 1.10:
-            raise ValueError("query_embedding must be L2-normalized")
-        return value
 
 
 @app.get("/")
@@ -124,7 +108,7 @@ def ask(request: Request, question: str = Query(min_length=3, max_length=2000)):
 @app.post("/ask")
 def ask_post(request: Request, payload: AskRequest):
     limiter.check(request)
-    return _answer(payload.question, payload.query_embedding)
+    return _answer(payload.question, None)
 
 
 def _answer(question, query_embedding=None):
