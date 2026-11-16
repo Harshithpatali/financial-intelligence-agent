@@ -802,7 +802,7 @@ elif selected_section == "Market Sentiment":
     section_heading(
         "07 / NLP market intelligence",
         "Daily market-news sentiment",
-        "Daily precomputed financial headline scores from ProsusAI FinBERT. Sentiment describes coverage tone, not expected stock returns.",
+        "Daily precomputed financial headline assessments from Groq openai/gpt-oss-20b. Sentiment describes coverage tone, not expected stock returns.",
     )
     sentiment_options = {
         "TCS · Tata Consultancy Services": "tcs",
@@ -820,7 +820,7 @@ elif selected_section == "Market Sentiment":
         st.rerun()
     st.caption(
         "Sentiment is calculated once daily by GitHub Actions. This page only downloads the saved JSON report; "
-        "refreshing here does not trigger FinBERT."
+        "refreshing here does not trigger Groq."
     )
 
     try:
@@ -829,7 +829,7 @@ elif selected_section == "Market Sentiment":
         sentiment_data = report.get("companies", {}).get(sentiment_slug)
         generated_at = report.get("generated_at")
         if not sentiment_data:
-            st.info("No report is available for this selection yet. Run the Daily FinBERT sentiment workflow.")
+            st.info("No report is available for this selection yet. Run the Daily Groq sentiment workflow.")
         else:
             if generated_at:
                 st.caption(f"Report generated: {generated_at} · Data source: {report.get('source', 'Google News RSS')}")
