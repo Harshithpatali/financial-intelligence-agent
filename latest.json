@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "report_date_utc": null,
+  "model": "ProsusAI/finbert",
+  "source": "Google News RSS",
+  "companies": {},
+  "methodology_note": "No successful daily report has been published yet. Headline tone only; not investment advice."
+}
