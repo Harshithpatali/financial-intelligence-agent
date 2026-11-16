@@ -237,15 +237,20 @@ def main() -> None:
             try:
                 result = None
                 last_error = None
-                for attempt in range(2):
+                for attempt in range(3):
                     try:
                         result = answer_question(row["question"], query_embedding=embedding, top_k=5)
                         break
                     except Exception as exc:
                         last_error = exc
-                        if attempt == 0:
-                            logger.warning("Retrying empty/failed Groq answer for %s: %s", row["id"], exc)
-                            time.sleep(15)
+                        if attempt < 2:
+                            retry_after = getattr(exc, "retry_after", None)
+                            delay = max(1, int(retry_after)) if retry_after else 20 * (attempt + 1)
+                            logger.warning(
+                                "Retrying Groq answer for %s (attempt %s/3) in %ss: %s",
+                                row["id"], attempt + 2, delay, exc
+                            )
+                            time.sleep(delay)
                 if result is None:
                     raise last_error or RuntimeError("Answer generation returned no result")
             except Exception as exc:
