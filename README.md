@@ -4,7 +4,7 @@
   <img src="assets/dashboard.png" alt="TCS financial intelligence dashboard" width="100%">
 </p>
 
-**A financial research assistant for TCS disclosures**, combining document ingestion, SQLite FTS5 BM25 retrieval, a provenance-backed entity graph and grounded Groq LLM responses.
+**A financial research assistant for TCS disclosures**, combining document ingestion, dense retrieval, bounded lexical retrieval, a provenance-backed entity graph and grounded LLM responses.
 
 [![Live Demo](https://img.shields.io/badge/Live-Streamlit%20Demo-brightgreen)](https://financial-intelligence-agent-g.streamlit.app/)
 [![API](https://img.shields.io/badge/API-FastAPI-009688)](https://financial-intelligence-agent-pmgy.onrender.com/)
@@ -17,14 +17,15 @@ Users can ask questions about TCS revenue, profitability, cash flow, business se
 
 ## Architecture
 
-1. **Ingestion:** PDF, CSV and news inputs are transformed into version-controlled Markdown documents.
-2. **Page-aware chunking:** overlapping chunks retain source and page metadata where available.
-3. **Offline indexing:** GitHub Actions builds a SQLite FTS5 full-text index and a NetworkX evidence graph, then publishes both as a versioned GitHub Release asset.
-4. **Lexical retrieval:** SQLite FTS5 supplies BM25-ranked lexical candidates; no embedding API or vector database is involved.
-5. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. Typed edges distinguish `MENTIONS`, `HAS_EVIDENCE_IN_PERIOD`, `PRECEDES`, qualitative trend evidence and `CO_MENTIONED_WITHIN_CHUNK`. Co-mentions are not causal relationships.
-6. **Hybrid ranking:** reciprocal-rank fusion combines lexical and graph candidates in the live API.
-7. **Generation:** Groq-hosted GPT OSS answers from retrieved context and is instructed to cite source IDs. Groq is used only for answer generation.
-8. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
+1. **Ingestion:** PDF, CSV and news inputs are transformed into a version-controlled Markdown knowledge repository.
+2. **Page-aware chunking:** documents are split into overlapping chunks while retaining source and page metadata when available.
+3. **Offline document indexing:** GitHub Actions uses Groq's `nomic-embed-text-v1_5` embedding endpoint to build normalized 768-dimensional document vectors, then publishes the ChromaDB vectors and NetworkX graph as a versioned GitHub Release asset.
+4. **Query embedding:** FastAPI generates each normalized query vector through the same Groq embedding model. The Streamlit client sends only the question text; no local embedding model or Hugging Face download is used.
+5. **Lexical retrieval:** the live API uses bounded Chroma document-term candidates to stay within its memory budget. A full-corpus BM25 implementation is used as an offline evaluation baseline.
+6. **Knowledge graph:** NetworkX stores financial entities, reporting periods and evidence-chunk nodes. Typed edges distinguish `MENTIONS`, `HAS_EVIDENCE_IN_PERIOD`, `PRECEDES`, qualitative trend evidence and `CO_MENTIONED_WITHIN_CHUNK`. Co-mentions are not causal relationships; trend nodes are unverified qualitative observations.
+7. **Hybrid ranking:** reciprocal-rank fusion combines dense, bounded lexical and graph candidates in the live API.
+8. **Generation:** Groq-hosted GPT OSS answers from retrieved context and is instructed to cite source IDs.
+9. **Serving:** FastAPI exposes question-answering endpoints; Streamlit provides the user interface and financial dashboards.
 
 > Graph edges describe evidence co-mentions, not causality or directional business relationships. This project uses a local NetworkX graph; it does not require a Neo4j server.
 
@@ -38,17 +39,23 @@ The repository contains TCS annual reports, quarterly financial reports and earn
 pip install -r backend/requirements.txt
 ```
 
-Configure `GROQ_API_KEY` in the Render environment and in GitHub Actions repository secrets. The frontend does not need the key; it sends only the question text. Groq is used only for answer generation; indexing and retrieval run locally without embeddings.
+Configure `GROQ_API_KEY` in the Render environment and in GitHub Actions repository secrets. The frontend does not need the key; it sends only the question text. Groq handles both query/document embeddings and answer generation.
 
-The SQLite FTS5 index and graph are built by the **Build and publish RAG index** workflow when knowledge or indexing code changes, or by manual dispatch. It publishes `rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; generated index files are not committed into the source tree.
+Document vectors are built by the GitHub Actions workflow **Build and publish RAG index**. It runs automatically when files under `knowledge/` or indexing code change, and can also be started manually from the Actions tab. The workflow publishes `tcs-rag-index.zip` as a versioned GitHub Release asset. Render downloads the latest release during startup; the index is not committed into the source tree.
 
-For a local rebuild, run:
+For a local rebuild, configure `GROQ_API_KEY` and run:
 
 ```bash
 python -m backend.rag.build_vector_db
 ```
 
-The index builder creates `backend/indexes/tcs_knowledge.sqlite3` and `backend/indexes/tcs_knowledge_graph.json`. SQLite FTS5 provides BM25 lexical ranking; NetworkX provides graph candidates. No embedding API, Hugging Face package, local model download or vector database is used.
+The index builder, FastAPI query path and benchmark all use the same Groq-hosted `nomic-embed-text-v1_5` model. No Hugging Face account, token, local model download, PyTorch or SentenceTransformers installation is required.
+
+To build only the graph from an existing Chroma collection:
+
+```bash
+python -m backend.rag.build_graph_from_collection
+```
 
 Run the API:
 
@@ -59,7 +66,7 @@ uvicorn backend.api.main:app --host 0.0.0.0 --port 10000
 ## API
 
 - `GET /` service metadata
-- `GET /health` liveness check\n- `GET /ready` readiness check for SQLite FTS5, graph index and Groq configuration
+- `GET /health` liveness check\n- `GET /ready` readiness check for Chroma, graph index and Groq configuration
 - `GET /ask?question=...` question answering
 - `POST /ask` JSON request: `{"question":"What was TCS revenue in FY2024?"}`
 
@@ -71,13 +78,20 @@ The Markets & News dashboard uses Yahoo Finance through `yfinance` for quotes/hi
 
 ## Evaluation
 
-The 50-question source-anchored benchmark compares three production-aligned retrieval methods: SQLite FTS5 BM25-only, graph-only and BM25+graph reciprocal-rank fusion. Dense retrieval is intentionally excluded: the Groq embedding endpoint returned `model_not_found`, and this project does not use Hugging Face or another embedding provider.
+A 50-question TCS source-anchored benchmark compares Groq dense-only, full-corpus BM25, dense+BM25 reciprocal-rank fusion, and dense+BM25+graph retrieval. The published table below is the historical BGE run and must not be treated as Groq performance; rerun the benchmark after the Groq index has been rebuilt:
 
-The workflow publishes Recall@5, MRR@5 and per-question results as a GitHub Actions artifact after the index build succeeds. If `GROQ_API_KEY` is configured, it also generates answers for all 50 questions and creates an audit packet with cited excerpts and automated numeric/citation screening checks. These checks are not proof of faithfulness or accounting correctness. Human review of answer relevance, faithfulness, numerical accuracy, citation correctness and page traceability remains pending until the packet is reviewed against the original disclosures.
+| Method | Recall@5 | MRR@5 |
+|---|---:|---:|
+| Dense only | 0.0460 | 0.0440 |
+| BM25 only (offline baseline) | **0.2782** | 0.1830 |
+| Dense + BM25 (RRF) | 0.1354 | 0.1490 |
+| Dense + BM25 + graph (RRF) | 0.2474 | **0.2440** |
 
-Historical BGE/dense metrics and the earlier 13-question audit remain in [the dated review report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) for historical context only. They are not measurements of the current FTS5 + graph implementation and must not be compared as if they were the same experiment. See [evaluation methodology](evaluation/README.md).
+BM25-only produced the highest Recall@5; graph-assisted fusion had the highest MRR@5. Equal-weight dense+BM25 fusion underperformed BM25 alone. These results measure retrieval against source-anchored relevance labels, not answer accuracy, and the offline BM25 baseline is not the live API lexical implementation.
 
-GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
+A 13-question answer audit with top-5 context found 3 correct answers, 1 materially incorrect answer, 1 accounting-basis ambiguity and 8 false abstentions. Citation coverage was 48.7%; citation presence is not proof of source support. The FX-sensitivity question was clarified to ask specifically for the Group figure after the audited run, so that item needs re-evaluation. The review identified period/accounting-basis confusion and missing relevant evidence. See the [full benchmark and answer-audit report](evaluation/reports/tcs-benchmark-review-2026-11-16.md) and [evaluation methodology](evaluation/README.md).
+
+GitHub Actions runs the automated test suite on pushes and pull requests. API safeguards include normalized finite 768-dimensional Groq embedding validation, a process-local per-IP sliding-window request limit, structured JSON logs, readiness checks and explicit Groq rate-limit responses with `Retry-After`.
 
 ## Limitations and next steps
 
