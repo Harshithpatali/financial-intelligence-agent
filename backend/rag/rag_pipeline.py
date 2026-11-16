@@ -1,6 +1,7 @@
 """Source-grounded Graph RAG question answering with bounded context."""
 from backend.rag.retriever import retrieve
 from backend.rag.llm import generate_answer
+from backend.rag.embeddings import embed_query
 
 
 def answer_question(question, query_embedding=None, top_k=3):
@@ -10,7 +11,6 @@ def answer_question(question, query_embedding=None, top_k=3):
         raise ValueError("top_k must be an integer between 1 and 10")
 
     if query_embedding is None:
-        from backend.rag.embeddings import embed_query
         query_embedding = embed_query(question)
     results = retrieve(question, top_k=top_k, query_embedding=query_embedding)
     documents = results["documents"]
