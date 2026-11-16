@@ -52,10 +52,14 @@ jobs:
           test -s backend/indexes/tcs_knowledge_graph.json
           python - <<'PY'
           from backend.rag.vector_store import get_collection
-          count = get_collection().count()
+          collection = get_collection()
+          count = collection.count()
+          metadata = collection.metadata or {}
           if count <= 0:
               raise SystemExit("The generated Chroma collection is empty.")
-          print(f"Verified {count} indexed document chunks.")
+          if metadata.get("embedding_provider") != "groq" or metadata.get("embedding_model") != "nomic-embed-text-v1_5" or int(metadata.get("embedding_dimension", 0)) != 768:
+              raise SystemExit(f"Incompatible embedding metadata: {metadata}")
+          print(f"Verified {count} Groq-embedded document chunks: {metadata}")
           from backend.rag.graph_index import INDEX_PATH, load_graph
           graph = load_graph()
           nodes, edges = graph.number_of_nodes(), graph.number_of_edges()
