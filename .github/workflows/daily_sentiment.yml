@@ -1,0 +1,64 @@
+name: Daily FinBERT sentiment report
+
+on:
+  schedule:
+    # 00:30 UTC = 06:00 Asia/Kolkata
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-sentiment-report
+  cancel-in-progress: false
+
+jobs:
+  build-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate FinBERT report
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python scripts/generate_sentiment_report.py --output /tmp/sentiment-report.json
+
+      - name: Publish report to sentiment-data branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin sentiment-data
+          git checkout -B sentiment-data origin/sentiment-data
+          mkdir -p history
+          cp /tmp/sentiment-report.json latest.json
+          report_date="$(python -c 'import json; print(json.load(open("latest.json"))["report_date_utc"])')"
+          cp latest.json "history/${report_date}.json"
+          cat > README.md <<'EOF'
+          # Daily FinBERT sentiment data
+
+          This branch contains generated, public sentiment reports for the Streamlit dashboard.
+          Reports contain public news headlines, source links, publication metadata and FinBERT scores.
+          No API tokens or secrets are stored here.
+          EOF
+          git add latest.json "history/${report_date}.json" README.md
+          if git diff --cached --quiet; then
+            echo "No report changes to publish."
+            exit 0
+          fi
+          git commit -m "Publish daily sentiment report ${report_date}"
+          git push origin HEAD:sentiment-data
